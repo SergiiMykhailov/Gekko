@@ -1,0 +1,747 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0207CD761FC1A6ED0074EADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CD751FC1A6ED0074EADF /* AppDelegate.swift */; };
+		0207CD7B1FC1A6ED0074EADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0207CD791FC1A6ED0074EADF /* Main.storyboard */; };
+		0207CD7E1FC1A6ED0074EADF /* Gekko.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0207CD7C1FC1A6ED0074EADF /* Gekko.xcdatamodeld */; };
+		0207CD801FC1A6ED0074EADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207CD7F1FC1A6ED0074EADF /* Assets.xcassets */; };
+		0207CD831FC1A6ED0074EADF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0207CD811FC1A6ED0074EADF /* LaunchScreen.storyboard */; };
+		0207CD8E1FC1A6EE0074EADF /* GekkoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CD8D1FC1A6EE0074EADF /* GekkoTests.swift */; };
+		0207CDA01FC234F70074EADF /* RestApiRequestsExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CD9F1FC234F70074EADF /* RestApiRequestsExecutor.swift */; };
+		0207CDB21FC62F3F0074EADF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0207CDB41FC62F3F0074EADF /* Localizable.strings */; };
+		0207CDC51FC632E00074EADF /* BTCTradeUAProviderBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDBF1FC632DF0074EADF /* BTCTradeUAProviderBase.swift */; };
+		0207CDC61FC632E00074EADF /* BTCTradeUAPostRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDC01FC632DF0074EADF /* BTCTradeUAPostRequestFactory.swift */; };
+		0207CDC71FC632E00074EADF /* BTCTradeUABalanceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDC11FC632DF0074EADF /* BTCTradeUABalanceProvider.swift */; };
+		0207CDC81FC632E00074EADF /* BTCTradeUACurrencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDC21FC632E00074EADF /* BTCTradeUACurrencies.swift */; };
+		0207CDCA1FC632E00074EADF /* BTCTradeUALoginSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDC41FC632E00074EADF /* BTCTradeUALoginSession.swift */; };
+		0207CDD41FD2E91F0074EADF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDD31FD2E91F0074EADF /* MainViewController.swift */; };
+		0207CDD61FD2E9570074EADF /* CurrenciesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDD51FD2E9570074EADF /* CurrenciesCollectionViewController.swift */; };
+		0207CDD81FD2F2140074EADF /* CurrencyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDD71FD2F2140074EADF /* CurrencyCollectionViewCell.swift */; };
+		022E3DB11FD3048B00D778D2 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 022E3DB21FD3048B00D778D2 /* SnapKit.framework */; };
+		022E3DB41FD747E300D778D2 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3DB31FD747E300D778D2 /* ChartViewController.swift */; };
+		0240BB1C1FE85DA6000EEAE0 /* OrdersStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB1B1FE85DA6000EEAE0 /* OrdersStackViewController.swift */; };
+		0240BB1E1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */; };
+		0240BB261FEC801B000EEAE0 /* TableViewInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */; };
+		0248532F1FFBD91000290BA1 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0248532E1FFBD91000290BA1 /* UIUtils.swift */; };
+		02B32B812008122A00CA82D7 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B802008122900CA82D7 /* OrdersView.swift */; };
+		02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */; };
+		02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */; };
+		02B32B8A200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B89200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift */; };
+		02D7D2F21FDB3FC2007C4557 /* CandleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F11FDB3FC2007C4557 /* CandleInfo.swift */; };
+		02D7D2F41FDB4014007C4557 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F31FDB4014007C4557 /* Currency.swift */; };
+		02D7D2F61FDB406D007C4557 /* BalanceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F51FDB406D007C4557 /* BalanceItem.swift */; };
+		02D7D2F81FDB409D007C4557 /* OrderTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F71FDB409D007C4557 /* OrderTypes.swift */; };
+		02D7D2FA1FDB415D007C4557 /* BTCTradeUACandlesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F91FDB415D007C4557 /* BTCTradeUACandlesProvider.swift */; };
+		02D7D2FC1FDDDECA007C4557 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2FB1FDDDECA007C4557 /* CreateOrderView.swift */; };
+		02D7D2FE1FDDEA4B007C4557 /* UIDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2FD1FDDEA4B007C4557 /* UIDefaults.swift */; };
+		02D7D3001FDF2544007C4557 /* BTCTradeUAOrderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2FF1FDF2544007C4557 /* BTCTradeUAOrderProvider.swift */; };
+		02D7D3021FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D3011FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift */; };
+		02D7D3041FE1E519007C4557 /* QRCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D3031FE1E519007C4557 /* QRCodePickerViewController.swift */; };
+		33D4941C4439586FB3638DB1 /* Pods_Gekko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D9D9BC13EE40979D25FB1 /* Pods_Gekko.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0207CD8A1FC1A6EE0074EADF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0207CD6A1FC1A6ED0074EADF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0207CD711FC1A6ED0074EADF;
+			remoteInfo = Gekko;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0207CD721FC1A6ED0074EADF /* Gekko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gekko.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0207CD751FC1A6ED0074EADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0207CD7A1FC1A6ED0074EADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0207CD7D1FC1A6ED0074EADF /* Gekko.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gekko.xcdatamodel; sourceTree = "<group>"; };
+		0207CD7F1FC1A6ED0074EADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0207CD821FC1A6ED0074EADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0207CD841FC1A6ED0074EADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0207CD891FC1A6EE0074EADF /* GekkoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GekkoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0207CD8D1FC1A6EE0074EADF /* GekkoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GekkoTests.swift; sourceTree = "<group>"; };
+		0207CD8F1FC1A6EE0074EADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0207CD9F1FC234F70074EADF /* RestApiRequestsExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestApiRequestsExecutor.swift; sourceTree = "<group>"; };
+		0207CDAC1FC4E6940074EADF /* Gekko-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gekko-Bridging-Header.h"; sourceTree = "<group>"; };
+		0207CDB51FC62F560074EADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0207CDBF1FC632DF0074EADF /* BTCTradeUAProviderBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTCTradeUAProviderBase.swift; sourceTree = "<group>"; };
+		0207CDC01FC632DF0074EADF /* BTCTradeUAPostRequestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTCTradeUAPostRequestFactory.swift; sourceTree = "<group>"; };
+		0207CDC11FC632DF0074EADF /* BTCTradeUABalanceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTCTradeUABalanceProvider.swift; sourceTree = "<group>"; };
+		0207CDC21FC632E00074EADF /* BTCTradeUACurrencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTCTradeUACurrencies.swift; sourceTree = "<group>"; };
+		0207CDC41FC632E00074EADF /* BTCTradeUALoginSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTCTradeUALoginSession.swift; sourceTree = "<group>"; };
+		0207CDCF1FC634600074EADF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		0207CDD01FC634600074EADF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		0207CDD11FC634600074EADF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0207CDD31FD2E91F0074EADF /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		0207CDD51FD2E9570074EADF /* CurrenciesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesCollectionViewController.swift; sourceTree = "<group>"; };
+		0207CDD71FD2F2140074EADF /* CurrencyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCollectionViewCell.swift; sourceTree = "<group>"; };
+		022E3DB21FD3048B00D778D2 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		022E3DB31FD747E300D778D2 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
+		0240BB1B1FE85DA6000EEAE0 /* OrdersStackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersStackViewController.swift; sourceTree = "<group>"; };
+		0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersStackViewTableCell.swift; sourceTree = "<group>"; };
+		0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewInputCell.swift; sourceTree = "<group>"; };
+		0248532E1FFBD91000290BA1 /* UIUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
+		02B32B802008122900CA82D7 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
+		02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewCell.swift; sourceTree = "<group>"; };
+		02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
+		02B32B89200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUAOrdersStatusProvider.swift; sourceTree = "<group>"; };
+		02D7D2F11FDB3FC2007C4557 /* CandleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandleInfo.swift; sourceTree = "<group>"; };
+		02D7D2F31FDB4014007C4557 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		02D7D2F51FDB406D007C4557 /* BalanceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceItem.swift; sourceTree = "<group>"; };
+		02D7D2F71FDB409D007C4557 /* OrderTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTypes.swift; sourceTree = "<group>"; };
+		02D7D2F91FDB415D007C4557 /* BTCTradeUACandlesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUACandlesProvider.swift; sourceTree = "<group>"; };
+		02D7D2FB1FDDDECA007C4557 /* CreateOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderView.swift; sourceTree = "<group>"; };
+		02D7D2FD1FDDEA4B007C4557 /* UIDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDefaults.swift; sourceTree = "<group>"; };
+		02D7D2FF1FDF2544007C4557 /* BTCTradeUAOrderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUAOrderProvider.swift; sourceTree = "<group>"; };
+		02D7D3011FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUAAccountSettingsViewController.swift; sourceTree = "<group>"; };
+		02D7D3031FE1E519007C4557 /* QRCodePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodePickerViewController.swift; sourceTree = "<group>"; };
+		386B48C09CA90EE9F7708A7E /* Pods-Gekko.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gekko.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gekko/Pods-Gekko.release.xcconfig"; sourceTree = "<group>"; };
+		CB8B640BD9403F92144F88E2 /* Pods-Gekko.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gekko.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Gekko/Pods-Gekko.debug.xcconfig"; sourceTree = "<group>"; };
+		FF1D9D9BC13EE40979D25FB1 /* Pods_Gekko.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gekko.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0207CD6F1FC1A6ED0074EADF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				022E3DB11FD3048B00D778D2 /* SnapKit.framework in Frameworks */,
+				33D4941C4439586FB3638DB1 /* Pods_Gekko.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0207CD861FC1A6EE0074EADF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0207CD691FC1A6ED0074EADF = {
+			isa = PBXGroup;
+			children = (
+				0207CD741FC1A6ED0074EADF /* Gekko */,
+				0207CD8C1FC1A6EE0074EADF /* GekkoTests */,
+				0207CD731FC1A6ED0074EADF /* Products */,
+				0F495D7E79147CC1B9C11505 /* Pods */,
+				4E4DDEF2BD78FE8A8C6BEF12 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		0207CD731FC1A6ED0074EADF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0207CD721FC1A6ED0074EADF /* Gekko.app */,
+				0207CD891FC1A6EE0074EADF /* GekkoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0207CD741FC1A6ED0074EADF /* Gekko */ = {
+			isa = PBXGroup;
+			children = (
+				02B32B84200AB7C900CA82D7 /* CoreData */,
+				02D7D2F01FDB3F8F007C4557 /* CommonTypes */,
+				0207CDD21FD2E8D70074EADF /* UI */,
+				0207CDBD1FC632B10074EADF /* DataProviders */,
+				0207CDAF1FC62E940074EADF /* Resources */,
+				0207CD9C1FC234210074EADF /* RESTAPI */,
+				0207CD751FC1A6ED0074EADF /* AppDelegate.swift */,
+				0207CDAC1FC4E6940074EADF /* Gekko-Bridging-Header.h */,
+			);
+			path = Gekko;
+			sourceTree = "<group>";
+		};
+		0207CD8C1FC1A6EE0074EADF /* GekkoTests */ = {
+			isa = PBXGroup;
+			children = (
+				0207CD8D1FC1A6EE0074EADF /* GekkoTests.swift */,
+				0207CD8F1FC1A6EE0074EADF /* Info.plist */,
+			);
+			path = GekkoTests;
+			sourceTree = "<group>";
+		};
+		0207CD9C1FC234210074EADF /* RESTAPI */ = {
+			isa = PBXGroup;
+			children = (
+				0207CD9F1FC234F70074EADF /* RestApiRequestsExecutor.swift */,
+			);
+			path = RESTAPI;
+			sourceTree = "<group>";
+		};
+		0207CDAF1FC62E940074EADF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0207CD7F1FC1A6ED0074EADF /* Assets.xcassets */,
+				0207CD7C1FC1A6ED0074EADF /* Gekko.xcdatamodeld */,
+				0207CD841FC1A6ED0074EADF /* Info.plist */,
+				0207CD811FC1A6ED0074EADF /* LaunchScreen.storyboard */,
+				0207CD791FC1A6ED0074EADF /* Main.storyboard */,
+				0207CDB41FC62F3F0074EADF /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0207CDBD1FC632B10074EADF /* DataProviders */ = {
+			isa = PBXGroup;
+			children = (
+				0207CDBE1FC632BC0074EADF /* BTCTradeUA */,
+			);
+			path = DataProviders;
+			sourceTree = "<group>";
+		};
+		0207CDBE1FC632BC0074EADF /* BTCTradeUA */ = {
+			isa = PBXGroup;
+			children = (
+				0207CDC11FC632DF0074EADF /* BTCTradeUABalanceProvider.swift */,
+				02D7D2F91FDB415D007C4557 /* BTCTradeUACandlesProvider.swift */,
+				0207CDC21FC632E00074EADF /* BTCTradeUACurrencies.swift */,
+				0207CDC41FC632E00074EADF /* BTCTradeUALoginSession.swift */,
+				0207CDC01FC632DF0074EADF /* BTCTradeUAPostRequestFactory.swift */,
+				0207CDBF1FC632DF0074EADF /* BTCTradeUAProviderBase.swift */,
+				02D7D2FF1FDF2544007C4557 /* BTCTradeUAOrderProvider.swift */,
+				02B32B89200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift */,
+			);
+			path = BTCTradeUA;
+			sourceTree = "<group>";
+		};
+		0207CDD21FD2E8D70074EADF /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				02D7D3011FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift */,
+				022E3DB31FD747E300D778D2 /* ChartViewController.swift */,
+				02D7D2FB1FDDDECA007C4557 /* CreateOrderView.swift */,
+				0207CDD51FD2E9570074EADF /* CurrenciesCollectionViewController.swift */,
+				0207CDD71FD2F2140074EADF /* CurrencyCollectionViewCell.swift */,
+				0207CDD31FD2E91F0074EADF /* MainViewController.swift */,
+				0240BB1B1FE85DA6000EEAE0 /* OrdersStackViewController.swift */,
+				0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */,
+				02B32B802008122900CA82D7 /* OrdersView.swift */,
+				02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */,
+				02D7D3031FE1E519007C4557 /* QRCodePickerViewController.swift */,
+				0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */,
+				02D7D2FD1FDDEA4B007C4557 /* UIDefaults.swift */,
+				0248532E1FFBD91000290BA1 /* UIUtils.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		02B32B84200AB7C900CA82D7 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		02D7D2F01FDB3F8F007C4557 /* CommonTypes */ = {
+			isa = PBXGroup;
+			children = (
+				02D7D2F51FDB406D007C4557 /* BalanceItem.swift */,
+				02D7D2F11FDB3FC2007C4557 /* CandleInfo.swift */,
+				02D7D2F31FDB4014007C4557 /* Currency.swift */,
+				02D7D2F71FDB409D007C4557 /* OrderTypes.swift */,
+			);
+			path = CommonTypes;
+			sourceTree = "<group>";
+		};
+		0F495D7E79147CC1B9C11505 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CB8B640BD9403F92144F88E2 /* Pods-Gekko.debug.xcconfig */,
+				386B48C09CA90EE9F7708A7E /* Pods-Gekko.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		4E4DDEF2BD78FE8A8C6BEF12 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				022E3DB21FD3048B00D778D2 /* SnapKit.framework */,
+				FF1D9D9BC13EE40979D25FB1 /* Pods_Gekko.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0207CD711FC1A6ED0074EADF /* Gekko */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0207CD921FC1A6EE0074EADF /* Build configuration list for PBXNativeTarget "Gekko" */;
+			buildPhases = (
+				0EE6E3C03F36084F483C4FB0 /* [CP] Check Pods Manifest.lock */,
+				0207CD6E1FC1A6ED0074EADF /* Sources */,
+				0207CD6F1FC1A6ED0074EADF /* Frameworks */,
+				0207CD701FC1A6ED0074EADF /* Resources */,
+				B29D5E18FEFA00225904C57B /* [CP] Embed Pods Frameworks */,
+				177DC0766BF49C8E89695D0E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Gekko;
+			productName = Gekko;
+			productReference = 0207CD721FC1A6ED0074EADF /* Gekko.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0207CD881FC1A6EE0074EADF /* GekkoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0207CD951FC1A6EE0074EADF /* Build configuration list for PBXNativeTarget "GekkoTests" */;
+			buildPhases = (
+				0207CD851FC1A6EE0074EADF /* Sources */,
+				0207CD861FC1A6EE0074EADF /* Frameworks */,
+				0207CD871FC1A6EE0074EADF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0207CD8B1FC1A6EE0074EADF /* PBXTargetDependency */,
+			);
+			name = GekkoTests;
+			productName = GekkoTests;
+			productReference = 0207CD891FC1A6EE0074EADF /* GekkoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0207CD6A1FC1A6ED0074EADF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0910;
+				LastUpgradeCheck = 0910;
+				ORGANIZATIONNAME = "Sergii Mykhailov";
+				TargetAttributes = {
+					0207CD711FC1A6ED0074EADF = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
+					0207CD881FC1A6EE0074EADF = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 0207CD711FC1A6ED0074EADF;
+					};
+				};
+			};
+			buildConfigurationList = 0207CD6D1FC1A6ED0074EADF /* Build configuration list for PBXProject "Gekko" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				ru,
+			);
+			mainGroup = 0207CD691FC1A6ED0074EADF;
+			productRefGroup = 0207CD731FC1A6ED0074EADF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0207CD711FC1A6ED0074EADF /* Gekko */,
+				0207CD881FC1A6EE0074EADF /* GekkoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0207CD701FC1A6ED0074EADF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0207CD831FC1A6ED0074EADF /* LaunchScreen.storyboard in Resources */,
+				0207CDB21FC62F3F0074EADF /* Localizable.strings in Resources */,
+				0207CD801FC1A6ED0074EADF /* Assets.xcassets in Resources */,
+				0207CD7B1FC1A6ED0074EADF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0207CD871FC1A6EE0074EADF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0EE6E3C03F36084F483C4FB0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Gekko-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		177DC0766BF49C8E89695D0E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gekko/Pods-Gekko-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B29D5E18FEFA00225904C57B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Gekko/Pods-Gekko-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftCharts/SwiftCharts.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftCharts.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gekko/Pods-Gekko-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0207CD6E1FC1A6ED0074EADF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0207CD761FC1A6ED0074EADF /* AppDelegate.swift in Sources */,
+				02D7D2F61FDB406D007C4557 /* BalanceItem.swift in Sources */,
+				0207CDD61FD2E9570074EADF /* CurrenciesCollectionViewController.swift in Sources */,
+				0207CDA01FC234F70074EADF /* RestApiRequestsExecutor.swift in Sources */,
+				0207CDC61FC632E00074EADF /* BTCTradeUAPostRequestFactory.swift in Sources */,
+				02D7D3001FDF2544007C4557 /* BTCTradeUAOrderProvider.swift in Sources */,
+				0240BB1C1FE85DA6000EEAE0 /* OrdersStackViewController.swift in Sources */,
+				02D7D3021FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift in Sources */,
+				0207CDC71FC632E00074EADF /* BTCTradeUABalanceProvider.swift in Sources */,
+				02D7D2F41FDB4014007C4557 /* Currency.swift in Sources */,
+				0207CDD81FD2F2140074EADF /* CurrencyCollectionViewCell.swift in Sources */,
+				02D7D2FE1FDDEA4B007C4557 /* UIDefaults.swift in Sources */,
+				02D7D2F81FDB409D007C4557 /* OrderTypes.swift in Sources */,
+				0207CDC51FC632E00074EADF /* BTCTradeUAProviderBase.swift in Sources */,
+				0207CDCA1FC632E00074EADF /* BTCTradeUALoginSession.swift in Sources */,
+				0207CD7E1FC1A6ED0074EADF /* Gekko.xcdatamodeld in Sources */,
+				02B32B8A200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift in Sources */,
+				02D7D3041FE1E519007C4557 /* QRCodePickerViewController.swift in Sources */,
+				02D7D2FC1FDDDECA007C4557 /* CreateOrderView.swift in Sources */,
+				02D7D2F21FDB3FC2007C4557 /* CandleInfo.swift in Sources */,
+				02D7D2FA1FDB415D007C4557 /* BTCTradeUACandlesProvider.swift in Sources */,
+				022E3DB41FD747E300D778D2 /* ChartViewController.swift in Sources */,
+				0240BB261FEC801B000EEAE0 /* TableViewInputCell.swift in Sources */,
+				02B32B812008122A00CA82D7 /* OrdersView.swift in Sources */,
+				0240BB1E1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift in Sources */,
+				0207CDC81FC632E00074EADF /* BTCTradeUACurrencies.swift in Sources */,
+				02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */,
+				02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */,
+				0207CDD41FD2E91F0074EADF /* MainViewController.swift in Sources */,
+				0248532F1FFBD91000290BA1 /* UIUtils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0207CD851FC1A6EE0074EADF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0207CD8E1FC1A6EE0074EADF /* GekkoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0207CD8B1FC1A6EE0074EADF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0207CD711FC1A6ED0074EADF /* Gekko */;
+			targetProxy = 0207CD8A1FC1A6EE0074EADF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0207CD791FC1A6ED0074EADF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0207CD7A1FC1A6ED0074EADF /* Base */,
+				0207CDD01FC634600074EADF /* ru */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0207CD811FC1A6ED0074EADF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0207CD821FC1A6ED0074EADF /* Base */,
+				0207CDCF1FC634600074EADF /* ru */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		0207CDB41FC62F3F0074EADF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0207CDB51FC62F560074EADF /* Base */,
+				0207CDD11FC634600074EADF /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0207CD901FC1A6EE0074EADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		0207CD911FC1A6EE0074EADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0207CD931FC1A6EE0074EADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB8B640BD9403F92144F88E2 /* Pods-Gekko.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WUVR239J8X;
+				INFOPLIST_FILE = "$(SRCROOT)/Gekko/Resources/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = None.Gekko;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Gekko/Gekko-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0207CD941FC1A6EE0074EADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 386B48C09CA90EE9F7708A7E /* Pods-Gekko.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WUVR239J8X;
+				INFOPLIST_FILE = "$(SRCROOT)/Gekko/Resources/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = None.Gekko;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Gekko/Gekko-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0207CD961FC1A6EE0074EADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WUVR239J8X;
+				INFOPLIST_FILE = GekkoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = None.GekkoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gekko.app/Gekko";
+			};
+			name = Debug;
+		};
+		0207CD971FC1A6EE0074EADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WUVR239J8X;
+				INFOPLIST_FILE = GekkoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = None.GekkoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gekko.app/Gekko";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0207CD6D1FC1A6ED0074EADF /* Build configuration list for PBXProject "Gekko" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0207CD901FC1A6EE0074EADF /* Debug */,
+				0207CD911FC1A6EE0074EADF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0207CD921FC1A6EE0074EADF /* Build configuration list for PBXNativeTarget "Gekko" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0207CD931FC1A6EE0074EADF /* Debug */,
+				0207CD941FC1A6EE0074EADF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0207CD951FC1A6EE0074EADF /* Build configuration list for PBXNativeTarget "GekkoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0207CD961FC1A6EE0074EADF /* Debug */,
+				0207CD971FC1A6EE0074EADF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0207CD7C1FC1A6ED0074EADF /* Gekko.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0207CD7D1FC1A6ED0074EADF /* Gekko.xcdatamodel */,
+			);
+			currentVersion = 0207CD7D1FC1A6ED0074EADF /* Gekko.xcdatamodel */;
+			path = Gekko.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 0207CD6A1FC1A6ED0074EADF /* Project object */;
+}

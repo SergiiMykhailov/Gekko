@@ -1,0 +1,73 @@
+/*
+  Created by Sergii Mykhailov on 23/11/2017.
+  Copyright © 2017 Sergii Mykhailov. All rights reserved.
+*/
+
+/* Buy button title */
+"Buy" = "Buy";
+
+/* Sell button title */
+"Sell" = "Sell";
+
+/* Balance title label text */
+"Balance:" = "Balance:";
+
+/* Unavailable balance placeholder */
+"Not available" = "Not available";
+
+/* Date axis title */
+"Date" = "Date";
+
+/* Price axis title */
+"Price" = "Price";
+
+/* Order amount */
+"Amount" = "Amount";
+
+/* Cancel order */
+"Cancel" = "Cancel";
+
+/* Keyboard apply button title */
+"Apply" = "Apply";
+
+/* Hide keyboard button title */
+"Hide" = "Hide";
+
+/* Order amount label title */
+"Order amount" = "Order amount:";
+
+/* Sell orders title */
+"Ask" = "Ask";
+
+/* Buy orders title */
+"Bid" = "Bid";
+
+/* Main view controller title */
+"Stock" = "Stock";
+
+/* Account settings view controller title */
+"Account Settings" = "Account Settings";
+
+/* Settings instruction */
+"Please specify public and private keys in order to perform trading operations\nTo obtain these keys please login to your account at www.btc-trade.com.ua and go to:\nAccount -> Profile -> API and mobile app" = "Please specify public and private keys in order to perform trading operations\nTo obtain these keys please login to your account at www.btc-trade.com and go to:\nAccount -> Profile -> API and mobile app";
+
+/* Public key label */
+"Public Key" = "Public Key";
+
+/* Private key label */
+"Private Key" = "Private Key";
+
+/* Done button title */
+"Done" = "Done";
+
+/* Bought amount label text */
+"Bought (in UAH)" = "Bought (in UAH)";
+
+/* Sold amount label text */
+"Sold (in UAH)" = "Sold (in UAH)";
+
+/* Initial order amount text */
+"Initial" = "Initial";
+
+/* Remaining order amount text */
+"Remaining" = "Remaining";

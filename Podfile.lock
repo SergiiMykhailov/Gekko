@@ -1,0 +1,15 @@
+PODS:
+  - SnapKit (4.0.0)
+  - SwiftCharts (0.6.1)
+
+DEPENDENCIES:
+  - SnapKit (~> 4.0.0)
+  - SwiftCharts (~> 0.6.1)
+
+SPEC CHECKSUMS:
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwiftCharts: 77378d6cf667e95f9c79a745b6778e66eed5339c
+
+PODFILE CHECKSUM: 6640d626f2cb538b75c13f194639c561ae41c499
+
+COCOAPODS: 1.3.1
