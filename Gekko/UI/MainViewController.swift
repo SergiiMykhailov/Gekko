@@ -77,13 +77,16 @@ class MainViewController : UIViewController,
             btcTradeUABalanceProvider.retriveBalanceAsync(withPublicKey:publicKey!,
                                                           privateKey:privateKey!,
                                                           onCompletion: { (balanceItems) in
-                                                            DispatchQueue.main.async { [weak self] () in
-                                                                if (self != nil) {
-                                                                    self!.balance = balanceItems
-                                                                    self!.currenciesController.collectionView!.reloadData()
-                                                                    self!.updateBalanceValueLabel()
-                                                                }
-                                                            }
+                DispatchQueue.main.async { [weak self] () in
+                    if (self != nil) {
+                        self!.balance = balanceItems
+                        self!.currenciesController.collectionView!.reloadData()
+
+                        if (self!.orderView?.superview == nil) {
+                            self!.updateBalanceValueLabel()
+                        }
+                    }
+                }
             })
         }
 
