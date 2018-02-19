@@ -636,7 +636,7 @@
 				DEVELOPMENT_TEAM = WUVR239J8X;
 				INFOPLIST_FILE = "$(SRCROOT)/Gekko/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = None.Gekko;
+				PRODUCT_BUNDLE_IDENTIFIER = "ua.com.btc-trade";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Gekko/Gekko-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
@@ -655,7 +655,7 @@
 				DEVELOPMENT_TEAM = WUVR239J8X;
 				INFOPLIST_FILE = "$(SRCROOT)/Gekko/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = None.Gekko;
+				PRODUCT_BUNDLE_IDENTIFIER = "ua.com.btc-trade";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Gekko/Gekko-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
