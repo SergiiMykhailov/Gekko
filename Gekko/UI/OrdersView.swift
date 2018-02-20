@@ -31,6 +31,7 @@ class OrdersView : UIView,
         ordersTable.dataSource = self
         ordersTable.delegate = self
         ordersTable.register(OrdersViewCell.classForCoder(), forCellReuseIdentifier:OrdersView.CellIdentifier)
+        ordersTable.separatorInset = UIEdgeInsets(top:0, left:40, bottom:0, right:0)
 
         addSubview(ordersTable)
     }
@@ -49,7 +50,7 @@ class OrdersView : UIView,
                 if orderStatus.status == .Pending {
                     pendingOrders.append(orderStatus)
                 }
-                else {
+                else if orderStatus.status == .Completed {
                     completedOrders.append(orderStatus)
                 }
             }

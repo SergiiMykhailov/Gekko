@@ -9,7 +9,7 @@ class BTCTradeUAOrdersStatusProvider : BTCTradeUAProviderBase {
 typealias OrderStatusRetreivingCallback = ([OrderStatusInfo]) -> Void
 
     // MARK: Public methods and properties
-
+    
 typealias OrderStatusCallback = (OrderStatusInfo?) -> Void
 
     public func retrieveStatusAsync(forOrderWithID id:String,
@@ -30,46 +30,61 @@ typealias OrderStatusCallback = (OrderStatusInfo?) -> Void
 
     fileprivate static func orderStatusInfo(fromResponseItems items:[String : Any]) -> OrderStatusInfo? {
         let id = items[IDKey] as? String
-        let currencyString = items[CryptoCurrencyKey] as? String
-        let statusString = items[StatusKey] as? String
-        let dateString = items[DateKey] as? String
-        let initialCryptoCurrencyAmount = items[InitialCryptoCurrencyAmountKey] as? Double
-        let initialFiatCurrencyAmount = items[InitialFiatCurrencyAmountKey] as? Double
-        let remainingCryptoCurrencyAmount = items[RemainingAmountKey] as? Double
+        
         let typeString = items[TypeKey] as? String
+        var type:OrderType?
+        switch typeString! {
+        case "buy":
+            type = OrderType.Buy
+        case "sell":
+            type = OrderType.Sell
+        default:
+            return nil
+        }
+        
+        let statusString = items[StatusKey] as? String
+        var status:OrderStatus?
+        switch statusString! {
+        case "processing":
+            status = OrderStatus.Pending
+        case "processed":
+            status = OrderStatus.Completed
+        case "canceled":
+            status = OrderStatus.Canceled
+        default:
+            return nil
+        }
+        
+        let cryptoCurrencyKey = type == .Sell ? "currency1" : "currency2"
+        let currencyString = items[cryptoCurrencyKey] as? String
+        
+        let dateString = items[DateKey] as? String
+        
+        let initialCryptoCurrencyAmountKey = type == .Sell ? "sum1_history" : "sum2_history"
+        let initialFiatCurrencyAmountKey = type == .Sell ? "sum2_history" : "sum1_history"
+        let remainingAmountKey = type == .Sell ? "sum1" : "sum2"
+        let initialCryptoCurrencyAmountString = items[initialCryptoCurrencyAmountKey] as? String
+        let initialFiatCurrencyAmountString = items[initialFiatCurrencyAmountKey] as? String
+        let remainingCryptoCurrencyAmountString = items[remainingAmountKey] as? String
 
         if id != nil && statusString != nil && dateString != nil &&
-           initialCryptoCurrencyAmount != nil && initialFiatCurrencyAmount != nil &&
-           remainingCryptoCurrencyAmount != nil && typeString != nil && currencyString != nil {
+           initialCryptoCurrencyAmountString != nil && initialFiatCurrencyAmountString != nil &&
+           remainingCryptoCurrencyAmountString != nil && typeString != nil && currencyString != nil {
 
-            var status:OrderStatus?
-            switch statusString! {
-            case "processing":
-                status = OrderStatus.Pending
-            case "processed":
-                status = OrderStatus.Completed
-            case "canceled":
-                status = OrderStatus.Canceled
-            default:
-                status = nil
-            }
-
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date = dateFormatter.date(from:dateString!)
 
-            var type:OrderType?
-            switch typeString! {
-            case "buy":
-                type = OrderType.Buy
-            case "sell":
-                type = OrderType.Sell
-            default:
-                type = nil
-            }
-
             let currency = Currency(rawValue:currencyString! as Currency.RawValue)
-            let price = initialCryptoCurrencyAmount! / initialFiatCurrencyAmount!
+            let initialCryptoCurrencyAmount = Double(initialCryptoCurrencyAmountString!)
+            let initialFiatCurrencyAmount = Double(initialFiatCurrencyAmountString!)
+            let remainingCryptoCurrencyAmount = status == .Completed ? 0 : Double(remainingCryptoCurrencyAmountString!)
+            let price = initialFiatCurrencyAmount! / initialCryptoCurrencyAmount!
 
-            if status != nil && date != nil && type != nil && currency != nil {
+            if status != nil &&
+                date != nil &&
+                type != nil &&
+                currency != nil &&
+                remainingCryptoCurrencyAmount != nil {
                 return OrderStatusInfo(id:id!,
                                        status:status!,
                                        date:date!,
@@ -91,12 +106,8 @@ typealias OrderStatusCallback = (OrderStatusInfo?) -> Void
     private static let OrdersSuffix = "my_orders"
     private static let OrderStatusSuffix = "order/status"
 
-    private static let RemainingAmountKey = "sum1"
-    private static let InitialCryptoCurrencyAmountKey = "sum1_history"
-    private static let InitialFiatCurrencyAmountKey = "sum2_history"
     private static let StatusKey = "status"
     private static let IDKey = "id"
-    private static let CryptoCurrencyKey = "currency1"
     private static let TypeKey = "type"
     private static let DateKey = "pub_date"
 }

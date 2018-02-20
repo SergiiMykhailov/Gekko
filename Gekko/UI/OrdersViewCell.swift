@@ -26,19 +26,19 @@ class OrdersViewCell : UITableViewCell {
     override init(style:UITableViewCellStyle, reuseIdentifier:String?) {
         super.init(style:style, reuseIdentifier:reuseIdentifier)
 
-        typeLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelDefaultFontSize)
+        typeLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
         typeLabel.textColor = UIDefaults.LabelDefaultFontColor
         typeLabel.textAlignment = .center
 
-        priceLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelDefaultFontSize)
+        priceLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
         priceLabel.textColor = UIDefaults.LabelDefaultFontColor
         priceLabel.textAlignment = .center
 
-        initialAmountLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelDefaultFontSize)
+        initialAmountLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
         initialAmountLabel.textColor = UIDefaults.LabelDefaultFontColor
         initialAmountLabel.textAlignment = .center
 
-        remainingAmountLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelDefaultFontSize)
+        remainingAmountLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
         remainingAmountLabel.textColor = UIDefaults.LabelDefaultFontColor
         remainingAmountLabel.textAlignment = .center
 
@@ -103,7 +103,7 @@ class OrdersViewCell : UITableViewCell {
         initialAmountLabel.text = String(format:"%.06f", orderStatus!.initialAmount)
         remainingAmountLabel.text = String(format:"%.06f", orderStatus!.remainingAmount)
 
-        if orderStatus!.status == .Pending {
+        if orderStatus!.status == .Completed {
             addSubview(shadeOverlayView)
 
             shadeOverlayView.snp.makeConstraints({ (make) in

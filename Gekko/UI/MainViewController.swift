@@ -154,12 +154,11 @@ class MainViewController : UIViewController,
                             return
                         }
 
-                        var ordersForCurrencyPair = self!.currencyPairToUserOrdersStatusMap[currencyPair]
-                        if (ordersForCurrencyPair == nil) {
-                            ordersForCurrencyPair = [OrderStatusInfo]()
-                            self!.currencyPairToUserOrdersStatusMap[currencyPair] = ordersForCurrencyPair
+                        if (self!.currencyPairToUserOrdersStatusMap[currencyPair] == nil) {
+                            self!.currencyPairToUserOrdersStatusMap[currencyPair] = [OrderStatusInfo]()
                         }
 
+                        var ordersForCurrencyPair = self!.currencyPairToUserOrdersStatusMap[currencyPair]
                         if let existingOrderIndex = ordersForCurrencyPair?.index(where: { (currentOrder) -> Bool in
                             return currentOrder.id == order.id!
                         }) {
@@ -168,6 +167,8 @@ class MainViewController : UIViewController,
                         else {
                             ordersForCurrencyPair!.append(status!)
                         }
+                        
+                        self!.currencyPairToUserOrdersStatusMap[currencyPair] = ordersForCurrencyPair
                     }
                 })
             }
