@@ -14,6 +14,9 @@ protocol OrdersViewDataSource : class {
 
 @objc protocol OrdersViewDelegate : class {
 
+    @objc optional func ordersView(sender:OrdersView,
+                                   didRequestCancel order:OrderStatusInfo) -> Void
+    
 }
 
 class OrdersView : UIView,
@@ -32,6 +35,7 @@ class OrdersView : UIView,
         ordersTable.delegate = self
         ordersTable.register(OrdersViewCell.classForCoder(), forCellReuseIdentifier:OrdersView.CellIdentifier)
         ordersTable.separatorInset = UIEdgeInsets(top:0, left:40, bottom:0, right:0)
+        ordersTable.allowsSelection = false
 
         addSubview(ordersTable)
     }
@@ -71,7 +75,7 @@ class OrdersView : UIView,
 
     // MARK: UITableViewDataSource implementation
 
-    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    internal func tableView(_ tableView:UITableView, numberOfRowsInSection section:Int) -> Int {
         return pendingOrders.count + completedOrders.count
     }
 
@@ -92,7 +96,7 @@ class OrdersView : UIView,
         return cell
     }
 
-    internal func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    internal func tableView(_ tableView:UITableView, viewForHeaderInSection section:Int) -> UIView? {
         if headerView == nil {
             headerView = OrdersViewCell(style:.default, reuseIdentifier:OrdersView.CellIdentifier)
 
@@ -104,8 +108,35 @@ class OrdersView : UIView,
         return headerView!
     }
 
-    internal func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    internal func tableView(_ tableView:UITableView, heightForHeaderInSection section:Int) -> CGFloat {
         return UIDefaults.LineHeight / 2
+    }
+    
+    // MARK: UITableViewDelegate implementation
+    
+    internal func tableView(_ tableView:UITableView, editActionsForRowAt indexPath:IndexPath) -> [UITableViewRowAction]? {
+        if let cell = tableView.cellForRow(at:indexPath) as? OrdersViewCell {
+            if cell.orderStatus?.status == .Pending {
+                var actions = [UITableViewRowAction]()
+
+                let cancelAction = UITableViewRowAction(style:.destructive,
+                                                        title:NSLocalizedString("Cancel", comment:"Cancel order action title"),
+                                                        handler: { [weak self] (action, indexPath) in
+                    self?.pendingOrders = (self?.pendingOrders.filter({ (currentOrder) -> Bool in
+                        currentOrder.id != cell.orderStatus!.id
+                    }))!
+                    
+                    self?.ordersTable.deleteRows(at:[indexPath], with:.top)
+                    self?.delegate?.ordersView?(sender:self!, didRequestCancel:cell.orderStatus!)
+                })
+                
+                actions.append(cancelAction)
+                
+                return actions
+            }
+        }
+        
+        return [UITableViewRowAction]()
     }
 
     // MARK: Internal fields

@@ -612,6 +612,23 @@ class MainViewController : UIViewController,
         return [OrderStatusInfo]()
     }
 
+    // MARK: OrdersViewDelegate implementation
+    
+    func ordersView(sender:OrdersView, didRequestCancel order:OrderStatusInfo) {
+        var currentPairOrders = currencyPairToUserOrdersStatusMap[currentPair]
+        currentPairOrders = currentPairOrders?.filter({ (currentOrderStatus) -> Bool in
+            currentOrderStatus.id != order.id
+        })
+
+        currencyPairToUserOrdersStatusMap[currentPair] = currentPairOrders
+        
+        btcTradeUAOrderProvider.cancelOrderAsync(withID:order.id,
+                                                 publicKey:publicKey!,
+                                                 privateKey:privateKey!) {
+                                                    
+        }
+    }
+    
     // MARK: Events handling
 
     @objc fileprivate func buyButtonPressed(button:UIButton) -> Void {

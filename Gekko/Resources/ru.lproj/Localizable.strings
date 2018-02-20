@@ -71,3 +71,6 @@
 
 /* Remaining order amount text */
 "Remaining" = "Текущий";
+
+/* Cancel order action title */
+"Cancel" = "Отменить";

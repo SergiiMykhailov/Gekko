@@ -12,18 +12,37 @@ struct OrderInfo {
     var isBuy:Bool
 }
 
-enum OrderType : Int8 {
+@objc enum OrderType : Int8 {
     case Buy
     case Sell
 }
 
-enum OrderStatus : Int8 {
+@objc enum OrderStatus : Int8 {
     case Pending
     case Completed
     case Canceled
 }
 
-struct OrderStatusInfo {
+@objc class OrderStatusInfo : NSObject {
+    
+    init(id:String,
+         status:OrderStatus,
+         date:Date,
+         currency:Currency,
+         initialAmount:Double,
+         remainingAmount:Double,
+         price:Double,
+         type:OrderType) {
+        self.id = id
+        self.status = status
+        self.date = date
+        self.currency = currency
+        self.initialAmount = initialAmount
+        self.remainingAmount = remainingAmount
+        self.price = price
+        self.type = type
+    }
+    
     var id:String
     var status:OrderStatus
     var date:Date

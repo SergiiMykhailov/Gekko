@@ -9,6 +9,7 @@ class BTCTradeUAOrderProvider : BTCTradeUAProviderBase {
 typealias OrderCompletionCallback = (String?) -> Void
 typealias CompletedOrdersCompletionCallback = ([OrderInfo], Double, Double) -> Void
 typealias PendingOrdersCompletionCallback = ([OrderInfo]) -> Void
+typealias CancelOrderCompletionCallback = () -> Void
 
     // MARK: Public methods and properties
 
@@ -74,6 +75,19 @@ typealias PendingOrdersCompletionCallback = ([OrderInfo]) -> Void
                           onCompletion:onCompletion)
     }
 
+    public func cancelOrderAsync(withID id:String,
+                                 publicKey:String,
+                                 privateKey:String,
+                                 onCompletion:@escaping CancelOrderCompletionCallback) {
+        let cancelSuffix = "remove/order/\(id)"
+        
+        super.performUserRequestAsync(withSuffix:cancelSuffix,
+                                      publicKey:publicKey,
+                                      privateKey:privateKey) { (items, _) in
+            onCompletion()
+        }
+    }
+    
     // MARK: Internal methods
 
     fileprivate func handleOrders(withSuffix suffix:String,
