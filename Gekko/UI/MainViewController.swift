@@ -495,6 +495,8 @@ class MainViewController : UIViewController,
 
     func createOrderViewDidCancelRequest(sender:CreateOrderView) {
         dismissOrderView()
+        
+        self.chartController.reloadData()
     }
 
     func createOrderView(sender:CreateOrderView,
@@ -546,6 +548,8 @@ class MainViewController : UIViewController,
                         })
                     })
                 }
+                                            
+                self.chartController.reloadData()
             })
         }
     }
