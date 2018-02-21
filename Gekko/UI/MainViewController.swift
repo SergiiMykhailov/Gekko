@@ -123,7 +123,9 @@ class MainViewController : UIViewController,
         }
 
         ordersDataFacade = CoreDataFacade(completionBlock: { [weak self] in
-            self?.scheduleOrdersStatusUpdating()
+            DispatchQueue.main.async { [weak self] in
+                self?.scheduleOrdersStatusUpdating()
+            }
         })
     }
 
@@ -135,7 +137,6 @@ class MainViewController : UIViewController,
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.OrdersPollTimeout) {
             [weak self] () in
             if (self != nil) {
-                self!.userOrdersView.reloadData()
                 self!.scheduleOrdersStatusUpdating()
             }
         }
@@ -143,7 +144,6 @@ class MainViewController : UIViewController,
 
     fileprivate func updateOrdersStatus(forCurrencyPair currencyPair:BTCTradeUACurrencyPair) {
         if let orders = ordersDataFacade?.orders(forCurrencyPair:currencyPair.rawValue as String) {
-
             for order in orders {
                 btcTradeUAOrdersStatusProvider.retrieveStatusAsync(forOrderWithID:order.id!,
                                                                    publicKey:publicKey!,
@@ -169,6 +169,7 @@ class MainViewController : UIViewController,
                         }
                         
                         self!.currencyPairToUserOrdersStatusMap[currencyPair] = ordersForCurrencyPair
+                        self!.userOrdersView.reloadData()
                     }
                 })
             }

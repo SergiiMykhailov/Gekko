@@ -107,7 +107,10 @@ class OrdersViewCell : UITableViewCell {
             addSubview(shadeOverlayView)
 
             shadeOverlayView.snp.makeConstraints({ (make) in
-                make.edges.equalToSuperview()
+                make.top.equalToSuperview()
+                make.left.equalToSuperview()
+                make.right.equalToSuperview()
+                make.bottom.equalToSuperview().offset(1)
             })
         }
         else {
