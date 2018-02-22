@@ -101,8 +101,11 @@ class OrdersView : UIView,
             headerView = OrdersViewCell(style:.default, reuseIdentifier:OrdersView.CellIdentifier)
 
             headerView!.priceLabel.text = NSLocalizedString("Price", comment:"")
+            headerView!.priceLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
             headerView!.initialAmountLabel.text = NSLocalizedString("Initial", comment:"Initial order amount text")
+            headerView!.initialAmountLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
             headerView!.remainingAmountLabel.text = NSLocalizedString("Remaining", comment:"Remaining order amount text")
+            headerView!.remainingAmountLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
         }
 
         return headerView!

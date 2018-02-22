@@ -64,7 +64,7 @@ class OrdersStackViewController : UIViewController,
 
     fileprivate func setupSubviews() {
         view.addSubview(headerSeparatorView)
-        headerSeparatorView.backgroundColor = UIDefaults.SeparatorColor
+        headerSeparatorView.backgroundColor = UIColor.white // UIDefaults.SeparatorColor
 
         view.addSubview(topVerticalSeparatorView)
         topVerticalSeparatorView.backgroundColor = UIDefaults.SeparatorColor
@@ -130,7 +130,7 @@ class OrdersStackViewController : UIViewController,
         }
 
         bottomVerticalSeparatorView.snp.makeConstraints { (make) in
-            make.top.equalTo(headerSeparatorView.snp.bottom).offset(UIDefaults.Spacing)
+            make.top.equalTo(topVerticalSeparatorView.snp.bottom)
             make.centerX.equalTo(topVerticalSeparatorView)
             make.width.equalTo(1)
             make.bottom.equalToSuperview().offset(-UIDefaults.Spacing)
