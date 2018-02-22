@@ -216,3 +216,9 @@ class ChartViewController : UIViewController {
     
     fileprivate static let CandleWidth:CGFloat = 7
 }
+
+
+
+
+
+
