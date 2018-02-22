@@ -32,6 +32,10 @@ typealias OrderStatusCallback = (OrderStatusInfo?) -> Void
         let id = items[IDKey] as? String
         
         let typeString = items[TypeKey] as? String
+        if typeString == nil {
+            return nil
+        }
+        
         var type:OrderType?
         switch typeString! {
         case "buy":
@@ -43,6 +47,10 @@ typealias OrderStatusCallback = (OrderStatusInfo?) -> Void
         }
         
         let statusString = items[StatusKey] as? String
+        if statusString == nil {
+            return nil
+        }
+        
         var status:OrderStatus?
         switch statusString! {
         case "processing":
