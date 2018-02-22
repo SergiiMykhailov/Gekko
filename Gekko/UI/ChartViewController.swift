@@ -81,14 +81,18 @@ class ChartViewController : UIViewController {
                                                                 chartFrame:chartFrame,
                                                                 xModel:xModel,
                                                                 yModel:yModel)
+        var candlesFrame = coordsSpace.chartInnerFrame
+        candlesFrame.origin.x -= ChartViewController.CandleWidth
+        candlesFrame.size.width += 2 * ChartViewController.CandleWidth
+        
         let (xAxisLayer, yAxisLayer, innerFrame) = (coordsSpace.xAxisLayer,
                                                     coordsSpace.yAxisLayer,
-                                                    coordsSpace.chartInnerFrame)
+                                                    candlesFrame)
 
         let chartPointsLineLayer = ChartCandleStickLayer<ChartPointCandleStick>(xAxis:xAxisLayer.axis,
                                                                                 yAxis:yAxisLayer.axis,
                                                                                 chartPoints:chartPoints,
-                                                                                itemWidth:7,
+                                                                                itemWidth:ChartViewController.CandleWidth,
                                                                                 strokeWidth:0.6,
                                                                                 increasingColor:UIDefaults.GreenColor,
                                                                                 decreasingColor:UIDefaults.RedColor)
@@ -190,7 +194,7 @@ class ChartViewController : UIViewController {
         var chartSettings = ChartSettings()
         chartSettings.leading = UIDefaults.SpacingSmall
         chartSettings.top = UIDefaults.Spacing
-        chartSettings.trailing = 0
+        chartSettings.trailing = UIDefaults.SpacingSmall
         chartSettings.bottom = 0
         chartSettings.labelsToAxisSpacingX = 4
         chartSettings.labelsToAxisSpacingY = 4
@@ -200,7 +204,7 @@ class ChartViewController : UIViewController {
         chartSettings.spacingBetweenAxesY = UIDefaults.SpacingSmall
         chartSettings.labelsSpacing = 0
         chartSettings.zoomPan.panEnabled = true
-        chartSettings.zoomPan.zoomEnabled = true
+        chartSettings.zoomPan.zoomEnabled = false
         return chartSettings
     }
 
@@ -209,4 +213,6 @@ class ChartViewController : UIViewController {
     fileprivate var chart:Chart?
     fileprivate var formatter = DateFormatter()
     fileprivate var chartPoints = [ChartPointCandleStick]()
+    
+    fileprivate static let CandleWidth:CGFloat = 7
 }
