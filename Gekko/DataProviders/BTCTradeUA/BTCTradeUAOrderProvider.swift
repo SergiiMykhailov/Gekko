@@ -241,7 +241,7 @@ typealias CancelOrderCompletionCallback = () -> Void
         maxValue = -Double.greatestFiniteMagnitude
 
         for dealInfo in deals {
-            if dealInfo.isBuy {
+            if dealInfo.isBuy && dealInfo.fiatCurrencyAmount > BTCTradeUAOrderProvider.MinFiatCurrencyAmount {
                 minValue = min(minValue, dealInfo.price)
                 maxValue = max(maxValue, dealInfo.price)
             }
@@ -266,4 +266,6 @@ typealias CancelOrderCompletionCallback = () -> Void
     fileprivate static let FiatCurrencyAmountKey = "currency_base"
 
     fileprivate static let OrderIdKey = "order_id"
+    
+    fileprivate static let MinFiatCurrencyAmount:Double = 20
 }
