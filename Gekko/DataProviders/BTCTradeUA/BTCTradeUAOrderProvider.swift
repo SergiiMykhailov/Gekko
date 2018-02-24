@@ -13,8 +13,8 @@ typealias CancelOrderCompletionCallback = () -> Void
 
     // MARK: Public methods and properties
 
-    func retrieveDealsAsync(forPair pair:BTCTradeUACurrencyPair,
-                            withCompletionHandler completionHandler:@escaping CompletedOrdersCompletionCallback)
+    public func retrieveDealsAsync(forPair pair:BTCTradeUACurrencyPair,
+                                   withCompletionHandler completionHandler:@escaping CompletedOrdersCompletionCallback)
     {
         let dealsSuffix = String(format:"deals/%@", pair.rawValue)
 
