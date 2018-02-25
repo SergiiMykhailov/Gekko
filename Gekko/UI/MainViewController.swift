@@ -14,9 +14,11 @@ class MainViewController : UIViewController,
                            OrdersViewDelegate,
                            OrdersViewDataSource {
 
-    // MARK: Overriden functions
-
+    // MARK: Properties
+    
     private var refreshControl:UIRefreshControl!
+    
+    // MARK: Overriden functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
