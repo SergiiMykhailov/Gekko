@@ -35,9 +35,7 @@ class MainViewController : UIViewController,
 
         updateBalanceValueLabel()
         
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshMainView(sender:)), for: .valueChanged)
-        mainScrollView?.refreshControl = refreshControl
+        setupRefreshControl()
     }
 
     override func viewDidAppear(_ animated:Bool) {
@@ -387,9 +385,18 @@ class MainViewController : UIViewController,
                      sender:self)
     }
     
-    @objc fileprivate func refreshMainView(sender: UIRefreshControl) {
-        chartController.reloadData()
-        ordersStackController.reloadData()
+    fileprivate func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshMainView(sender:)), for: .valueChanged)
+        mainScrollView?.refreshControl = refreshControl
+    }
+    
+    @objc fileprivate func refreshMainView(sender:UIRefreshControl) {
+        scheduleDealsUpdating()
+        scheduleOrdersUpdating()
+        scheduleOrdersStatusUpdating()
+        scheduleBalanceUpdating()
+        scheduleCandlesUpdating()
         
         sender.endRefreshing()
     }
