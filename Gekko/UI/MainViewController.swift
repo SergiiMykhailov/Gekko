@@ -34,6 +34,10 @@ class MainViewController : UIViewController,
         scheduleCandlesUpdating()
 
         updateBalanceValueLabel()
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshMainView(sender:)), for: .valueChanged)
+        mainScrollView?.refreshControl = refreshControl
     }
 
     override func viewDidAppear(_ animated:Bool) {
@@ -382,6 +386,14 @@ class MainViewController : UIViewController,
         performSegue(withIdentifier:MainViewController.ShowAccountSettingsSegueName,
                      sender:self)
     }
+    
+    @objc fileprivate func refreshMainView(sender: UIRefreshControl) {
+
+        chartController.reloadData()
+        ordersStackController.reloadData()
+    
+        refreshControl.endRefreshing()
+    }
 
     // MARK: CurrenciesCollectionViewControllerDataSource implementation
 
@@ -711,5 +723,7 @@ typealias LoginCompletionAction = () -> Void
 
     fileprivate static let MainTabIndex = 0
     fileprivate static let SettingsTabIndex = 1
+    
+    fileprivate var refreshControl:UIRefreshControl!
 }
 
