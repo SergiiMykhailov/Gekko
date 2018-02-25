@@ -14,12 +14,8 @@ class MainViewController : UIViewController,
                            OrdersViewDelegate,
                            OrdersViewDataSource {
 
-    // MARK: Properties
-    
-    private var refreshControl:UIRefreshControl!
-    
     // MARK: Overriden functions
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,7 +35,7 @@ class MainViewController : UIViewController,
 
         updateBalanceValueLabel()
         
-        refreshControl = UIRefreshControl()
+        let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshMainView(sender:)), for: .valueChanged)
         mainScrollView?.refreshControl = refreshControl
     }
@@ -61,7 +57,7 @@ class MainViewController : UIViewController,
     }
 
     // MARK: Internal methods and properties
-
+    
     fileprivate var isAuthorized:Bool {
         return publicKey != nil && !publicKey!.isEmpty && privateKey != nil && !privateKey!.isEmpty
     }
@@ -392,11 +388,10 @@ class MainViewController : UIViewController,
     }
     
     @objc fileprivate func refreshMainView(sender: UIRefreshControl) {
-
         chartController.reloadData()
         ordersStackController.reloadData()
-    
-        refreshControl.endRefreshing()
+        
+        sender.endRefreshing()
     }
 
     // MARK: CurrenciesCollectionViewControllerDataSource implementation
