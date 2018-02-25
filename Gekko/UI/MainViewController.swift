@@ -16,6 +16,8 @@ class MainViewController : UIViewController,
 
     // MARK: Overriden functions
 
+    private var refreshControl:UIRefreshControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -723,7 +725,5 @@ typealias LoginCompletionAction = () -> Void
 
     fileprivate static let MainTabIndex = 0
     fileprivate static let SettingsTabIndex = 1
-    
-    fileprivate var refreshControl:UIRefreshControl!
 }
 
