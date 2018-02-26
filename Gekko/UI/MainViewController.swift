@@ -26,12 +26,12 @@ class MainViewController : UIViewController,
         setupCurrenciesView()
 
         setupOrdersView()
-        scheduleOrdersUpdating()
+        scheduleOrdersUpdating{}
 
-        scheduleDealsUpdating()
+        scheduleDealsUpdating{}
 
         setupChartView()
-        scheduleCandlesUpdating()
+        scheduleCandlesUpdating{}
 
         updateBalanceValueLabel()
         
@@ -46,7 +46,7 @@ class MainViewController : UIViewController,
         publicKey = userDefaults.string(forKey:BTCTradeUAAccountSettingsViewController.PublicKeySettingsKey)
         privateKey = userDefaults.string(forKey:BTCTradeUAAccountSettingsViewController.PrivateKeySettingsKey)
 
-        scheduleBalanceUpdating()
+        scheduleBalanceUpdating{}
 
         if isAuthorized && loginCompletionAction != nil {
             loginCompletionAction!()
@@ -74,7 +74,7 @@ class MainViewController : UIViewController,
         }
     }
 
-    fileprivate func scheduleBalanceUpdating() {
+    fileprivate func scheduleBalanceUpdating(onCompletion: @escaping () -> Void) {
         if publicKey != nil && privateKey != nil {
             btcTradeUABalanceProvider.retriveBalanceAsync(withPublicKey:publicKey!,
                                                           privateKey:privateKey!,
@@ -95,7 +95,7 @@ class MainViewController : UIViewController,
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.BalancePollTimeout) {
             [weak self] () in
             if (self != nil) {
-                self!.scheduleBalanceUpdating()
+                self!.scheduleBalanceUpdating{}
             }
         }
     }
@@ -126,12 +126,12 @@ class MainViewController : UIViewController,
 
         ordersDataFacade = CoreDataFacade(completionBlock: { [weak self] in
             DispatchQueue.main.async { [weak self] in
-                self?.scheduleOrdersStatusUpdating()
+                self?.scheduleOrdersStatusUpdating{}
             }
         })
     }
 
-    fileprivate func scheduleOrdersStatusUpdating() {
+    fileprivate func scheduleOrdersStatusUpdating(onCompletion: @escaping () -> Void) {
         updateOrdersStatus(forCurrencyPair:.BtcUah)
         updateOrdersStatus(forCurrencyPair:.EthUah)
         updateOrdersStatus(forCurrencyPair:.LtcUah)
@@ -139,7 +139,7 @@ class MainViewController : UIViewController,
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.OrdersPollTimeout) {
             [weak self] () in
             if (self != nil) {
-                self!.scheduleOrdersStatusUpdating()
+                self!.scheduleOrdersStatusUpdating{}
             }
         }
     }
@@ -198,7 +198,7 @@ class MainViewController : UIViewController,
         }
     }
 
-    fileprivate func scheduleOrdersUpdating() {
+    fileprivate func scheduleOrdersUpdating(onCompletion: @escaping () -> Void) {
         handleOrdersUpdating(forPair:.BtcUah)
         handleOrdersUpdating(forPair:.EthUah)
         handleOrdersUpdating(forPair:.LtcUah)
@@ -206,7 +206,7 @@ class MainViewController : UIViewController,
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PricePollTimeout) {
             [weak self] () in
             if (self != nil) {
-                self!.scheduleOrdersUpdating()
+                self!.scheduleOrdersUpdating{}
             }
         }
     }
@@ -239,7 +239,7 @@ class MainViewController : UIViewController,
         })
     }
 
-    fileprivate func scheduleDealsUpdating() {
+    fileprivate func scheduleDealsUpdating(onCompletion: @escaping () -> Void) {
         handleDealsUpdating(forPair:.BtcUah)
         handleDealsUpdating(forPair:.EthUah)
         handleDealsUpdating(forPair:.LtcUah)
@@ -247,7 +247,7 @@ class MainViewController : UIViewController,
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PricePollTimeout) {
             [weak self] () in
             if (self != nil) {
-                self!.scheduleDealsUpdating()
+                self!.scheduleDealsUpdating{}
             }
         }
     }
@@ -349,7 +349,7 @@ class MainViewController : UIViewController,
         }
     }
 
-    fileprivate func scheduleCandlesUpdating() {
+    fileprivate func scheduleCandlesUpdating(onCompletion: @escaping () -> Void) {
         handleCandlesUpdatingFor(pair:.BtcUah)
         handleCandlesUpdatingFor(pair:.EthUah)
         handleCandlesUpdatingFor(pair:.LtcUah)
@@ -357,7 +357,7 @@ class MainViewController : UIViewController,
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.CandlesPollTimeout) {
             [weak self] () in
             if (self != nil) {
-                self!.scheduleCandlesUpdating()
+                self!.scheduleCandlesUpdating {}
             }
         }
     }
@@ -392,13 +392,22 @@ class MainViewController : UIViewController,
     }
     
     @objc fileprivate func refreshMainView(sender:UIRefreshControl) {
-        scheduleDealsUpdating()
-        scheduleOrdersUpdating()
-        scheduleOrdersStatusUpdating()
-        scheduleBalanceUpdating()
-        scheduleCandlesUpdating()
+        let requiredOperationsCount = 5
+        var completedOperationsCount = 0
         
-        sender.endRefreshing()
+        let handleOperationCompletion = {
+            completedOperationsCount += 1
+
+            if (completedOperationsCount == requiredOperationsCount) {
+                sender.endRefreshing()
+            }
+        }
+
+        scheduleDealsUpdating(onCompletion:handleOperationCompletion)
+        scheduleOrdersUpdating(onCompletion:handleOperationCompletion)
+        scheduleOrdersStatusUpdating(onCompletion:handleOperationCompletion)
+        scheduleBalanceUpdating(onCompletion:handleOperationCompletion)
+        scheduleCandlesUpdating(onCompletion:handleOperationCompletion)
     }
 
     // MARK: CurrenciesCollectionViewControllerDataSource implementation
