@@ -33,7 +33,6 @@ class ChartViewController : UIViewController {
         }
 
         setupChartView()
-        setupCopyrightLabel()
     }
 
     // MARK: Overriden methods
@@ -131,23 +130,6 @@ class ChartViewController : UIViewController {
         self.chart = chart
     }
 
-    fileprivate func setupCopyrightLabel() {
-        copyrightLabel.font = UIFont.systemFont(ofSize:6)
-        copyrightLabel.text = "by Ivan Schütz (https://github.com/i-schuetz/SwiftCharts)"
-        copyrightLabel.textColor = UIColor(white:128.0 / 255.0, alpha:1)
-        
-        if self.chart != nil {
-            self.chart!.view.addSubview(copyrightLabel)
-            
-            copyrightLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for:.horizontal)
-            
-            copyrightLabel.snp.makeConstraints { (make) in
-                make.left.equalToSuperview().offset(UIDefaults.Spacing)
-                make.top.equalToSuperview().offset(UIDefaults.Spacing)
-            }
-        }
-    }
-    
     fileprivate func candleStickFrom(candleInfo:CandleInfo) -> ChartPointCandleStick {
         return ChartPointCandleStick(date:candleInfo.date,
                                      formatter:self.formatter,
@@ -231,8 +213,6 @@ class ChartViewController : UIViewController {
     fileprivate var chart:Chart?
     fileprivate var formatter = DateFormatter()
     fileprivate var chartPoints = [ChartPointCandleStick]()
-    
-    fileprivate let copyrightLabel = UILabel()
     
     fileprivate static let CandleWidth:CGFloat = 7
 }
