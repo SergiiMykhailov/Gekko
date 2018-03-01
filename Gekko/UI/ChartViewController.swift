@@ -50,16 +50,17 @@ class ChartViewController : UIViewController {
     fileprivate func setupChartView() {
         let labelSettings = ChartLabelSettings(font:UIFont.systemFont(ofSize:8))
 
-        let minMaxValues = minMaxTradingValues()
+        let minMaxValues = minMaxChartYAxisValues()
 
         if minMaxValues.minValue == nil {
             // No data available. Just return.
             return
         }
 
+        let step = (minMaxValues.maxValue! - minMaxValues.minValue!) / 5
         let yValues = stride(from:minMaxValues.minValue!,
                              through:minMaxValues.maxValue!,
-                             by:minMaxValues.maxValue! / 10).map {ChartAxisValueDouble(Double($0),
+                             by:step).map {ChartAxisValueDouble(Double($0),
                                                                  labelSettings:labelSettings)}
 
         let xGeneratorDate = ChartAxisValuesGeneratorDate(unit:.day, preferredDividers:7, minSpace:1, maxTextSize:8)
@@ -139,7 +140,7 @@ class ChartViewController : UIViewController {
                                      close:candleInfo.close)
     }
 
-    fileprivate func minMaxTradingValues() -> (minValue:Double?, maxValue:Double?) {
+    fileprivate func minMaxChartYAxisValues() -> (minValue:Double?, maxValue:Double?) {
         if dataSource == nil {
             return (nil, nil)
         }
@@ -158,7 +159,7 @@ class ChartViewController : UIViewController {
         }
 
         let closestValuePair = closestValue(forValue:minValue, greaterThan:false)
-        minValue = closestValuePair.value
+        minValue = closestValuePair.value - closestValuePair.comparableValue
 
         maxValue += closestValuePair.comparableValue
         maxValue = round(maxValue / closestValuePair.comparableValue) * closestValuePair.comparableValue
