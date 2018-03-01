@@ -26,12 +26,12 @@ class MainViewController : UIViewController,
         setupCurrenciesView()
 
         setupOrdersView()
-        scheduleOrdersUpdating{}
+        scheduleOrdersUpdating()
 
-        scheduleDealsUpdating{}
+        scheduleDealsUpdating()
 
         setupChartView()
-        scheduleCandlesUpdating{}
+        scheduleCandlesUpdating()
 
         updateBalanceValueLabel()
         
@@ -83,6 +83,7 @@ class MainViewController : UIViewController,
                     if (self != nil) {
                         self!.balance = balanceItems
                         self!.currenciesController.collectionView!.reloadData()
+                        onCompletion()
 
                         if (self!.orderView?.superview == nil) {
                             self!.updateBalanceValueLabel()
@@ -126,26 +127,54 @@ class MainViewController : UIViewController,
 
         ordersDataFacade = CoreDataFacade(completionBlock: { [weak self] in
             DispatchQueue.main.async { [weak self] in
-                self?.scheduleOrdersStatusUpdating{}
+                self?.scheduleOrdersStatusUpdating()
             }
         })
     }
 
-    fileprivate func scheduleOrdersStatusUpdating(onCompletion: @escaping () -> Void) {
-        updateOrdersStatus(forCurrencyPair:.BtcUah)
-        updateOrdersStatus(forCurrencyPair:.EthUah)
-        updateOrdersStatus(forCurrencyPair:.LtcUah)
+    fileprivate func scheduleOrdersStatusUpdating() {
+        handleOrdersStatusUpdating(onCompletion: {})
 
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.OrdersPollTimeout) {
             [weak self] () in
             if (self != nil) {
-                self!.scheduleOrdersStatusUpdating{}
+                self!.scheduleOrdersStatusUpdating()
             }
         }
     }
 
-    fileprivate func updateOrdersStatus(forCurrencyPair currencyPair:BTCTradeUACurrencyPair) {
+    fileprivate func handleOrdersStatusUpdating(onCompletion:@escaping () -> Void) {
+        let RequiredOperationsCount = 3
+        var operationsCount = 0
+        let completionHandler = {
+            operationsCount += 1
+        
+            if operationsCount == RequiredOperationsCount {
+                onCompletion()
+            }
+        }
+        
+        updateOrdersStatus(forCurrencyPair:.BtcUah, onCompletion:completionHandler)
+        updateOrdersStatus(forCurrencyPair:.EthUah, onCompletion:completionHandler)
+        updateOrdersStatus(forCurrencyPair:.LtcUah, onCompletion:completionHandler)
+    }
+    
+    fileprivate func updateOrdersStatus(forCurrencyPair currencyPair:BTCTradeUACurrencyPair,
+                                        onCompletion:@escaping () -> Void) {
         if let orders = ordersDataFacade?.orders(forCurrencyPair:currencyPair.rawValue as String) {
+            let RequiredOrdersCount = orders.count
+            var ordersCount = 0
+            if RequiredOrdersCount == 0 {
+                onCompletion()
+            }
+            let completionHandler = {
+                ordersCount += 1
+                print("OrdersCount = \(ordersCount) and RequiredOrdersCount = \(RequiredOrdersCount)")
+                if ordersCount == RequiredOrdersCount {
+                    onCompletion()
+                }
+            }
+            
             for order in orders {
                 btcTradeUAOrdersStatusProvider.retrieveStatusAsync(forOrderWithID:order.id!,
                                                                    publicKey:publicKey!,
@@ -173,6 +202,7 @@ class MainViewController : UIViewController,
                         self!.currencyPairToUserOrdersStatusMap[currencyPair] = ordersForCurrencyPair
                         self!.userOrdersView.reloadData()
                     }
+                completionHandler()
                 })
             }
         }
@@ -198,27 +228,43 @@ class MainViewController : UIViewController,
         }
     }
 
-    fileprivate func scheduleOrdersUpdating(onCompletion: @escaping () -> Void) {
-        handleOrdersUpdating(forPair:.BtcUah)
-        handleOrdersUpdating(forPair:.EthUah)
-        handleOrdersUpdating(forPair:.LtcUah)
-
+    fileprivate func scheduleOrdersUpdating() {
+        handleOrdersUpdating(onCompletion: {})
+        
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PricePollTimeout) {
             [weak self] () in
             if (self != nil) {
-                self!.scheduleOrdersUpdating{}
+                self!.scheduleOrdersUpdating()
             }
         }
     }
 
-    fileprivate func handleOrdersUpdating(forPair pair:BTCTradeUACurrencyPair) {
+    fileprivate func handleOrdersUpdating(onCompletion:@escaping () -> Void) {
+        let RequiredOperationsCount = 6
+        var operationsCount = 0
+        let completionHandler:() -> Void = {
+            operationsCount += 1
+        
+            if operationsCount == RequiredOperationsCount {
+                onCompletion()
+            }
+        }
+        
+        handleOrdersUpdating(forPair:.BtcUah, onCompletion:completionHandler)
+        handleOrdersUpdating(forPair:.EthUah, onCompletion:completionHandler)
+        handleOrdersUpdating(forPair:.LtcUah, onCompletion:completionHandler)
+    }
+    
+    fileprivate func handleOrdersUpdating(forPair pair:BTCTradeUACurrencyPair,
+                                          onCompletion:@escaping () -> Void) {
         btcTradeUAOrderProvider.retrieveBuyOrdersAsync(forPair:pair,
                                                        withCompletionHandler: { (orders) in
                                                         DispatchQueue.main.async {
             [weak self] () in
                 if (self != nil) {
                     self!.currencyPairToBuyOrdersMap[pair] = orders
-
+                    onCompletion()
+                    
                     if pair == self!.currentPair {
                         UIUtils.blink(aboveView:self!.ordersStackController.view)
                         self!.ordersStackController.reloadData()
@@ -234,25 +280,42 @@ class MainViewController : UIViewController,
                 if (self != nil) {
                     self!.currencyPairToSellOrdersMap[pair] = orders
                     self!.ordersStackController.reloadData()
+                    onCompletion()
                 }
             }
         })
     }
 
-    fileprivate func scheduleDealsUpdating(onCompletion: @escaping () -> Void) {
-        handleDealsUpdating(forPair:.BtcUah)
-        handleDealsUpdating(forPair:.EthUah)
-        handleDealsUpdating(forPair:.LtcUah)
+    
+    fileprivate func scheduleDealsUpdating() {
+        handleDealsUpdating(onCompletion:{})
 
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PricePollTimeout) {
             [weak self] () in
             if (self != nil) {
-                self!.scheduleDealsUpdating{}
+                self!.scheduleDealsUpdating()
             }
         }
     }
 
-    fileprivate func handleDealsUpdating(forPair pair:BTCTradeUACurrencyPair) {
+    fileprivate func handleDealsUpdating(onCompletion:@escaping () -> Void) {
+        let RequiredOperationsCount = 3
+        var operationsCount = 0
+        let completionHandler = {
+            operationsCount += 1
+            
+            if operationsCount == RequiredOperationsCount {
+                onCompletion()
+            }
+        }
+        
+        handleDealsUpdating(forPair:.BtcUah, onCompletion:completionHandler)
+        handleDealsUpdating(forPair:.EthUah, onCompletion:completionHandler)
+        handleDealsUpdating(forPair:.LtcUah, onCompletion:completionHandler)
+    }
+    
+    fileprivate func handleDealsUpdating(forPair pair:BTCTradeUACurrencyPair,
+                                         onCompletion:@escaping () -> Void) {
         btcTradeUAOrderProvider.retrieveDealsAsync(forPair:pair,
                                                    withCompletionHandler: { (deals,
                                                     minPrice,
@@ -262,11 +325,13 @@ class MainViewController : UIViewController,
                     let currencyPairInfo = CurrencyPairInfo(minPrice:minPrice, maxPrice:maxPrice)
                     self!.currencyPairToCompletedOrdersMap[pair] = currencyPairInfo
                     self!.currenciesController.collectionView!.reloadData()
+                    
+                    onCompletion()
                 }
             }
         })
     }
-
+    
     fileprivate func balanceFor(currency:Currency) -> Double? {
         for balanceItem in balance {
             if balanceItem.currency == currency {
@@ -349,25 +414,41 @@ class MainViewController : UIViewController,
         }
     }
 
-    fileprivate func scheduleCandlesUpdating(onCompletion: @escaping () -> Void) {
-        handleCandlesUpdatingFor(pair:.BtcUah)
-        handleCandlesUpdatingFor(pair:.EthUah)
-        handleCandlesUpdatingFor(pair:.LtcUah)
+    fileprivate func scheduleCandlesUpdating() {
+        handleCandlesUpdating(onCompletion: {})
 
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.CandlesPollTimeout) {
             [weak self] () in
             if (self != nil) {
-                self!.scheduleCandlesUpdating {}
+                self!.scheduleCandlesUpdating()
             }
         }
     }
+    
+    fileprivate func handleCandlesUpdating(onCompletion:@escaping () -> Void) {
+        let RequiredOperationsCount = 3
+        var operationsCount = 0
+        let completionHandler = {
+            operationsCount += 1
+            
+            if operationsCount == RequiredOperationsCount {
+                onCompletion()
+            }
+        }
+        
+        handleCandlesUpdatingFor(pair:.BtcUah, onCompletion:completionHandler)
+        handleCandlesUpdatingFor(pair:.EthUah, onCompletion:completionHandler)
+        handleCandlesUpdatingFor(pair:.LtcUah, onCompletion:completionHandler)
+    }
 
-    fileprivate func handleCandlesUpdatingFor(pair:BTCTradeUACurrencyPair) {
+    fileprivate func handleCandlesUpdatingFor(pair:BTCTradeUACurrencyPair,
+                                              onCompletion:@escaping () -> Void) {
         btcTradeUACandlesProvider.retrieveCandlesAsync(forPair:pair) { (candles) in
             DispatchQueue.main.async { [weak self] () in
                 if self != nil {
                     self!.currencyPairToCandlesMap[pair] = candles
                     self!.chartController.reloadData()
+                    onCompletion()
                 }
             }
         }
@@ -397,17 +478,25 @@ class MainViewController : UIViewController,
         
         let handleOperationCompletion = {
             completedOperationsCount += 1
+            print(completedOperationsCount)
 
             if (completedOperationsCount == requiredOperationsCount) {
                 sender.endRefreshing()
             }
         }
 
-        scheduleDealsUpdating(onCompletion:handleOperationCompletion)
-        scheduleOrdersUpdating(onCompletion:handleOperationCompletion)
-        scheduleOrdersStatusUpdating(onCompletion:handleOperationCompletion)
+        handleDealsUpdating(onCompletion:handleOperationCompletion)
+        handleOrdersUpdating(onCompletion:handleOperationCompletion)
+        handleOrdersStatusUpdating(onCompletion:handleOperationCompletion)
         scheduleBalanceUpdating(onCompletion:handleOperationCompletion)
-        scheduleCandlesUpdating(onCompletion:handleOperationCompletion)
+        handleCandlesUpdating(onCompletion:handleOperationCompletion)
+        
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PullDownRefreshingTimeout) {
+            [weak self] () in
+            if (self != nil) {
+                sender.endRefreshing()
+            }
+        }
     }
 
     // MARK: CurrenciesCollectionViewControllerDataSource implementation
@@ -729,6 +818,7 @@ typealias LoginCompletionAction = () -> Void
     fileprivate static let PricePollTimeout:TimeInterval = 10
     fileprivate static let CandlesPollTimeout:TimeInterval = 30
     fileprivate static let OrdersPollTimeout:TimeInterval = 10
+    fileprivate static let PullDownRefreshingTimeout:TimeInterval = 3
 
     fileprivate static let CurrencyToCurrencyPairMap = [Currency.BTC : BTCTradeUACurrencyPair.BtcUah,
                                                         Currency.ETH : BTCTradeUACurrencyPair.EthUah,
