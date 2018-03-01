@@ -478,8 +478,7 @@ class MainViewController : UIViewController,
         
         let handleOperationCompletion = {
             completedOperationsCount += 1
-            print(completedOperationsCount)
-
+        
             if (completedOperationsCount == requiredOperationsCount) {
                 sender.endRefreshing()
             }
