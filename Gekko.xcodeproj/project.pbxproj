@@ -44,42 +44,6 @@
 		02D7D3021FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D3011FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift */; };
 		02D7D3041FE1E519007C4557 /* QRCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D3031FE1E519007C4557 /* QRCodePickerViewController.swift */; };
 		33D4941C4439586FB3638DB1 /* Pods_Gekko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D9D9BC13EE40979D25FB1 /* Pods_Gekko.framework */; };
-		CA6C08252047160F004A6D42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CD751FC1A6ED0074EADF /* AppDelegate.swift */; };
-		CA6C08262047160F004A6D42 /* BalanceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F51FDB406D007C4557 /* BalanceItem.swift */; };
-		CA6C08272047160F004A6D42 /* CurrenciesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDD51FD2E9570074EADF /* CurrenciesCollectionViewController.swift */; };
-		CA6C08282047160F004A6D42 /* RestApiRequestsExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CD9F1FC234F70074EADF /* RestApiRequestsExecutor.swift */; };
-		CA6C08292047160F004A6D42 /* BTCTradeUAPostRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDC01FC632DF0074EADF /* BTCTradeUAPostRequestFactory.swift */; };
-		CA6C082A2047160F004A6D42 /* BTCTradeUAOrderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2FF1FDF2544007C4557 /* BTCTradeUAOrderProvider.swift */; };
-		CA6C082B2047160F004A6D42 /* OrdersStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB1B1FE85DA6000EEAE0 /* OrdersStackViewController.swift */; };
-		CA6C082C2047160F004A6D42 /* BTCTradeUAAccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D3011FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift */; };
-		CA6C082D2047160F004A6D42 /* BTCTradeUABalanceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDC11FC632DF0074EADF /* BTCTradeUABalanceProvider.swift */; };
-		CA6C082E2047160F004A6D42 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F31FDB4014007C4557 /* Currency.swift */; };
-		CA6C082F2047160F004A6D42 /* CurrencyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDD71FD2F2140074EADF /* CurrencyCollectionViewCell.swift */; };
-		CA6C08302047160F004A6D42 /* UIDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2FD1FDDEA4B007C4557 /* UIDefaults.swift */; };
-		CA6C08312047160F004A6D42 /* OrderTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F71FDB409D007C4557 /* OrderTypes.swift */; };
-		CA6C08322047160F004A6D42 /* BTCTradeUAProviderBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDBF1FC632DF0074EADF /* BTCTradeUAProviderBase.swift */; };
-		CA6C08332047160F004A6D42 /* BTCTradeUALoginSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDC41FC632E00074EADF /* BTCTradeUALoginSession.swift */; };
-		CA6C08342047160F004A6D42 /* Gekko.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0207CD7C1FC1A6ED0074EADF /* Gekko.xcdatamodeld */; };
-		CA6C08352047160F004A6D42 /* BTCTradeUAOrdersStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B89200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift */; };
-		CA6C08362047160F004A6D42 /* QRCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D3031FE1E519007C4557 /* QRCodePickerViewController.swift */; };
-		CA6C08372047160F004A6D42 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2FB1FDDDECA007C4557 /* CreateOrderView.swift */; };
-		CA6C08382047160F004A6D42 /* CandleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F11FDB3FC2007C4557 /* CandleInfo.swift */; };
-		CA6C08392047160F004A6D42 /* BTCTradeUACandlesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F91FDB415D007C4557 /* BTCTradeUACandlesProvider.swift */; };
-		CA6C083A2047160F004A6D42 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3DB31FD747E300D778D2 /* ChartViewController.swift */; };
-		CA6C083B2047160F004A6D42 /* TableViewInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */; };
-		CA6C083C2047160F004A6D42 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B802008122900CA82D7 /* OrdersView.swift */; };
-		CA6C083D2047160F004A6D42 /* OrdersStackViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */; };
-		CA6C083E2047160F004A6D42 /* BTCTradeUACurrencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDC21FC632E00074EADF /* BTCTradeUACurrencies.swift */; };
-		CA6C083F2047160F004A6D42 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */; };
-		CA6C08402047160F004A6D42 /* OrdersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */; };
-		CA6C08412047160F004A6D42 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDD31FD2E91F0074EADF /* MainViewController.swift */; };
-		CA6C08422047160F004A6D42 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0248532E1FFBD91000290BA1 /* UIUtils.swift */; };
-		CA6C08442047160F004A6D42 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 022E3DB21FD3048B00D778D2 /* SnapKit.framework */; };
-		CA6C08452047160F004A6D42 /* Pods_Gekko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D9D9BC13EE40979D25FB1 /* Pods_Gekko.framework */; };
-		CA6C08472047160F004A6D42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0207CD811FC1A6ED0074EADF /* LaunchScreen.storyboard */; };
-		CA6C08482047160F004A6D42 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0207CDB41FC62F3F0074EADF /* Localizable.strings */; };
-		CA6C08492047160F004A6D42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207CD7F1FC1A6ED0074EADF /* Assets.xcassets */; };
-		CA6C084A2047160F004A6D42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0207CD791FC1A6ED0074EADF /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,8 +102,6 @@
 		02D7D3011FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUAAccountSettingsViewController.swift; sourceTree = "<group>"; };
 		02D7D3031FE1E519007C4557 /* QRCodePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodePickerViewController.swift; sourceTree = "<group>"; };
 		386B48C09CA90EE9F7708A7E /* Pods-Gekko.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gekko.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gekko/Pods-Gekko.release.xcconfig"; sourceTree = "<group>"; };
-		CA6C08502047160F004A6D42 /* Gekko Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gekko Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA6C085120471610004A6D42 /* Gekko copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Gekko copy-Info.plist"; path = "/Users/aleksandrsaliyenko/Documents/Projects/Gekko copy-Info.plist"; sourceTree = "<absolute>"; };
 		CB8B640BD9403F92144F88E2 /* Pods-Gekko.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gekko.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Gekko/Pods-Gekko.debug.xcconfig"; sourceTree = "<group>"; };
 		FF1D9D9BC13EE40979D25FB1 /* Pods_Gekko.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gekko.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -161,15 +123,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CA6C08432047160F004A6D42 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CA6C08442047160F004A6D42 /* SnapKit.framework in Frameworks */,
-				CA6C08452047160F004A6D42 /* Pods_Gekko.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -181,7 +134,6 @@
 				0207CD731FC1A6ED0074EADF /* Products */,
 				0F495D7E79147CC1B9C11505 /* Pods */,
 				4E4DDEF2BD78FE8A8C6BEF12 /* Frameworks */,
-				CA6C085120471610004A6D42 /* Gekko copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -190,7 +142,6 @@
 			children = (
 				0207CD721FC1A6ED0074EADF /* Gekko.app */,
 				0207CD891FC1A6EE0074EADF /* GekkoTests.xctest */,
-				CA6C08502047160F004A6D42 /* Gekko Dev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -362,26 +313,6 @@
 			productReference = 0207CD891FC1A6EE0074EADF /* GekkoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		CA6C08222047160F004A6D42 /* Gekko Dev */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CA6C084D2047160F004A6D42 /* Build configuration list for PBXNativeTarget "Gekko Dev" */;
-			buildPhases = (
-				CA6C08232047160F004A6D42 /* [CP] Check Pods Manifest.lock */,
-				CA6C08242047160F004A6D42 /* Sources */,
-				CA6C08432047160F004A6D42 /* Frameworks */,
-				CA6C08462047160F004A6D42 /* Resources */,
-				CA6C084B2047160F004A6D42 /* [CP] Embed Pods Frameworks */,
-				CA6C084C2047160F004A6D42 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Gekko Dev";
-			productName = Gekko;
-			productReference = CA6C08502047160F004A6D42 /* Gekko Dev.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -401,9 +332,6 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 0207CD711FC1A6ED0074EADF;
 					};
-					CA6C08222047160F004A6D42 = {
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
 			buildConfigurationList = 0207CD6D1FC1A6ED0074EADF /* Build configuration list for PBXProject "Gekko" */;
@@ -421,7 +349,6 @@
 			targets = (
 				0207CD711FC1A6ED0074EADF /* Gekko */,
 				0207CD881FC1A6EE0074EADF /* GekkoTests */,
-				CA6C08222047160F004A6D42 /* Gekko Dev */,
 			);
 		};
 /* End PBXProject section */
@@ -442,17 +369,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CA6C08462047160F004A6D42 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CA6C08472047160F004A6D42 /* LaunchScreen.storyboard in Resources */,
-				CA6C08482047160F004A6D42 /* Localizable.strings in Resources */,
-				CA6C08492047160F004A6D42 /* Assets.xcassets in Resources */,
-				CA6C084A2047160F004A6D42 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,59 +428,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gekko/Pods-Gekko-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CA6C08232047160F004A6D42 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Gekko-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CA6C084B2047160F004A6D42 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Gekko/Pods-Gekko-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftCharts/SwiftCharts.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftCharts.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gekko/Pods-Gekko-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CA6C084C2047160F004A6D42 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Gekko/Pods-Gekko-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -610,43 +473,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0207CD8E1FC1A6EE0074EADF /* GekkoTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CA6C08242047160F004A6D42 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CA6C08252047160F004A6D42 /* AppDelegate.swift in Sources */,
-				CA6C08262047160F004A6D42 /* BalanceItem.swift in Sources */,
-				CA6C08272047160F004A6D42 /* CurrenciesCollectionViewController.swift in Sources */,
-				CA6C08282047160F004A6D42 /* RestApiRequestsExecutor.swift in Sources */,
-				CA6C08292047160F004A6D42 /* BTCTradeUAPostRequestFactory.swift in Sources */,
-				CA6C082A2047160F004A6D42 /* BTCTradeUAOrderProvider.swift in Sources */,
-				CA6C082B2047160F004A6D42 /* OrdersStackViewController.swift in Sources */,
-				CA6C082C2047160F004A6D42 /* BTCTradeUAAccountSettingsViewController.swift in Sources */,
-				CA6C082D2047160F004A6D42 /* BTCTradeUABalanceProvider.swift in Sources */,
-				CA6C082E2047160F004A6D42 /* Currency.swift in Sources */,
-				CA6C082F2047160F004A6D42 /* CurrencyCollectionViewCell.swift in Sources */,
-				CA6C08302047160F004A6D42 /* UIDefaults.swift in Sources */,
-				CA6C08312047160F004A6D42 /* OrderTypes.swift in Sources */,
-				CA6C08322047160F004A6D42 /* BTCTradeUAProviderBase.swift in Sources */,
-				CA6C08332047160F004A6D42 /* BTCTradeUALoginSession.swift in Sources */,
-				CA6C08342047160F004A6D42 /* Gekko.xcdatamodeld in Sources */,
-				CA6C08352047160F004A6D42 /* BTCTradeUAOrdersStatusProvider.swift in Sources */,
-				CA6C08362047160F004A6D42 /* QRCodePickerViewController.swift in Sources */,
-				CA6C08372047160F004A6D42 /* CreateOrderView.swift in Sources */,
-				CA6C08382047160F004A6D42 /* CandleInfo.swift in Sources */,
-				CA6C08392047160F004A6D42 /* BTCTradeUACandlesProvider.swift in Sources */,
-				CA6C083A2047160F004A6D42 /* ChartViewController.swift in Sources */,
-				CA6C083B2047160F004A6D42 /* TableViewInputCell.swift in Sources */,
-				CA6C083C2047160F004A6D42 /* OrdersView.swift in Sources */,
-				CA6C083D2047160F004A6D42 /* OrdersStackViewTableCell.swift in Sources */,
-				CA6C083E2047160F004A6D42 /* BTCTradeUACurrencies.swift in Sources */,
-				CA6C083F2047160F004A6D42 /* CoreDataFacade.swift in Sources */,
-				CA6C08402047160F004A6D42 /* OrdersViewCell.swift in Sources */,
-				CA6C08412047160F004A6D42 /* MainViewController.swift in Sources */,
-				CA6C08422047160F004A6D42 /* UIUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -808,7 +634,7 @@
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BNMD8A6247;
+				DEVELOPMENT_TEAM = WUVR239J8X;
 				INFOPLIST_FILE = "$(SRCROOT)/Gekko/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ua.com.btc-trade";
@@ -829,7 +655,7 @@
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BNMD8A6247;
+				DEVELOPMENT_TEAM = WUVR239J8X;
 				INFOPLIST_FILE = "$(SRCROOT)/Gekko/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ua.com.btc-trade";
@@ -876,48 +702,6 @@
 			};
 			name = Release;
 		};
-		CA6C084E2047160F004A6D42 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB8B640BD9403F92144F88E2 /* Pods-Gekko.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BNMD8A6247;
-				INFOPLIST_FILE = "Gekko copy-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.ua.com.btc-trade";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Gekko/Gekko-Bridging-Header.h";
-				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
-		CA6C084F2047160F004A6D42 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 386B48C09CA90EE9F7708A7E /* Pods-Gekko.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BNMD8A6247;
-				INFOPLIST_FILE = "Gekko copy-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.ua.com.btc-trade";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Gekko/Gekko-Bridging-Header.h";
-				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -944,15 +728,6 @@
 			buildConfigurations = (
 				0207CD961FC1A6EE0074EADF /* Debug */,
 				0207CD971FC1A6EE0074EADF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CA6C084D2047160F004A6D42 /* Build configuration list for PBXNativeTarget "Gekko Dev" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CA6C084E2047160F004A6D42 /* Debug */,
-				CA6C084F2047160F004A6D42 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
