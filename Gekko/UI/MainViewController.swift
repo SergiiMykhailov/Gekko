@@ -83,12 +83,13 @@ class MainViewController : UIViewController,
                     if (self != nil) {
                         self!.balance = balanceItems
                         self!.currenciesController.collectionView!.reloadData()
-                        onCompletion()
-
+                        
                         if (self!.orderView?.superview == nil) {
                             self!.updateBalanceValueLabel()
                         }
                     }
+                    
+                    onCompletion()
                 }
             })
         }
@@ -146,6 +147,7 @@ class MainViewController : UIViewController,
     fileprivate func handleOrdersStatusUpdating(onCompletion:@escaping () -> Void) {
         let RequiredOperationsCount = 3
         var operationsCount = 0
+        
         let completionHandler = {
             operationsCount += 1
         
@@ -162,15 +164,16 @@ class MainViewController : UIViewController,
     fileprivate func updateOrdersStatus(forCurrencyPair currencyPair:BTCTradeUACurrencyPair,
                                         onCompletion:@escaping () -> Void) {
         if let orders = ordersDataFacade?.orders(forCurrencyPair:currencyPair.rawValue as String) {
-            let RequiredOrdersCount = orders.count
+            let requiredOrdersCount = orders.count
             var ordersCount = 0
-            if RequiredOrdersCount == 0 {
+            
+            if requiredOrdersCount == 0 {
                 onCompletion()
             }
+            
             let completionHandler = {
                 ordersCount += 1
-                print("OrdersCount = \(ordersCount) and RequiredOrdersCount = \(RequiredOrdersCount)")
-                if ordersCount == RequiredOrdersCount {
+                if ordersCount == requiredOrdersCount {
                     onCompletion()
                 }
             }
@@ -201,8 +204,9 @@ class MainViewController : UIViewController,
                         
                         self!.currencyPairToUserOrdersStatusMap[currencyPair] = ordersForCurrencyPair
                         self!.userOrdersView.reloadData()
+                        
+                        completionHandler()
                     }
-                completionHandler()
                 })
             }
         }
@@ -240,8 +244,9 @@ class MainViewController : UIViewController,
     }
 
     fileprivate func handleOrdersUpdating(onCompletion:@escaping () -> Void) {
-        let RequiredOperationsCount = 6
+        let RequiredOperationsCount = 3
         var operationsCount = 0
+        
         let completionHandler:() -> Void = {
             operationsCount += 1
         
@@ -257,19 +262,31 @@ class MainViewController : UIViewController,
     
     fileprivate func handleOrdersUpdating(forPair pair:BTCTradeUACurrencyPair,
                                           onCompletion:@escaping () -> Void) {
+        let RequiredOperationsCount = 2
+        var operationsCount = 0
+        
+        let completionHandler:() -> Void = {
+            operationsCount += 1
+            
+            if operationsCount == RequiredOperationsCount {
+                onCompletion()
+            }
+        }
+        
         btcTradeUAOrderProvider.retrieveBuyOrdersAsync(forPair:pair,
                                                        withCompletionHandler: { (orders) in
                                                         DispatchQueue.main.async {
             [weak self] () in
                 if (self != nil) {
                     self!.currencyPairToBuyOrdersMap[pair] = orders
-                    onCompletion()
                     
                     if pair == self!.currentPair {
                         UIUtils.blink(aboveView:self!.ordersStackController.view)
                         self!.ordersStackController.reloadData()
                     }
                 }
+                                                            
+                completionHandler()
             }
         })
 
@@ -280,8 +297,9 @@ class MainViewController : UIViewController,
                 if (self != nil) {
                     self!.currencyPairToSellOrdersMap[pair] = orders
                     self!.ordersStackController.reloadData()
-                    onCompletion()
                 }
+                                                                
+                completionHandler()
             }
         })
     }
@@ -301,6 +319,7 @@ class MainViewController : UIViewController,
     fileprivate func handleDealsUpdating(onCompletion:@escaping () -> Void) {
         let RequiredOperationsCount = 3
         var operationsCount = 0
+        
         let completionHandler = {
             operationsCount += 1
             
@@ -325,9 +344,9 @@ class MainViewController : UIViewController,
                     let currencyPairInfo = CurrencyPairInfo(minPrice:minPrice, maxPrice:maxPrice)
                     self!.currencyPairToCompletedOrdersMap[pair] = currencyPairInfo
                     self!.currenciesController.collectionView!.reloadData()
-                    
-                    onCompletion()
                 }
+                
+                onCompletion()
             }
         })
     }
@@ -428,6 +447,7 @@ class MainViewController : UIViewController,
     fileprivate func handleCandlesUpdating(onCompletion:@escaping () -> Void) {
         let RequiredOperationsCount = 3
         var operationsCount = 0
+        
         let completionHandler = {
             operationsCount += 1
             
@@ -448,8 +468,9 @@ class MainViewController : UIViewController,
                 if self != nil {
                     self!.currencyPairToCandlesMap[pair] = candles
                     self!.chartController.reloadData()
-                    onCompletion()
                 }
+                
+                onCompletion()
             }
         }
     }
@@ -492,8 +513,8 @@ class MainViewController : UIViewController,
         
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PullDownRefreshingTimeout) {
             [weak self] () in
-            if (self != nil) {
-                sender.endRefreshing()
+            if (self != nil) && sender.isRefreshing {
+                    sender.endRefreshing()
             }
         }
     }
@@ -817,7 +838,7 @@ typealias LoginCompletionAction = () -> Void
     fileprivate static let PricePollTimeout:TimeInterval = 10
     fileprivate static let CandlesPollTimeout:TimeInterval = 30
     fileprivate static let OrdersPollTimeout:TimeInterval = 10
-    fileprivate static let PullDownRefreshingTimeout:TimeInterval = 3
+    fileprivate static let PullDownRefreshingTimeout:TimeInterval = 5
 
     fileprivate static let CurrencyToCurrencyPairMap = [Currency.BTC : BTCTradeUACurrencyPair.BtcUah,
                                                         Currency.ETH : BTCTradeUACurrencyPair.EthUah,
