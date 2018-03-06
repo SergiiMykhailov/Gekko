@@ -145,20 +145,9 @@ class MainViewController : UIViewController,
     }
 
     fileprivate func handleOrdersStatusUpdating(onCompletion:@escaping () -> Void) {
-        let RequiredOperationsCount = 3
-        var operationsCount = 0
-        
-        let completionHandler = {
-            operationsCount += 1
-        
-            if operationsCount == RequiredOperationsCount {
-                onCompletion()
-            }
-        }
-        
-        updateOrdersStatus(forCurrencyPair:.BtcUah, onCompletion:completionHandler)
-        updateOrdersStatus(forCurrencyPair:.EthUah, onCompletion:completionHandler)
-        updateOrdersStatus(forCurrencyPair:.LtcUah, onCompletion:completionHandler)
+        handlePropertyUpdating(withBlock: { (currencyPair, completionHandler) in
+            updateOrdersStatus(forCurrencyPair:currencyPair, onCompletion:completionHandler)
+        }, onCompletion:onCompletion)
     }
     
     fileprivate func updateOrdersStatus(forCurrencyPair currencyPair:BTCTradeUACurrencyPair,
@@ -244,20 +233,9 @@ class MainViewController : UIViewController,
     }
 
     fileprivate func handleOrdersUpdating(onCompletion:@escaping () -> Void) {
-        let RequiredOperationsCount = 3
-        var operationsCount = 0
-        
-        let completionHandler:() -> Void = {
-            operationsCount += 1
-        
-            if operationsCount == RequiredOperationsCount {
-                onCompletion()
-            }
-        }
-        
-        handleOrdersUpdating(forPair:.BtcUah, onCompletion:completionHandler)
-        handleOrdersUpdating(forPair:.EthUah, onCompletion:completionHandler)
-        handleOrdersUpdating(forPair:.LtcUah, onCompletion:completionHandler)
+        handlePropertyUpdating(withBlock: { (currencyPair, completionHandler) in
+            handleOrdersUpdating(forPair:currencyPair, onCompletion:completionHandler)
+        }, onCompletion:onCompletion)
     }
     
     fileprivate func handleOrdersUpdating(forPair pair:BTCTradeUACurrencyPair,
@@ -317,20 +295,9 @@ class MainViewController : UIViewController,
     }
 
     fileprivate func handleDealsUpdating(onCompletion:@escaping () -> Void) {
-        let RequiredOperationsCount = 3
-        var operationsCount = 0
-        
-        let completionHandler = {
-            operationsCount += 1
-            
-            if operationsCount == RequiredOperationsCount {
-                onCompletion()
-            }
-        }
-        
-        handleDealsUpdating(forPair:.BtcUah, onCompletion:completionHandler)
-        handleDealsUpdating(forPair:.EthUah, onCompletion:completionHandler)
-        handleDealsUpdating(forPair:.LtcUah, onCompletion:completionHandler)
+        handlePropertyUpdating(withBlock: { (currencyPair, completionHandler) in
+            handleDealsUpdating(forPair:currencyPair, onCompletion:completionHandler)
+        }, onCompletion:onCompletion)
     }
     
     fileprivate func handleDealsUpdating(forPair pair:BTCTradeUACurrencyPair,
@@ -445,20 +412,28 @@ class MainViewController : UIViewController,
     }
     
     fileprivate func handleCandlesUpdating(onCompletion:@escaping () -> Void) {
-        let RequiredOperationsCount = 3
+        handlePropertyUpdating(withBlock: { (currencyPair, completionHandler) in
+            handleCandlesUpdatingFor(pair:currencyPair, onCompletion:completionHandler)
+        }, onCompletion:onCompletion)
+    }
+
+typealias CompletionHandler = () -> Void
+
+    fileprivate func handlePropertyUpdating(withBlock block:(BTCTradeUACurrencyPair, @escaping CompletionHandler) -> Void,
+                                            onCompletion:@escaping () -> Void) {
         var operationsCount = 0
-        
+
         let completionHandler = {
             operationsCount += 1
-            
-            if operationsCount == RequiredOperationsCount {
+
+            if operationsCount == MainViewController.SupportedCurrencyPairs.count {
                 onCompletion()
             }
         }
-        
-        handleCandlesUpdatingFor(pair:.BtcUah, onCompletion:completionHandler)
-        handleCandlesUpdatingFor(pair:.EthUah, onCompletion:completionHandler)
-        handleCandlesUpdatingFor(pair:.LtcUah, onCompletion:completionHandler)
+
+        for currencyPair in MainViewController.SupportedCurrencyPairs {
+            block(currencyPair, completionHandler)
+        }
     }
 
     fileprivate func handleCandlesUpdatingFor(pair:BTCTradeUACurrencyPair,
@@ -868,9 +843,30 @@ typealias LoginCompletionAction = () -> Void
     fileprivate static let OrdersPollTimeout:TimeInterval = 10
     fileprivate static let PullDownRefreshingTimeout:TimeInterval = 5
 
+    fileprivate static let SupportedCurrencyPairs = [BTCTradeUACurrencyPair.BtcUah,
+                                                     BTCTradeUACurrencyPair.EthUah,
+                                                     BTCTradeUACurrencyPair.LtcUah,
+                                                     BTCTradeUACurrencyPair.XmrUah,
+                                                     BTCTradeUACurrencyPair.DogeUah,
+                                                     BTCTradeUACurrencyPair.DashUah,
+                                                     BTCTradeUACurrencyPair.SibUah,
+                                                     BTCTradeUACurrencyPair.KrbUah,
+                                                     BTCTradeUACurrencyPair.ZecUah,
+                                                     BTCTradeUACurrencyPair.BchUah,
+                                                     BTCTradeUACurrencyPair.EtcUah,
+                                                     BTCTradeUACurrencyPair.NvcUah]
     fileprivate static let CurrencyToCurrencyPairMap = [Currency.BTC : BTCTradeUACurrencyPair.BtcUah,
                                                         Currency.ETH : BTCTradeUACurrencyPair.EthUah,
-                                                        Currency.LTC : BTCTradeUACurrencyPair.LtcUah]
+                                                        Currency.LTC : BTCTradeUACurrencyPair.LtcUah,
+                                                        Currency.XMR : BTCTradeUACurrencyPair.XmrUah,
+                                                        Currency.DOGE : BTCTradeUACurrencyPair.DogeUah,
+                                                        Currency.DASH : BTCTradeUACurrencyPair.DashUah,
+                                                        Currency.SIB : BTCTradeUACurrencyPair.SibUah,
+                                                        Currency.KRB : BTCTradeUACurrencyPair.KrbUah,
+                                                        Currency.ZEC : BTCTradeUACurrencyPair.ZecUah,
+                                                        Currency.BCH : BTCTradeUACurrencyPair.BchUah,
+                                                        Currency.ETC : BTCTradeUACurrencyPair.EtcUah,
+                                                        Currency.NVC : BTCTradeUACurrencyPair.NvcUah]
 
     fileprivate static let ShowAccountSettingsSegueName = "Show Account Settings"
 

@@ -10,6 +10,15 @@ import Foundation
     case BTC
     case ETH
     case LTC
+    case XMR
+    case DOGE
+    case DASH
+    case SIB
+    case KRB
+    case ZEC
+    case BCH
+    case ETC
+    case NVC
 
     typealias RawValue = NSString
 
@@ -23,6 +32,24 @@ import Foundation
             return "ETH"
         case .LTC:
             return "LTC"
+        case .XMR:
+            return "XMR"
+        case .DOGE:
+            return "DOGE"
+        case .DASH:
+            return "DASH"
+        case .SIB:
+            return "SIB"
+        case .KRB:
+            return "KRB"
+        case .ZEC:
+            return "ZEC"
+        case .BCH:
+            return "BCH"
+        case .ETC:
+            return "ETC"
+        case .NVC:
+            return "NVC"
         }
     }
 
@@ -36,6 +63,24 @@ import Foundation
             self = .ETH
         case "LTC":
             self = .LTC
+        case "XMR":
+            self = .XMR
+        case "DOGE":
+            self = .DOGE
+        case "DASH":
+            self = .DASH
+        case "SIB":
+            self = .SIB
+        case "KRB":
+            self = .KRB
+        case "ZEC":
+            self = .ZEC
+        case "BCH":
+            self = .BCH
+        case "ETC":
+            self = .ETC
+        case "NVC":
+            self = .NVC
         default:
             self = .UAH
         }

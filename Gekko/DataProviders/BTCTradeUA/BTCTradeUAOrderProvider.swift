@@ -152,6 +152,24 @@ typealias CancelOrderCompletionCallback = () -> Void
             currencyPair = .EthUah
         case .LTC:
             currencyPair = .LtcUah
+        case .XMR:
+            currencyPair = .XmrUah
+        case .DOGE:
+            currencyPair = .DogeUah
+        case .DASH:
+            currencyPair = .DashUah
+        case .SIB:
+            currencyPair = .SibUah
+        case .KRB:
+            currencyPair = .KrbUah
+        case .ZEC:
+            currencyPair = .ZecUah
+        case .BCH:
+            currencyPair = .BchUah
+        case .ETC:
+            currencyPair = .EtcUah
+        case .NVC:
+            currencyPair = .NvcUah
         case .UAH:
             currencyPair = nil
         }

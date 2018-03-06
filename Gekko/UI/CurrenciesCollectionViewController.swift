@@ -161,5 +161,14 @@ class CurrenciesCollectionViewController : UICollectionViewController {
 
     fileprivate static let ItemIndexToCurrencyMap = [0 : Currency.BTC,
                                                      1 : Currency.ETH,
-                                                     2 : Currency.LTC]
+                                                     2 : Currency.LTC,
+                                                     3 : Currency.XMR,
+                                                     4 : Currency.DOGE,
+                                                     5 : Currency.DASH,
+                                                     6 : Currency.SIB,
+                                                     7 : Currency.KRB,
+                                                     8 : Currency.ZEC,
+                                                     9 : Currency.BCH,
+                                                     10 : Currency.ETC,
+                                                     11 : Currency.NVC]
 }
