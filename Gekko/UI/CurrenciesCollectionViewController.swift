@@ -126,10 +126,15 @@ class CurrenciesCollectionViewController : UICollectionViewController {
         let currencyCell = cell as? CurrencyCollectionViewCell
         if currencyCell != nil {
             let currency = currencyForCell(currencyCell!)
+
+            let boundsInCollectionView = cell?.convert(cell!.bounds, to:collectionView)
+
+            if !collectionView.bounds.contains(boundsInCollectionView!) {
+                collectionView.scrollToItem(at:indexPath, at:.right, animated:true)
+            }
+
             delegate?.currenciesViewController?(sender:self, didSelectCurrency:currency)
         }
-
-        collectionView.scrollToItem(at:indexPath, at:.right, animated:true)
     }
 
     // MARK: CurrencyCollectionViewCellDelegate implementation
