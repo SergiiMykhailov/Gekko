@@ -648,6 +648,22 @@ class MainViewController : UIViewController,
             self.animateOrderSubmitting(withOrderView:sender,
                                         forMode:mode,
                                         completion: {
+
+                let addPendingOrder = { (id:String) in
+                    let orderStatus = OrderStatusInfo(id:id,
+                                                      status:OrderStatus.Pending,
+                                                      date:Date(),
+                                                      currency:orderCurrency!,
+                                                      initialAmount:amount,
+                                                      remainingAmount:amount,
+                                                      price:price,
+                                                      type:mode == .Buy ? OrderType.Buy : OrderType.Sell)
+                    var ordersForCurrencyPair = self.currencyPairToUserOrdersStatusMap[pair]
+                    ordersForCurrencyPair!.append(orderStatus)
+                    self.currencyPairToUserOrdersStatusMap[pair] = ordersForCurrencyPair
+                    self.userOrdersView.reloadData()
+                }
+
                 if mode == .Buy {
                     self.btcTradeUAOrderProvider.performBuyOrderAsync(forCurrency:orderCurrency!,
                                                                       amount:amount,
@@ -664,6 +680,12 @@ class MainViewController : UIViewController,
                             order.initialAmount = amount
                             order.price = price
                         })
+
+                        if orderId != nil {
+                            addPendingOrder(orderId!)
+                        }
+
+                        self?.handleOrdersStatusUpdating {}
                     })
                 }
                 else {
@@ -682,6 +704,12 @@ class MainViewController : UIViewController,
                             order.initialAmount = amount
                             order.price = price
                         })
+
+                        if orderId != nil {
+                            addPendingOrder(orderId!)
+                        }
+
+                        self?.handleOrdersStatusUpdating {}
                     })
                 }
                                             
