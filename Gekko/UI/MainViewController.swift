@@ -80,7 +80,7 @@ class MainViewController : UIViewController,
                                                           privateKey:privateKey!,
                                                           onCompletion: { (balanceItems) in
                 DispatchQueue.main.async { [weak self] () in
-                    if (self != nil) {
+                    if (self != nil) && (!balanceItems.isEmpty) {
                         self!.balance = balanceItems
                         self!.currenciesController.collectionView!.reloadData()
                         
