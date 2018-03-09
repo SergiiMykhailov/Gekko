@@ -28,6 +28,8 @@ class OrdersView : UIView,
     public weak var dataSource:OrdersViewDataSource?
     public weak var delegate:OrdersViewDelegate?
 
+    public private(set) var isEditing = false
+
     public override init(frame:CGRect) {
         super.init(frame:frame)
 
@@ -145,6 +147,14 @@ class OrdersView : UIView,
         }
         
         return [UITableViewRowAction]()
+    }
+
+    internal func tableView(_ tableView:UITableView, willBeginEditingRowAt indexPath:IndexPath) {
+        isEditing = true
+    }
+
+    internal func tableView(_ tableView:UITableView, didEndEditingRowAt indexPath:IndexPath?) {
+        isEditing = false
     }
 
     // MARK: Internal fields
