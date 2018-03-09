@@ -101,7 +101,7 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
             priceLabel.text = NSLocalizedString(CurrencyCollectionViewCell.BalanceDefaultString,
                                                 comment:"Unavailable balance placeholder")
         }
-        else if comparePricesToDoubleMinMax(firstValue: minPrice!, secondValue: maxPrice!) {
+        else if isAnyValueInfinite(firstValue: minPrice!, secondValue: maxPrice!) {
             priceLabel.text = NSLocalizedString(CurrencyCollectionViewCell.BalanceDefaultString,
                                                 comment:"Unavailable balance placeholder")
         }
@@ -149,7 +149,7 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
                                               comment:"Unavailable balance placeholder")
     }
     
-    fileprivate func comparePricesToDoubleMinMax(firstValue:Double, secondValue:Double) -> Bool {
+    fileprivate func isAnyValueInfinite(firstValue:Double, secondValue:Double) -> Bool {
         let minValue = min(firstValue, secondValue)
         let maxValue = max(firstValue, secondValue)
         
