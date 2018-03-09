@@ -192,7 +192,10 @@ class MainViewController : UIViewController,
                         }
                         
                         self!.currencyPairToUserOrdersStatusMap[currencyPair] = ordersForCurrencyPair
-                        self!.userOrdersView.reloadData()
+
+                        if !self!.userOrdersView.isEditing {
+                            self!.userOrdersView.reloadData()
+                        }
                         
                         completionHandler()
                     }
