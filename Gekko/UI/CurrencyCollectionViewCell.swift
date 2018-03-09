@@ -101,6 +101,10 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
             priceLabel.text = NSLocalizedString(CurrencyCollectionViewCell.BalanceDefaultString,
                                                 comment:"Unavailable balance placeholder")
         }
+        else if comparePricesToDoubleMinMax(firstValue: minPrice!, secondValue: maxPrice!) {
+            priceLabel.text = NSLocalizedString(CurrencyCollectionViewCell.BalanceDefaultString,
+                                                comment:"Unavailable balance placeholder")
+        }
         else {
             let adjustedMinPrice = min(minPrice!, maxPrice!)
             let adjustedMaxPrice = max(minPrice!, maxPrice!)
@@ -143,6 +147,17 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
         balanceLabel.font = UIFont.systemFont(ofSize: UIDefaults.LabelSmallFontSize)
         balanceLabel.text = NSLocalizedString(CurrencyCollectionViewCell.BalanceDefaultString,
                                               comment:"Unavailable balance placeholder")
+    }
+    
+    fileprivate func comparePricesToDoubleMinMax(firstValue:Double, secondValue:Double) -> Bool {
+        let minValue = min(firstValue, secondValue)
+        let maxValue = max(firstValue, secondValue)
+        
+        if minValue == -Double.greatestFiniteMagnitude || maxValue == Double.greatestFiniteMagnitude {
+            return true
+        }
+        
+        return false
     }
 
     // MARK: Internal fields
