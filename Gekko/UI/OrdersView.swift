@@ -60,6 +60,9 @@ class OrdersView : UIView,
             }
         }
 
+        pendingOrders.sort { return $0.date > $1.date }
+        completedOrders.sort {return $0.date > $1.date }
+
         ordersTable.reloadData()
     }
 
@@ -100,11 +103,13 @@ class OrdersView : UIView,
         if headerView == nil {
             headerView = OrdersViewCell(style:.default, reuseIdentifier:OrdersView.CellIdentifier)
 
+            headerView!.dateLabel.text = NSLocalizedString("Date", comment:"Order publishing date label title")
+            headerView!.dateLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
+            headerView!.volumeLabel.text = NSLocalizedString("Volume", comment:"Order volume label title")
+            headerView!.volumeLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
             headerView!.priceLabel.text = NSLocalizedString("Price", comment:"")
             headerView!.priceLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
-            headerView!.initialAmountLabel.text = NSLocalizedString("Initial", comment:"Initial order amount text")
-            headerView!.initialAmountLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
-            headerView!.remainingAmountLabel.text = NSLocalizedString("Remaining", comment:"Remaining order amount text")
+            headerView!.remainingAmountLabel.text = NSLocalizedString("Remainder", comment:"Remaining order amount text")
             headerView!.remainingAmountLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
         }
 
