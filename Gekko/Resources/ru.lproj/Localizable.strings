@@ -70,7 +70,10 @@
 "Initial" = "Начальный";
 
 /* Remaining order amount text */
-"Remaining" = "Текущий";
+"Remainder" = "Остаток";
 
 /* Cancel order action title */
 "Cancel" = "Отменить";
+
+/* Order volume label title */
+"Volume" = "Объем";

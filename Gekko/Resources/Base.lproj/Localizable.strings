@@ -70,7 +70,10 @@
 "Initial" = "Initial";
 
 /* Remaining order amount text */
-"Remaining" = "Remaining";
+"Remainder" = "Remainder";
 
 /* Cancel order action title */
 "Cancel" = "Cancel";
+
+/* Order volume label title */
+"Volume" = "Volume";

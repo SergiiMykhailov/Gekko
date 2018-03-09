@@ -40,7 +40,7 @@ class ChartViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        formatter.dateFormat = "MMM dd"
+        ChartViewController.formatter.dateFormat = "MMM dd"
 
         reloadData()
     }
@@ -65,7 +65,7 @@ class ChartViewController : UIViewController {
 
         let xGeneratorDate = ChartAxisValuesGeneratorDate(unit:.day, preferredDividers:7, minSpace:1, maxTextSize:8)
         let xLabelGeneratorDate = ChartAxisLabelsGeneratorDate(labelSettings:labelSettings,
-                                                               formatter:formatter)
+                                                               formatter:ChartViewController.formatter)
         let firstDate = chartPoints[0].date
         let lastDate = chartPoints.last!.date
         let xModel = ChartAxisModel(firstModelValue:firstDate.timeIntervalSince1970,
@@ -133,7 +133,7 @@ class ChartViewController : UIViewController {
 
     fileprivate func candleStickFrom(candleInfo:CandleInfo) -> ChartPointCandleStick {
         return ChartPointCandleStick(date:candleInfo.date,
-                                     formatter:self.formatter,
+                                     formatter:ChartViewController.formatter,
                                      high:candleInfo.high,
                                      low:candleInfo.low,
                                      open:candleInfo.open,
@@ -212,7 +212,7 @@ class ChartViewController : UIViewController {
     // MARK: Internal fields
 
     fileprivate var chart:Chart?
-    fileprivate var formatter = DateFormatter()
+    fileprivate static let formatter = DateFormatter()
     fileprivate var chartPoints = [ChartPointCandleStick]()
     
     fileprivate static let CandleWidth:CGFloat = 7

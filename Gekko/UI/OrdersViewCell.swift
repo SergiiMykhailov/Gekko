@@ -15,8 +15,9 @@ class OrdersViewCell : UITableViewCell {
     }
 
     public let typeLabel = UILabel()
+    public let dateLabel = UILabel()
+    public let volumeLabel = UILabel()
     public let priceLabel = UILabel()
-    public let initialAmountLabel = UILabel()
     public let remainingAmountLabel = UILabel()
 
     public var shadeOverlayView = UIView()
@@ -30,13 +31,17 @@ class OrdersViewCell : UITableViewCell {
         typeLabel.textColor = UIDefaults.LabelDefaultFontColor
         typeLabel.textAlignment = .center
 
+        dateLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
+        dateLabel.textColor = UIDefaults.LabelDefaultFontColor
+        dateLabel.textAlignment = .center
+
+        volumeLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
+        volumeLabel.textColor = UIDefaults.LabelDefaultFontColor
+        volumeLabel.textAlignment = .center
+
         priceLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
         priceLabel.textColor = UIDefaults.LabelDefaultFontColor
         priceLabel.textAlignment = .center
-
-        initialAmountLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
-        initialAmountLabel.textColor = UIDefaults.LabelDefaultFontColor
-        initialAmountLabel.textAlignment = .center
 
         remainingAmountLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
         remainingAmountLabel.textColor = UIDefaults.LabelDefaultFontColor
@@ -44,9 +49,10 @@ class OrdersViewCell : UITableViewCell {
 
         shadeOverlayView.backgroundColor = UIColor(white:1, alpha:0.5)
 
+        addSubview(volumeLabel)
+        addSubview(dateLabel)
         addSubview(typeLabel)
         addSubview(priceLabel)
-        addSubview(initialAmountLabel)
         addSubview(remainingAmountLabel)
     }
 
@@ -63,20 +69,26 @@ class OrdersViewCell : UITableViewCell {
             make.centerY.equalToSuperview()
         }
 
-        priceLabel.snp.makeConstraints { (make) in
+        dateLabel.snp.makeConstraints { (make) in
             make.left.equalTo(typeLabel.snp.right)
-            make.width.equalToSuperview().multipliedBy(0.3)
+            make.width.equalToSuperview().multipliedBy(0.2)
             make.centerY.equalToSuperview()
         }
 
-        initialAmountLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(priceLabel.snp.right)
-            make.width.equalToSuperview().multipliedBy(0.3)
+        volumeLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(dateLabel.snp.right)
+            make.width.equalToSuperview().multipliedBy(0.2)
+            make.centerY.equalToSuperview()
+        }
+
+        priceLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(volumeLabel.snp.right)
+            make.width.equalToSuperview().multipliedBy(0.2)
             make.centerY.equalToSuperview()
         }
 
         remainingAmountLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(initialAmountLabel.snp.right)
+            make.left.equalTo(priceLabel.snp.right)
             make.right.equalToSuperview()
             make.centerY.equalToSuperview()
         }
@@ -99,9 +111,12 @@ class OrdersViewCell : UITableViewCell {
             typeLabel.text = "↑"
         }
 
+        OrdersViewCell.formatter.dateFormat = "dd.MM.yy"
+        dateLabel.text = OrdersViewCell.formatter.string(from:orderStatus!.date)
+        let fiatAmount = orderStatus!.initialAmount * orderStatus!.price
+        volumeLabel.text = String(format:"%.02f", fiatAmount)
         priceLabel.text = String(format:"%.02f", orderStatus!.price)
-        initialAmountLabel.text = String(format:"%.06f", orderStatus!.initialAmount)
-        remainingAmountLabel.text = String(format:"%.06f", orderStatus!.remainingAmount)
+        remainingAmountLabel.text = String(format:"%.04f / %.04f", orderStatus!.remainingAmount, orderStatus!.initialAmount)
 
         if orderStatus!.status == .Completed {
             addSubview(shadeOverlayView)
@@ -117,4 +132,8 @@ class OrdersViewCell : UITableViewCell {
             shadeOverlayView.removeFromSuperview()
         }
     }
+
+    // MARK: Internal fields
+
+    fileprivate static let formatter = DateFormatter()
 }
