@@ -77,3 +77,13 @@
 
 /* Order volume label title */
 "Volume" = "Volume";
+
+/* Authorization failed alert title */
+"Authorization failed" = "Authorization failed";
+
+/* Authorization failed alert message */
+"Invalid public/private key" = "Invalid public/private key";
+
+/* Close alert */
+"Close" = "Close";
+

@@ -77,3 +77,12 @@
 
 /* Order volume label title */
 "Volume" = "Объем";
+
+/* Authorization failed alert */
+"Authorization failed" = "Ошибка авторизации";
+
+/* Authorization failed alert message */
+"Invalid public/private key" = "Неправильный публичный/приватный ключ";
+
+/* Close alert */
+"Close" = "Закрыть";
