@@ -26,28 +26,31 @@ class OrdersStackViewTableCell : UITableViewCell {
     // MARK: Overriden methods
 
     override func layoutSubviews() {
+        super.layoutSubviews()
+
         setup(label:fiatPriceLabel)
+        fiatPriceLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelVerySmallFontSize)
         setup(label:cryptocurrencyAmountLabel)
         setup(label:fiatAmountLabel)
 
         fiatPriceLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(UIDefaults.SpacingSmall)
+            make.left.equalToSuperview().offset(UIDefaults.Spacing)
             make.centerY.equalToSuperview()
-            make.height.equalTo(UIDefaults.LabelSmallFontSize)
-            make.width.equalToSuperview().multipliedBy(0.33)
+            make.height.equalTo(UIDefaults.LabelDefaultFontSize)
+            make.width.equalToSuperview().multipliedBy(0.5)
         }
 
         cryptocurrencyAmountLabel.snp.makeConstraints { (make) in
             make.left.equalTo(fiatPriceLabel.snp.right).offset(UIDefaults.SpacingSmall)
-            make.centerY.equalTo(fiatPriceLabel.snp.centerY)
-            make.height.equalTo(UIDefaults.LabelSmallFontSize)
-            make.width.equalToSuperview().multipliedBy(0.33)
+            make.centerY.equalToSuperview().dividedBy(2)
+            make.height.equalTo(UIDefaults.LabelDefaultFontSize)
+            make.right.equalToSuperview()
         }
 
         fiatAmountLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(cryptocurrencyAmountLabel.snp.right).offset(UIDefaults.SpacingSmall)
-            make.centerY.equalTo(cryptocurrencyAmountLabel.snp.centerY)
-            make.height.equalTo(UIDefaults.LabelSmallFontSize)
+            make.left.equalTo(fiatPriceLabel.snp.right).offset(UIDefaults.SpacingSmall)
+            make.centerY.equalToSuperview().offset(UIDefaults.LineHeight / 4)
+            make.height.equalTo(UIDefaults.LabelDefaultFontSize)
             make.right.equalToSuperview()
         }
     }

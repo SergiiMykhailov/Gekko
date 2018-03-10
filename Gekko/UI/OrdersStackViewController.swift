@@ -90,9 +90,10 @@ class OrdersStackViewController : UIViewController,
     }
 
     fileprivate func setup(table:UITableView) {
-        table.rowHeight = UIDefaults.LineHeight / 2
+        table.rowHeight = UIDefaults.LineHeight
         table.dataSource = self
-        table.separatorStyle = .none
+        table.separatorStyle = .singleLine
+        table.separatorInset = UIEdgeInsets(top:0, left:UIDefaults.Spacing, bottom:0, right:0)
         table.allowsSelection = false
         table.register(OrdersStackViewTableCell.classForCoder(),
                        forCellReuseIdentifier:OrdersStackViewController.CellIdentifier)
@@ -102,21 +103,19 @@ class OrdersStackViewController : UIViewController,
         super.updateViewConstraints()
 
         buyHeaderLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(UIDefaults.Spacing)
             make.left.equalToSuperview()
             make.right.equalTo(topVerticalSeparatorView.snp.left)
-            make.height.equalTo(UIDefaults.LabelDefaultFontSize)
+            make.centerY.equalTo(UIDefaults.LineHeight / 2)
         }
 
         sellHeaderLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(UIDefaults.Spacing)
+            make.centerY.equalTo(buyHeaderLabel)
             make.left.equalTo(topVerticalSeparatorView.snp.right)
             make.right.equalToSuperview()
-            make.height.equalTo(UIDefaults.LabelDefaultFontSize)
         }
 
         headerSeparatorView.snp.makeConstraints { (make) in
-            make.top.equalTo(sellHeaderLabel.snp.bottom).offset(UIDefaults.Spacing)
+            make.top.equalToSuperview().offset(UIDefaults.LineHeight)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.height.equalTo(1)
@@ -138,15 +137,15 @@ class OrdersStackViewController : UIViewController,
 
         buyOrdersTableView.snp.makeConstraints { (make) in
             make.top.equalTo(headerSeparatorView.snp.bottom)
-            make.left.equalToSuperview().offset(UIDefaults.Spacing)
-            make.right.equalTo(topVerticalSeparatorView.snp.left).offset(-UIDefaults.SpacingSmall)
+            make.left.equalToSuperview()
+            make.right.equalTo(topVerticalSeparatorView.snp.left)
             make.bottom.equalToSuperview()
         }
 
         sellOrdersTableView.snp.makeConstraints { (make) in
             make.top.equalTo(headerSeparatorView.snp.bottom)
-            make.left.equalTo(topVerticalSeparatorView.snp.right).offset(UIDefaults.SpacingSmall)
-            make.right.equalToSuperview().offset(-UIDefaults.Spacing)
+            make.left.equalTo(topVerticalSeparatorView.snp.right)
+            make.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }

@@ -119,7 +119,7 @@ class OrdersView : UIView,
     }
 
     internal func tableView(_ tableView:UITableView, heightForHeaderInSection section:Int) -> CGFloat {
-        return UIDefaults.LineHeight / 2
+        return UIDefaults.LineHeight
     }
     
     // MARK: UITableViewDelegate implementation
