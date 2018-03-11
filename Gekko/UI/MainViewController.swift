@@ -36,6 +36,8 @@ class MainViewController : UIViewController,
         updateBalanceValueLabel()
         
         setupRefreshControl()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action:#selector(settingsButtonPressed))
     }
 
     override func viewDidAppear(_ animated:Bool) {
@@ -794,6 +796,10 @@ typealias CompletionHandler = () -> Void
                                        forCurrency:self!.currenciesController.selectedCurrency!)
             }
         }
+    }
+    
+    @objc fileprivate func settingsButtonPressed(button:UIButton) {
+        performSegue(withIdentifier:MainViewController.ShowAccountSettingsSegueName, sender:self)
     }
 
     // MARK: Outlets
