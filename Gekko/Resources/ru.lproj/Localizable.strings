@@ -86,3 +86,6 @@
 
 /* Close alert */
 "Close" = "Закрыть";
+
+/* Back button navigation bar */
+"Back" = "Назад";

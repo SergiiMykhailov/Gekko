@@ -33,6 +33,8 @@ public static let PrivateKeySettingsKey = "Private Key"
                                                                  style:.done,
                                                                  target:self,
                                                                  action:#selector(applyButtonPressed))
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Back", comment:"Back navigation button"), style: .plain, target: self, action: #selector(backButtonPressed))
     }
 
     override func prepare(for segue:UIStoryboardSegue, sender:Any?) {
@@ -100,6 +102,14 @@ public static let PrivateKeySettingsKey = "Private Key"
                     }
                 }
             })
+        }
+    }
+    
+    @objc func backButtonPressed() {
+        DispatchQueue.main.async { [weak self] () in
+            if  (self != nil) {
+                self!.navigationController?.popViewController(animated:true)
+            }
         }
     }
 
