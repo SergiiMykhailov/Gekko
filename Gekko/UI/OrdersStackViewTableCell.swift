@@ -29,7 +29,7 @@ class OrdersStackViewTableCell : UITableViewCell {
         super.layoutSubviews()
 
         setup(label:fiatPriceLabel)
-        fiatPriceLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelVerySmallFontSize)
+        fiatPriceLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
         setup(label:cryptocurrencyAmountLabel)
         setup(label:fiatAmountLabel)
 
