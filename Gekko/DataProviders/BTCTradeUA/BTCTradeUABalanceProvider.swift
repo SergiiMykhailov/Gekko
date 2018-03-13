@@ -31,21 +31,56 @@ typealias BalanceCompletionCallback = ([BalanceItem]) -> Void
         let accounts = items[BTCTradeUABalanceProvider.AccountsKey]
         if accounts != nil {
             if let accountsDictionary = accounts as? [[String : Any]] {
-                let uahBalance = balanceItem(fromJSONItems:accountsDictionary, forCurrency:.UAH)
-                appendBalanceItem(item:uahBalance, toCollection:&result)
-
-                let btcBalance = balanceItem(fromJSONItems:accountsDictionary, forCurrency:.BTC)
-                appendBalanceItem(item:btcBalance, toCollection:&result)
-
-                let ethBalance = balanceItem(fromJSONItems:accountsDictionary, forCurrency:.ETH)
-                appendBalanceItem(item:ethBalance, toCollection:&result)
-
-                let ltcBalance = balanceItem(fromJSONItems:accountsDictionary, forCurrency:.LTC)
-                appendBalanceItem(item:ltcBalance, toCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.UAH,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.BTC,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.ETH,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.LTC,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.XMR,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.DOGE,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.DASH,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.SIB,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.KRB,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.ZEC,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.BCH,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.ETC,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.NVC,
+                                     andStoreInCollection:&result)
             }
         }
 
         return result;
+    }
+
+    fileprivate func retrieveBalanceValue(fromJSONItems items:[[String : Any]],
+                                          forCurrency currency:Currency,
+                                          andStoreInCollection sink:inout [BalanceItem]) {
+        let balance = balanceItem(fromJSONItems:items, forCurrency:currency)
+        appendBalanceItem(item:balance, toCollection: &sink)
     }
 
     fileprivate func balanceItem(fromJSONItems items:[[String : Any]],

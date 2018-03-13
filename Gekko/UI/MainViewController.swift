@@ -168,6 +168,10 @@ class MainViewController : UIViewController,
             }
             
             for order in orders {
+                if order.id == nil || publicKey == nil || privateKey == nil {
+                    continue
+                }
+
                 btcTradeUAOrdersStatusProvider.retrieveStatusAsync(forOrderWithID:order.id!,
                                                                    publicKey:publicKey!,
                                                                    privateKey:privateKey!,
@@ -177,21 +181,7 @@ class MainViewController : UIViewController,
                             return
                         }
 
-                        if (self!.currencyPairToUserOrdersStatusMap[currencyPair] == nil) {
-                            self!.currencyPairToUserOrdersStatusMap[currencyPair] = [OrderStatusInfo]()
-                        }
-
-                        var ordersForCurrencyPair = self!.currencyPairToUserOrdersStatusMap[currencyPair]
-                        if let existingOrderIndex = ordersForCurrencyPair?.index(where: { (currentOrder) -> Bool in
-                            return currentOrder.id == order.id!
-                        }) {
-                            ordersForCurrencyPair![existingOrderIndex] = status!
-                        }
-                        else {
-                            ordersForCurrencyPair!.append(status!)
-                        }
-                        
-                        self!.currencyPairToUserOrdersStatusMap[currencyPair] = ordersForCurrencyPair
+                        self!.set(orderStatusInfo:status, forCurrencyPair:currencyPair)
 
                         if !self!.userOrdersView.isEditing {
                             self!.userOrdersView.reloadData()
@@ -202,6 +192,29 @@ class MainViewController : UIViewController,
                 })
             }
         }
+    }
+
+    fileprivate func set(orderStatusInfo statusInfo:OrderStatusInfo?,
+                         forCurrencyPair currencyPair:BTCTradeUACurrencyPair) {
+        if statusInfo == nil {
+            return
+        }
+
+        if (self.currencyPairToUserOrdersStatusMap[currencyPair] == nil) {
+            self.currencyPairToUserOrdersStatusMap[currencyPair] = [OrderStatusInfo]()
+        }
+
+        var ordersForCurrencyPair = self.currencyPairToUserOrdersStatusMap[currencyPair]
+        if let existingOrderIndex = ordersForCurrencyPair?.index(where: { (currentOrder) -> Bool in
+            return currentOrder.id == statusInfo!.id
+        }) {
+            ordersForCurrencyPair![existingOrderIndex] = statusInfo!
+        }
+        else {
+            ordersForCurrencyPair!.append(statusInfo!)
+        }
+
+        self.currencyPairToUserOrdersStatusMap[currencyPair] = ordersForCurrencyPair
     }
 
     @objc func ordersPlaceholderTapped(gestureRecognizer:UITapGestureRecognizer) {
@@ -636,9 +649,7 @@ typealias CompletionHandler = () -> Void
                                                       remainingAmount:amount,
                                                       price:price,
                                                       type:mode == .Buy ? OrderType.Buy : OrderType.Sell)
-                    var ordersForCurrencyPair = self.currencyPairToUserOrdersStatusMap[pair]
-                    ordersForCurrencyPair!.append(orderStatus)
-                    self.currencyPairToUserOrdersStatusMap[pair] = ordersForCurrencyPair
+                    self.set(orderStatusInfo:orderStatus, forCurrencyPair:pair)
                     self.userOrdersView.reloadData()
                 }
 
@@ -650,6 +661,10 @@ typealias CompletionHandler = () -> Void
                                                                       privateKey:self.privateKey!,
                                                                       onCompletion:
                     { [weak self] (orderId) in
+                        if orderId == nil {
+                            return
+                        }
+
                         self?.ordersDataFacade!.makeOrder(withInitializationBlock: { (order) in
                             order.id = orderId
                             order.isBuy = true
@@ -659,9 +674,7 @@ typealias CompletionHandler = () -> Void
                             order.price = price
                         })
 
-                        if orderId != nil {
-                            addPendingOrder(orderId!)
-                        }
+                        addPendingOrder(orderId!)
 
                         self?.handleOrdersStatusUpdating {}
                     })
@@ -674,6 +687,10 @@ typealias CompletionHandler = () -> Void
                                                                        privateKey:self.privateKey!,
                                                                        onCompletion:
                     { [weak self] (orderId) in
+                        if orderId == nil {
+                            return
+                        }
+
                         self?.ordersDataFacade!.makeOrder(withInitializationBlock: { (order) in
                             order.id = orderId
                             order.isBuy = false
@@ -683,9 +700,7 @@ typealias CompletionHandler = () -> Void
                             order.price = price
                         })
 
-                        if orderId != nil {
-                            addPendingOrder(orderId!)
-                        }
+                        addPendingOrder(orderId!)
 
                         self?.handleOrdersStatusUpdating {}
                     })

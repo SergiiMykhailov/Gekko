@@ -208,5 +208,5 @@ class OrdersStackViewController : UIViewController,
     public var sellOrders:[OrderInfo] = [OrderInfo]()
 
     fileprivate static let CellIdentifier = "Order Cell"
-    fileprivate static let OrdersDeviation = 0.05
+    fileprivate static let OrdersDeviation = 0.1
 }
