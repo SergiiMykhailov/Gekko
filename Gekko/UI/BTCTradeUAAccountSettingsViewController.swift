@@ -33,6 +33,8 @@ public static let PrivateKeySettingsKey = "Private Key"
                                                                  style:.done,
                                                                  target:self,
                                                                  action:#selector(applyButtonPressed))
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Back", comment:"Back navigation button"), style: .plain, target: self, action: #selector(backButtonPressed))
     }
 
     override func prepare(for segue:UIStoryboardSegue, sender:Any?) {
@@ -71,15 +73,40 @@ public static let PrivateKeySettingsKey = "Private Key"
         let privateKey = privateKeyField?.text
 
         if publicKey != nil && privateKey != nil {
-            let userDefaults = UserDefaults.standard
-
-            userDefaults.set(publicKey!,
-                             forKey:BTCTradeUAAccountSettingsViewController.PublicKeySettingsKey)
-            userDefaults.set(privateKey,
-                             forKey:BTCTradeUAAccountSettingsViewController.PrivateKeySettingsKey)
+            BTCTradeUALoginSession.loginIfNeeded(withPublicKey: publicKey!,
+                                                 privateKey: privateKey!,
+                                                 completionCallback: { (succeeded) in
+                DispatchQueue.main.async { [weak self] () in
+                    if (self != nil && succeeded) {
+                        let userDefaults = UserDefaults.standard
+                        
+                        userDefaults.set(publicKey!,
+                                         forKey:BTCTradeUAAccountSettingsViewController.PublicKeySettingsKey)
+                        userDefaults.set(privateKey,
+                                         forKey:BTCTradeUAAccountSettingsViewController.PrivateKeySettingsKey)
+                        
+                        self!.navigationController?.popViewController(animated:true)
+                    }
+                    else {
+                        let alert = UIAlertController(title: NSLocalizedString("Authorization failed", comment: "Alert title"),
+                                                      message: NSLocalizedString("Invalid public/private key", comment: "Invalid key"),
+                                                      preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: "Close alert action"),
+                                                      style: .`default`,
+                                                      handler: { _ in
+                            self!.publicKeyField!.text = String()
+                            self!.privateKeyField!.text = String()
+                        }))
+                        
+                        self!.present(alert, animated: true, completion: nil)
+                    }
+                }
+            })
         }
-
-        navigationController?.popViewController(animated:true)
+    }
+    
+    @objc func backButtonPressed() {
+        self.navigationController?.popViewController(animated:true)
     }
 
     // MARK: Outlets
