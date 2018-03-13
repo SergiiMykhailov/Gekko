@@ -106,11 +106,7 @@ public static let PrivateKeySettingsKey = "Private Key"
     }
     
     @objc func backButtonPressed() {
-        DispatchQueue.main.async { [weak self] () in
-            if  (self != nil) {
-                self!.navigationController?.popViewController(animated:true)
-            }
-        }
+        self.navigationController?.popViewController(animated:true)
     }
 
     // MARK: Outlets
