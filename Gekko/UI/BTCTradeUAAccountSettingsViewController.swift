@@ -8,11 +8,6 @@ import AVFoundation
 
 class BTCTradeUAAccountSettingsViewController : UIViewController {
 
-    // MARK: Public methods and properties
-
-public static let PublicKeySettingsKey = "Public Key"
-public static let PrivateKeySettingsKey = "Private Key"
-
     // MARK: Overriden methods
 
     override func viewDidLoad() {
@@ -81,9 +76,9 @@ public static let PrivateKeySettingsKey = "Private Key"
                         let userDefaults = UserDefaults.standard
                         
                         userDefaults.set(publicKey!,
-                                         forKey:BTCTradeUAAccountSettingsViewController.PublicKeySettingsKey)
+                                         forKey:UIUtils.PublicKeySettingsKey)
                         userDefaults.set(privateKey,
-                                         forKey:BTCTradeUAAccountSettingsViewController.PrivateKeySettingsKey)
+                                         forKey:UIUtils.PrivateKeySettingsKey)
                         
                         self!.navigationController?.popViewController(animated:true)
                     }

@@ -45,8 +45,8 @@ class MainViewController : UIViewController,
 
         let userDefaults = UserDefaults.standard
 
-        publicKey = userDefaults.string(forKey:BTCTradeUAAccountSettingsViewController.PublicKeySettingsKey)
-        privateKey = userDefaults.string(forKey:BTCTradeUAAccountSettingsViewController.PrivateKeySettingsKey)
+        publicKey = userDefaults.string(forKey:UIUtils.PublicKeySettingsKey)
+        privateKey = userDefaults.string(forKey:UIUtils.PrivateKeySettingsKey)
 
         scheduleBalanceUpdating{}
 

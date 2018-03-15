@@ -8,6 +8,8 @@ import SnapKit
 
 class UIUtils {
 
+    //MARK: Methods
+    
     public static func blink(aboveView view:UIView) {
         let blinkingView = UIView()
         blinkingView.backgroundColor = UIColor.white
@@ -31,4 +33,10 @@ class UIUtils {
             })
         }
     }
+    
+    // MARK: Properties
+    
+    public static let PublicKeySettingsKey = "Public Key"
+    public static let PrivateKeySettingsKey = "Private Key"
+
 }
