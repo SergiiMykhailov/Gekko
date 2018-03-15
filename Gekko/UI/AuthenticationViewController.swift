@@ -1,7 +1,3 @@
-//
-//  AuthenticationViewController.swift
-//  Gekko
-//
 //  Created by Aleksandr Saliyenko on 3/13/18.
 //  Copyright © 2018 Sergii Mykhailov. All rights reserved.
 //
@@ -25,11 +21,11 @@ class AuthenticationViewController : UIViewController {
         self.setupMainIconImageView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated:Bool) {
         super.viewDidAppear(animated)
         
         if isAuthorized {
-            authenticationWithTouchID()
+            authenticate()
         }
         else {
             performSegue(withIdentifier: AuthenticationViewController.ShowNavigationControllerSegueName, sender: self)
@@ -59,7 +55,7 @@ class AuthenticationViewController : UIViewController {
         return publicKey != nil && !publicKey!.isEmpty && privateKey != nil && !privateKey!.isEmpty
     }
     
-    func authenticationWithTouchID() {
+    func authenticate() {
         let localAuthenticationContext = LAContext()
         localAuthenticationContext.localizedFallbackTitle = NSLocalizedString("Use Passcode", comment: "Fallback title")
         
@@ -67,28 +63,20 @@ class AuthenticationViewController : UIViewController {
         
         localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString) { (success, _) in
             if success {
-                self.navigateToMainViewController()
+                DispatchQueue.main.async { [weak self] in
+                    if self != nil {
+                        self!.performSegue(withIdentifier: AuthenticationViewController.ShowNavigationControllerSegueName, sender: self)
+                    }
+                }
             }
             else {
-                self.enableFailLabel()
-            }
-        }
-    }
-    
-    fileprivate func navigateToMainViewController() {
-        DispatchQueue.main.async { [weak self] in
-            if self != nil {
-                self!.performSegue(withIdentifier: AuthenticationViewController.ShowNavigationControllerSegueName, sender: self)
-            }
-        }
-    }
-    
-    fileprivate func enableFailLabel() {
-        DispatchQueue.main.async { [weak self] in
-            if self != nil {
-                self!.failedLabel.textColor = #colorLiteral(red: 1, green: 0.02807807196, blue: 0, alpha: 1)
-                self!.failedLabel.text = NSLocalizedString("Authorization failed", comment: "Authorization failed")
-                self!.failedLabel.isEnabled = true
+                DispatchQueue.main.async { [weak self] in
+                    if self != nil {
+                        self!.failedLabel.textColor = #colorLiteral(red: 1, green: 0.02807807196, blue: 0, alpha: 1)
+                        self!.failedLabel.text = NSLocalizedString("Authorization failed", comment: "Authorization failed")
+                        self!.failedLabel.isEnabled = true
+                    }
+                }
             }
         }
     }

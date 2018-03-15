@@ -34,7 +34,7 @@ public static let PrivateKeySettingsKey = "Private Key"
                                                                  target:self,
                                                                  action:#selector(applyButtonPressed))
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Back", comment:"Back navigation button"), style: .plain, target: self, action: #selector(backButtonPressed))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("< Back", comment:"Back navigation button"), style: .plain, target: self, action: #selector(backButtonPressed))
     }
 
     override func prepare(for segue:UIStoryboardSegue, sender:Any?) {
@@ -104,10 +104,6 @@ public static let PrivateKeySettingsKey = "Private Key"
             })
         }
     }
-    
-    @objc func backButtonPressed() {
-        self.navigationController?.popViewController(animated:true)
-    }
 
     // MARK: Outlets
 
@@ -121,7 +117,7 @@ public static let PrivateKeySettingsKey = "Private Key"
     
     // MARK: Actions
     
-    @IBAction func actionBackToMainView(_ sender: UISwipeGestureRecognizer) {
+    @IBAction func backButtonPressed(_ sender: UISwipeGestureRecognizer) {
         self.navigationController?.popViewController(animated:true)
     }
 

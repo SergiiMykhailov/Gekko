@@ -325,7 +325,7 @@ Account -&gt; Profile -&gt; API and mobile app</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LAD-uU-fp4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="zqW-kh-NtU">
                     <connections>
-                        <action selector="actionBackToMainView:" destination="oRG-7B-kZq" id="yTg-Tg-gHy"/>
+                        <action selector="backButtonPressed:" destination="oRG-7B-kZq" id="yTg-Tg-gHy"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
