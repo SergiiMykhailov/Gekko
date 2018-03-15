@@ -118,6 +118,12 @@ public static let PrivateKeySettingsKey = "Private Key"
 
     @IBOutlet weak var privateKeyLabel:UILabel?
     @IBOutlet weak var privateKeyField:UITextField?
+    
+    // MARK: Actions
+    
+    @IBAction func actionBackToMainView(_ sender: UISwipeGestureRecognizer) {
+        self.navigationController?.popViewController(animated:true)
+    }
 
     // MARK: Internal fields
 

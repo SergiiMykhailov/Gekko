@@ -89,3 +89,9 @@
 
 /* Back button navigation bar */
 "Back" = "Назад";
+
+/* Authenticetion reason string */
+"To access the application" = "Для доступа к приложению";
+
+/* Authenticetion fallback title */
+"Use Passcode" = "Код-пароль";

@@ -22,13 +22,38 @@ class AuthenticationViewController : UIViewController {
         publicKey = userDefaults.string(forKey:BTCTradeUAAccountSettingsViewController.PublicKeySettingsKey)
         privateKey = userDefaults.string(forKey:BTCTradeUAAccountSettingsViewController.PrivateKeySettingsKey)
         
+        self.setupMainIconImageView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         if isAuthorized {
             authenticationWithTouchID()
         }
-        
+        else {
+            performSegue(withIdentifier: AuthenticationViewController.ShowNavigationControllerSegueName, sender: self)
+        }
     }
     
-    //MARK: Internal methods
+    // MARK: Internal methods
+    
+    fileprivate func setupMainIconImageView() {
+        let iconImage = (#imageLiteral(resourceName: "btcIcon"))
+        let mainIconImageView = UIImageView(image: iconImage)
+        
+        self.view.addSubview(mainIconImageView)
+        
+        mainIconImageView.layer.cornerRadius = mainIconImageView.frame.width / 2
+        mainIconImageView.layer.masksToBounds = true
+        
+        mainIconImageView.snp.makeConstraints { (make) in
+            let sizeOfMainView = self.view.frame.size
+            
+            make.centerX.equalTo(sizeOfMainView.width / 2)
+            make.centerY.equalTo(sizeOfMainView.height / 4)
+        }
+    }
     
     fileprivate var isAuthorized:Bool {
         return publicKey != nil && !publicKey!.isEmpty && privateKey != nil && !privateKey!.isEmpty
@@ -36,41 +61,43 @@ class AuthenticationViewController : UIViewController {
     
     func authenticationWithTouchID() {
         let localAuthenticationContext = LAContext()
-        localAuthenticationContext.localizedFallbackTitle = "Use Passcode"
+        localAuthenticationContext.localizedFallbackTitle = NSLocalizedString("Use Passcode", comment: "Fallback title")
         
-        var authError: NSError?
-        let reasonString = "To access the secure data"
+        let reasonString = NSLocalizedString("To access the application", comment: "Authentication reason string")
         
-        if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
-            
-            localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString) { (success, evaluateError) in
-                
-                if success {
-                    //TODO: User authenticated successfully, take appropriate action
-                    self.performSegue(withIdentifier: AuthenticationViewController.ShowNavigationControllerSegueName, sender: self)
-                }
-                else {
-                    //TODO: User did not authenticate successfully, look at error and take appropriate action
-//                    localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString, reply: { (success, evaluateError) in
-//
-//                        if success {
-//                            self.performSegue(withIdentifier: AuthenticationViewController.ShowNavigationControllerSegueName, sender: self)
-//                        }
-//                    })
-                    
-                }
+        localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString) { (success, _) in
+            if success {
+                self.navigateToMainViewController()
             }
-        }
-        else {
-            localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString, reply: { (success, evaluateError) in
-                if success {
-                    self.performSegue(withIdentifier: AuthenticationViewController.ShowNavigationControllerSegueName, sender: self)
-                }
-            })
+            else {
+                self.enableFailLabel()
+            }
         }
     }
     
-    //MARK: Internal fields
+    fileprivate func navigateToMainViewController() {
+        DispatchQueue.main.async { [weak self] in
+            if self != nil {
+                self!.performSegue(withIdentifier: AuthenticationViewController.ShowNavigationControllerSegueName, sender: self)
+            }
+        }
+    }
+    
+    fileprivate func enableFailLabel() {
+        DispatchQueue.main.async { [weak self] in
+            if self != nil {
+                self!.failedLabel.textColor = #colorLiteral(red: 1, green: 0.02807807196, blue: 0, alpha: 1)
+                self!.failedLabel.text = NSLocalizedString("Authorization failed", comment: "Authorization failed")
+                self!.failedLabel.isEnabled = true
+            }
+        }
+    }
+    
+    // MARK: Outlets
+    
+    @IBOutlet weak var failedLabel: UILabel!
+    
+    // MARK: Internal fields
     
     fileprivate var publicKey:String?
     fileprivate var privateKey:String?
