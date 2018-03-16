@@ -8,11 +8,6 @@ import AVFoundation
 
 class BTCTradeUAAccountSettingsViewController : UIViewController {
 
-    // MARK: Public methods and properties
-
-public static let PublicKeySettingsKey = "Public Key"
-public static let PrivateKeySettingsKey = "Private Key"
-
     // MARK: Overriden methods
 
     override func viewDidLoad() {
@@ -34,7 +29,7 @@ public static let PrivateKeySettingsKey = "Private Key"
                                                                  target:self,
                                                                  action:#selector(applyButtonPressed))
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Back", comment:"Back navigation button"), style: .plain, target: self, action: #selector(backButtonPressed))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("< Back", comment:"Back navigation button"), style: .plain, target: self, action: #selector(backButtonPressed))
     }
 
     override func prepare(for segue:UIStoryboardSegue, sender:Any?) {
@@ -81,9 +76,9 @@ public static let PrivateKeySettingsKey = "Private Key"
                         let userDefaults = UserDefaults.standard
                         
                         userDefaults.set(publicKey!,
-                                         forKey:BTCTradeUAAccountSettingsViewController.PublicKeySettingsKey)
+                                         forKey:UIUtils.PublicKeySettingsKey)
                         userDefaults.set(privateKey,
-                                         forKey:BTCTradeUAAccountSettingsViewController.PrivateKeySettingsKey)
+                                         forKey:UIUtils.PrivateKeySettingsKey)
                         
                         self!.navigationController?.popViewController(animated:true)
                     }
@@ -104,10 +99,6 @@ public static let PrivateKeySettingsKey = "Private Key"
             })
         }
     }
-    
-    @objc func backButtonPressed() {
-        self.navigationController?.popViewController(animated:true)
-    }
 
     // MARK: Outlets
 
@@ -118,6 +109,12 @@ public static let PrivateKeySettingsKey = "Private Key"
 
     @IBOutlet weak var privateKeyLabel:UILabel?
     @IBOutlet weak var privateKeyField:UITextField?
+    
+    // MARK: Actions
+    
+    @IBAction func backButtonPressed(_ sender: UISwipeGestureRecognizer) {
+        self.navigationController?.popViewController(animated:true)
+    }
 
     // MARK: Internal fields
 

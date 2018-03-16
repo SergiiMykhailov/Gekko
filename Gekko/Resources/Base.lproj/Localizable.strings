@@ -88,4 +88,10 @@
 "Close" = "Close";
 
 /* Back button navigation bar */
-"Back" = "Back";
+"< Back" = "< Back";
+
+/* Authenticetion reason string */
+"To access the application" = "To access the application";
+
+/* Authenticetion fallback title */
+"Use Passcode" = "Use Passcode";
