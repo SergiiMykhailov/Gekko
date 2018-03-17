@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -77,27 +78,63 @@
                                         </constraints>
                                     </view>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jya-ne-PJG" userLabel="Chart View Placeholder">
-                                        <rect key="frame" x="0.0" y="100" width="308" height="220"/>
+                                        <rect key="frame" x="0.0" y="100" width="308" height="176"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="220" id="oNF-5K-SO3"/>
+                                            <constraint firstAttribute="height" constant="176" id="oNF-5K-SO3"/>
                                         </constraints>
                                     </view>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PWD-ii-ZcC" userLabel="Stack View Placeholder">
-                                        <rect key="frame" x="0.0" y="326" width="308" height="178"/>
+                                        <rect key="frame" x="0.0" y="332" width="308" height="172"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bqH-l7-rQa" userLabel="Buttons Placeholder">
+                                        <rect key="frame" x="0.0" y="282" width="308" height="44"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P98-sh-Ph3">
+                                                <rect key="frame" x="0.0" y="0.0" width="154" height="44"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="sellButtonPressedWithButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mF7-tN-y47"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnl-Vg-wuo">
+                                                <rect key="frame" x="154" y="0.0" width="154" height="44"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="buyButtonPressedWithButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lan-ZM-Ld7"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="P98-sh-Ph3" firstAttribute="leading" secondItem="bqH-l7-rQa" secondAttribute="leading" id="Bvx-Hw-ZaV"/>
+                                            <constraint firstItem="Lnl-Vg-wuo" firstAttribute="top" secondItem="bqH-l7-rQa" secondAttribute="top" id="FeY-27-lLQ"/>
+                                            <constraint firstItem="P98-sh-Ph3" firstAttribute="top" secondItem="bqH-l7-rQa" secondAttribute="top" id="Lbq-q2-W6t"/>
+                                            <constraint firstAttribute="trailing" secondItem="P98-sh-Ph3" secondAttribute="trailing" multiplier="2" priority="750" id="PeR-G1-Mpg"/>
+                                            <constraint firstAttribute="trailing" secondItem="Lnl-Vg-wuo" secondAttribute="trailing" id="aL8-mh-ZfW"/>
+                                            <constraint firstAttribute="height" constant="44" id="hkB-30-vVN"/>
+                                            <constraint firstAttribute="bottom" secondItem="P98-sh-Ph3" secondAttribute="bottom" id="kpv-1T-FOB"/>
+                                            <constraint firstAttribute="bottom" secondItem="Lnl-Vg-wuo" secondAttribute="bottom" id="obz-Zl-tZU"/>
+                                            <constraint firstItem="Lnl-Vg-wuo" firstAttribute="leading" secondItem="P98-sh-Ph3" secondAttribute="trailing" id="uvM-TR-BQp"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="PWD-ii-ZcC" firstAttribute="top" secondItem="Jya-ne-PJG" secondAttribute="bottom" constant="6" id="3F5-Kh-sj6"/>
                                     <constraint firstItem="aWR-7S-po7" firstAttribute="leading" secondItem="aDd-Fd-XDV" secondAttribute="leading" id="8Lx-Hw-fpb"/>
                                     <constraint firstItem="Jya-ne-PJG" firstAttribute="top" secondItem="aWR-7S-po7" secondAttribute="bottom" constant="6" id="8fC-Zl-v88"/>
                                     <constraint firstAttribute="trailing" secondItem="PWD-ii-ZcC" secondAttribute="trailing" id="8oF-mA-TJh"/>
                                     <constraint firstItem="PWD-ii-ZcC" firstAttribute="leading" secondItem="aDd-Fd-XDV" secondAttribute="leading" id="INm-5P-I93"/>
+                                    <constraint firstItem="PWD-ii-ZcC" firstAttribute="top" secondItem="bqH-l7-rQa" secondAttribute="bottom" constant="6" id="LDV-2b-6dk"/>
                                     <constraint firstItem="PWD-ii-ZcC" firstAttribute="centerX" secondItem="aDd-Fd-XDV" secondAttribute="centerX" id="MRo-5B-6zo"/>
                                     <constraint firstAttribute="trailing" secondItem="aWR-7S-po7" secondAttribute="trailing" id="Mhk-w8-VVL"/>
+                                    <constraint firstItem="bqH-l7-rQa" firstAttribute="leading" secondItem="Jya-ne-PJG" secondAttribute="leading" id="RhC-AG-vsl"/>
                                     <constraint firstItem="aWR-7S-po7" firstAttribute="top" secondItem="aDd-Fd-XDV" secondAttribute="top" constant="6" id="SPi-1E-3kh"/>
+                                    <constraint firstItem="bqH-l7-rQa" firstAttribute="trailing" secondItem="Jya-ne-PJG" secondAttribute="trailing" id="WWw-Yh-l70"/>
                                     <constraint firstAttribute="trailing" secondItem="Jya-ne-PJG" secondAttribute="trailing" id="aOz-ZI-8Kt"/>
+                                    <constraint firstItem="bqH-l7-rQa" firstAttribute="top" secondItem="Jya-ne-PJG" secondAttribute="bottom" constant="6" id="yyT-yM-MNa"/>
                                     <constraint firstItem="Jya-ne-PJG" firstAttribute="leading" secondItem="aDd-Fd-XDV" secondAttribute="leading" id="zLX-QV-GLb"/>
                                 </constraints>
                             </scrollView>
@@ -115,16 +152,19 @@
                     <tabBarItem key="tabBarItem" title="Item" id="5pb-lH-R8b"/>
                     <navigationItem key="navigationItem" id="7Sr-Jv-mwP"/>
                     <connections>
+                        <outlet property="buttonsPlaceholder" destination="bqH-l7-rQa" id="hzg-Rb-jgc"/>
+                        <outlet property="buyButton" destination="Lnl-Vg-wuo" id="ZK6-72-1Hf"/>
                         <outlet property="chartViewPlaceholder" destination="Jya-ne-PJG" id="4MS-pe-4wc"/>
                         <outlet property="collectionViewPlaceholder" destination="aWR-7S-po7" id="K4W-hw-atF"/>
                         <outlet property="mainScrollView" destination="aDd-Fd-XDV" id="1lZ-fH-W1a"/>
+                        <outlet property="sellButton" destination="P98-sh-Ph3" id="jX0-6j-Ciq"/>
                         <outlet property="stackViewPlaceholder" destination="PWD-ii-ZcC" id="oze-X9-BG5"/>
                         <segue destination="oRG-7B-kZq" kind="show" identifier="Show Account Settings" id="iB2-A6-Vww"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1740" y="-188"/>
+            <point key="canvasLocation" x="-1740" y="-188.02816901408451"/>
         </scene>
         <!--Account Settings-->
         <scene sceneID="hwZ-75-ooA">

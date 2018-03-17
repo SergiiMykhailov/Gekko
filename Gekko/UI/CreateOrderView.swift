@@ -30,21 +30,36 @@ class CreateOrderView : UIView,
     public static let PreferredHeight = UIDefaults.LineHeight * 4
 
     public weak var delegate:CreateOrderViewDelegate?
-
+    
+    public private(set) var mode = OrderMode.Buy
+    public private(set) var currency = Currency.BTC
+    
     init(withMode mode:OrderMode,
-         currency:Currency,
-         availableCryptocurrencyAmount:Double) {
+         currency:Currency) {
         super.init(frame:CGRect.zero)
 
         self.mode = mode
         self.currency = currency
-        self.availableCryptocurrencyAmount = availableCryptocurrencyAmount
 
         setupSubviews()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public var amount: Double? {
+        get {
+            let result = numberFormatter.number(from:amountInputField.text!)?.doubleValue
+            return result
+        }
+    }
+    
+    public var price: Double? {
+        get {
+            let result = numberFormatter.number(from:priceInputField.text!)?.doubleValue
+            return result
+        }
     }
 
     // MARK: Overriden methods
@@ -73,6 +88,10 @@ class CreateOrderView : UIView,
         layoutSeparator(separator:priceSeparatorView, offsetFrom:amountSeparatorView)
         layoutSeparator(separator:volumeSeparatorView, offsetFrom:priceSeparatorView)
 
+        amountSeparatorView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().priority(1000)
+        }
+        
         verticalLeftGuide.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -87,9 +106,16 @@ class CreateOrderView : UIView,
             make.width.equalTo(0)
         }
 
+        headerLabel.snp.makeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalTo(amountSeparatorView.snp.top)
+        }
+        
         amountLabel.snp.makeConstraints { (make) in
             make.left.equalTo(verticalLeftGuide)
-            make.centerY.equalTo(amountSeparatorView).offset(-UIDefaults.LineHeight / 2)
+            make.centerY.equalTo(amountSeparatorView).offset(UIDefaults.LineHeight / 2)
         }
 
         amountInputField.snp.makeConstraints { (make) in
@@ -99,7 +125,7 @@ class CreateOrderView : UIView,
 
         priceLabel.snp.makeConstraints { (make) in
             make.left.equalTo(verticalLeftGuide)
-            make.centerY.equalTo(priceSeparatorView).offset(-UIDefaults.LineHeight / 2)
+            make.centerY.equalTo(priceSeparatorView).offset(UIDefaults.LineHeight / 2)
         }
 
         priceInputField.snp.makeConstraints { (make) in
@@ -110,7 +136,7 @@ class CreateOrderView : UIView,
 
         orderAmountLabel.snp.makeConstraints { (make) in
             make.left.equalTo(verticalLeftGuide)
-            make.centerY.equalTo(volumeSeparatorView).offset(-UIDefaults.LineHeight / 2)
+            make.centerY.equalTo(volumeSeparatorView).offset(UIDefaults.LineHeight / 2)
         }
 
         orderAmountValueLabel.snp.makeConstraints { (make) in
@@ -118,31 +144,16 @@ class CreateOrderView : UIView,
             make.centerY.equalTo(orderAmountLabel.snp.centerY)
             make.right.equalToSuperview()
         }
-
-        submitCancelButtonsSeparator.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.width.equalTo(1)
-            make.top.equalTo(self.snp.bottom).offset(-UIDefaults.LineHeight + UIDefaults.Spacing)
-            make.bottom.equalToSuperview().offset(-UIDefaults.Spacing)
-        }
-
-        cancelButton.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.right.equalTo(submitCancelButtonsSeparator.snp.left)
-            make.centerY.equalTo(self.snp.bottom).offset(-UIDefaults.LineHeight / 2)
-        }
-
-        submitButton.snp.makeConstraints { (make) in
-            make.left.equalTo(submitCancelButtonsSeparator.snp.right)
-            make.right.equalToSuperview()
-            make.centerY.equalTo(cancelButton)
+        
+        orderAmountValueOverlay.snp.makeConstraints { (make) in
+            make.edges.equalTo(orderAmountValueLabel)
         }
     }
 
     fileprivate func layoutSeparator(separator:UIView,
                                      offsetFrom view:UIView) {
         separator.snp.makeConstraints { (make) in
-            make.left.equalTo(verticalLeftGuide)
+            make.left.equalTo(verticalLeftGuide).priority(750)
             make.right.equalToSuperview()
             make.height.equalTo(1)
             make.top.equalTo(view).offset(UIDefaults.LineHeight)
@@ -150,9 +161,6 @@ class CreateOrderView : UIView,
     }
 
     fileprivate func notifySubmitButtonPressed() {
-        let amount = numberFormatter.number(from:amountInputField.text!)?.doubleValue
-        let price = numberFormatter.number(from:priceInputField.text!)?.doubleValue
-
         if (amount != nil && price != nil) {
             delegate?.createOrderView?(sender:self,
                                        didSubmitRequestWithAmount:amount!,
@@ -200,6 +208,13 @@ class CreateOrderView : UIView,
         priceSeparatorView.backgroundColor = UIDefaults.SeparatorColor
         volumeSeparatorView.backgroundColor = UIDefaults.SeparatorColor
 
+        headerLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelDefaultFontSize)
+        headerLabel.textAlignment = .center
+        let title = mode == .Buy
+                            ? NSLocalizedString("Buy", comment:"Buy button title")
+                            : NSLocalizedString("Sell", comment:"Sell button title")
+        headerLabel.text = String(format:"%@ (%@)", title, currency.rawValue)
+        
         let amountText = NSLocalizedString("Amount", comment:"Order amount")
         amountLabel.text = String(format:"%@ (%@)", amountText, currency.rawValue)
         amountLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
@@ -207,15 +222,6 @@ class CreateOrderView : UIView,
         let priceText = NSLocalizedString("Price", comment:"Order price")
         priceLabel.text = String(format:"%@ (UAH)", priceText)
         priceLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
-
-        let submitButtonTitle = actionString()
-        submitButton.setTitle(submitButtonTitle, for:.normal)
-        submitButton.addTarget(self, action:#selector(submitButtonPressed(button:)), for:.touchUpInside)
-
-        cancelButton.setTitle(NSLocalizedString("Cancel", comment:"Cancel order"), for:.normal)
-        cancelButton.addTarget(self, action:#selector(cancelButtonPressed(button:)), for:.touchUpInside)
-
-        submitCancelButtonsSeparator.backgroundColor = UIDefaults.SeparatorColor
 
         amountInputField.keyboardType = .decimalPad
         amountInputField.placeholder = "12345678.90"
@@ -232,6 +238,8 @@ class CreateOrderView : UIView,
         orderAmountLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelSmallFontSize)
 
         orderAmountValueLabel.font = UIFont.systemFont(ofSize:UIDefaults.LabelDefaultFontSize)
+        
+        orderAmountValueOverlay.backgroundColor = UIColor(white:1, alpha:0.5)
 
         addSubview(amountSeparatorView)
         addSubview(priceSeparatorView)
@@ -240,15 +248,14 @@ class CreateOrderView : UIView,
         addSubview(verticalLeftGuide)
         addSubview(verticalCenterGuide)
 
+        addSubview(headerLabel)
         addSubview(amountLabel)
         addSubview(amountInputField)
         addSubview(priceLabel)
         addSubview(priceInputField)
         addSubview(orderAmountLabel)
         addSubview(orderAmountValueLabel)
-        addSubview(submitButton)
-        addSubview(submitCancelButtonsSeparator)
-        addSubview(cancelButton)
+        addSubview(orderAmountValueOverlay)
 
         setupInputFieldsAccessoryButtons()
     }
@@ -260,6 +267,10 @@ class CreateOrderView : UIView,
     }
 
     fileprivate func setupInputFieldsAccessoryButtons() {
+        let cancelItem = UIBarButtonItem(title:NSLocalizedString("Cancel", comment:"Cancel order"),
+                                         style:.plain,
+                                         target:self,
+                                         action:#selector(cancelButtonPressed))
         let applyItem = UIBarButtonItem(title:actionString(),
                                         style:.plain,
                                         target:self,
@@ -279,6 +290,7 @@ class CreateOrderView : UIView,
 
         accessoryToolbar.items = [hideKeyboardItem,
                                   UIBarButtonItem(barButtonSystemItem:.flexibleSpace, target:nil, action:nil),
+                                  cancelItem,
                                   prevItem,
                                   nextItem,
                                   applyItem]
@@ -330,15 +342,14 @@ class CreateOrderView : UIView,
 
     // MARK: Internal fields
 
+    fileprivate let headerLabel = UILabel()
     fileprivate let amountLabel = UILabel()
     fileprivate let amountInputField = UITextField()
     fileprivate let priceLabel = UILabel()
     fileprivate let priceInputField = UITextField()
     fileprivate let orderAmountLabel = UILabel()
     fileprivate let orderAmountValueLabel = UILabel()
-    fileprivate let submitButton = UIButton(type:.system)
-    fileprivate let submitCancelButtonsSeparator = UIView()
-    fileprivate let cancelButton = UIButton(type:.system)
+    fileprivate let orderAmountValueOverlay = UIView()
     fileprivate let accessoryToolbar = UIToolbar()
 
     fileprivate let verticalLeftGuide = UIView()
@@ -350,10 +361,6 @@ class CreateOrderView : UIView,
     fileprivate var orderAmountUpdatingTimer = Timer()
 
     fileprivate let numberFormatter = NumberFormatter()
-
-    fileprivate var availableCryptocurrencyAmount:Double = 0
-    fileprivate var mode = OrderMode.Buy
-    fileprivate var currency = Currency.BTC
 
     fileprivate static let OrderAmountUpdatingDelay:TimeInterval = 0.1
 }
