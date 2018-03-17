@@ -42,14 +42,14 @@ class OrdersStackViewTableCell : UITableViewCell {
 
         cryptocurrencyAmountLabel.snp.makeConstraints { (make) in
             make.left.equalTo(fiatPriceLabel.snp.right).offset(UIDefaults.SpacingSmall)
-            make.centerY.equalToSuperview().dividedBy(2)
+            make.centerY.equalToSuperview().offset(-UIDefaults.LineHeight / 4 + UIDefaults.SpacingSmall)
             make.height.equalTo(UIDefaults.LabelDefaultFontSize)
             make.right.equalToSuperview()
         }
 
         fiatAmountLabel.snp.makeConstraints { (make) in
             make.left.equalTo(fiatPriceLabel.snp.right).offset(UIDefaults.SpacingSmall)
-            make.centerY.equalToSuperview().offset(UIDefaults.LineHeight / 4)
+            make.centerY.equalToSuperview().offset(UIDefaults.LineHeight / 4 - UIDefaults.SpacingSmall)
             make.height.equalTo(UIDefaults.LabelDefaultFontSize)
             make.right.equalToSuperview()
         }
