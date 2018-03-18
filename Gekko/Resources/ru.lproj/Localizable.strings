@@ -95,3 +95,6 @@
 
 /* Authenticetion fallback title */
 "Use Passcode" = "Код-пароль";
+
+/* Scan label */
+"Scan" = "Сканировать";

@@ -95,3 +95,6 @@
 
 /* Authenticetion fallback title */
 "Use Passcode" = "Use Passcode";
+
+/* Scan label */
+"Scan" = "Scan";

@@ -46,6 +46,8 @@ class QRCodePickerViewController : UIViewController,
         videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         videoPreviewLayer?.frame = view.layer.bounds
         view.layer.addSublayer(videoPreviewLayer!)
+        
+        setupTopBar()
 
         captureSession?.startRunning()
     }
@@ -81,7 +83,56 @@ class QRCodePickerViewController : UIViewController,
             }
         }
     }
+    
+    // MARK: Internal methods
+    
+    fileprivate func setupTopBar() {
+        let topBar = UIView()
+        topBar.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        topBar.alpha = 0.6
+        
+        view.addSubview(topBar)
+        
+        topBar.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(60)
+        }
+        
+        let label = UILabel()
+        label.text = NSLocalizedString("Scan", comment: "TopBar label")
+        label.font = UIFont.systemFont(ofSize: 24)
+        label.textAlignment = .center
+        label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        topBar.addSubview(label)
+        
+        label.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(-8)
+        }
+        
+        let cancelButton = UIButton(type: .system)
+        cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
+        cancelButton.setImage(#imageLiteral(resourceName: "cross"), for: .normal)
+        cancelButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
+        topBar.addSubview(cancelButton)
+
+        cancelButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(-13)
+            make.right.equalTo(-15)
+            make.height.equalTo(18)
+            make.width.equalTo(18)
+        }
+    }
+    
+    // MARK: Actions
+    
+    @objc func cancelButtonPressed() {
+        self.dismiss(animated:true)
+    }
 
     // MARK: Internal fields
     
