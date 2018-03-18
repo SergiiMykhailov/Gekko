@@ -89,7 +89,7 @@ class QRCodePickerViewController : UIViewController,
     fileprivate func setupTopBar() {
         let topBar = UIView()
         topBar.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        topBar.alpha = 0.6
+        topBar.alpha = UIDefaults.TopBarOpacity
         
         view.addSubview(topBar)
         
@@ -101,8 +101,8 @@ class QRCodePickerViewController : UIViewController,
         }
         
         let label = UILabel()
-        label.text = NSLocalizedString("Scan", comment: "TopBar label")
-        label.font = UIFont.systemFont(ofSize: 24)
+        label.text = NSLocalizedString("Scan", comment:"TopBar label")
+        label.font = UIFont.systemFont(ofSize:UIDefaults.TopBarFontSize)
         label.textAlignment = .center
         label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
@@ -110,19 +110,19 @@ class QRCodePickerViewController : UIViewController,
         
         label.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(-8)
+            make.bottom.equalToSuperview().offset(-UIDefaults.Spacing)
         }
         
-        let cancelButton = UIButton(type: .system)
-        cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
-        cancelButton.setImage(#imageLiteral(resourceName: "cross"), for: .normal)
+        let cancelButton = UIButton(type:.system)
+        cancelButton.addTarget(self, action:#selector(cancelButtonPressed), for:.touchUpInside)
+        cancelButton.setImage(#imageLiteral(resourceName: "cross"), for:.normal)
         cancelButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
         topBar.addSubview(cancelButton)
 
         cancelButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(-13)
-            make.right.equalTo(-15)
+            make.bottom.equalToSuperview().offset(-12)
+            make.right.equalToSuperview().offset(-12)
             make.height.equalTo(18)
             make.width.equalTo(18)
         }

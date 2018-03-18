@@ -39,4 +39,7 @@ class UIDefaults {
     public static let RedColor = UIColor(red:1, green:59 / 255, blue:48 / 255, alpha:1)
 
     public static let DefaultAnimationDuration:TimeInterval = 0.25
+    
+    public static let TopBarOpacity:CGFloat = 0.5
+    public static let TopBarFontSize:CGFloat = 24
 }
