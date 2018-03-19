@@ -21,6 +21,7 @@ class MainViewController : UIViewController,
 
         stackViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         collectionViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
+        buttonsPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         chartViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
 
         setupCurrenciesView()
@@ -31,6 +32,7 @@ class MainViewController : UIViewController,
         scheduleDealsUpdating()
 
         setupChartView()
+        setupButtons()
         scheduleCandlesUpdating()
 
         updateBalanceValueLabel()
@@ -57,6 +59,64 @@ class MainViewController : UIViewController,
     }
 
     // MARK: Internal methods and properties
+    
+    fileprivate func handleOrderSubmission(withCryptocurrencyAmount amount:Double,
+                                           price:Double,
+                                           mode:OrderMode) {
+        let timeout = orderView!.isFirstResponder ? UIDefaults.DefaultAnimationDuration : 0
+        _ = orderView!.resignFirstResponder()
+        let orderCurrency = currentOrderCurrency
+        let pair = currentPair
+        
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + timeout) {
+            [weak self] in
+            self!.animateOrderSubmitting(withOrderView:self!.orderView!,
+                                         forMode:mode,
+                                         completion: {
+                [weak self] in
+                let orderPostingMethod = mode == .Buy
+                                                 ? self!.btcTradeUAOrderProvider.performBuyOrderAsync
+                                                 : self!.btcTradeUAOrderProvider.performSellOrderAsync
+                                            
+                orderPostingMethod(orderCurrency!,
+                                   amount,
+                                   price,
+                                   self!.publicKey!,
+                                   self!.privateKey!,
+                                   {
+                    [weak self] (orderId) in
+                    DispatchQueue.main.async {
+                        if orderId == nil {
+                            return
+                        }
+                                        
+                        self!.ordersDataFacade!.makeOrder(withInitializationBlock: { (order) in
+                            order.id = orderId
+                            order.isBuy = mode == .Buy
+                            order.currency = pair.rawValue as String
+                            order.date = Date()
+                            order.initialAmount = amount
+                            order.price = price
+                        })
+                                        
+                        let orderStatus = OrderStatusInfo(id:orderId!,
+                                                          status:OrderStatus.Pending,
+                                                          date:Date(),
+                                                          currency:orderCurrency!,
+                                                          initialAmount:amount,
+                                                          remainingAmount:amount,
+                                                          price:price,
+                                                          type:mode == .Buy ? OrderType.Buy : OrderType.Sell)
+                        self!.set(orderStatusInfo:orderStatus, forCurrencyPair:pair)
+                        self!.userOrdersView.reloadData()
+                                        
+                        self!.handleOrdersStatusUpdating {}
+                        self!.chartController.reloadData()
+                    }
+                })
+            })
+        }
+    }
     
     fileprivate var isAuthorized:Bool {
         return publicKey != nil && !publicKey!.isEmpty && privateKey != nil && !privateKey!.isEmpty
@@ -359,62 +419,50 @@ class MainViewController : UIViewController,
         self.title = title
     }
 
-    fileprivate func setupChartView() {
-        let separatorView = UIView()
-        separatorView.backgroundColor = UIDefaults.SeparatorColor
-        chartViewPlaceholder!.addSubview(separatorView)
-
-        separatorView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.top.equalToSuperview().offset(UIDefaults.LineHeight)
-            make.height.equalTo(1)
+    fileprivate func setupButtons() {
+        if sellButton == nil || buyButton == nil {
+            return
         }
-
-        let sellButton = UIButton(type:.system)
-        sellButton.setTitle(NSLocalizedString("Sell", comment:"Sell button title"), for:.normal)
-        sellButton.addTarget(self, action:#selector(sellButtonPressed(button:)), for:.touchUpInside)
-        chartViewPlaceholder!.addSubview(sellButton)
-
-        let buyButton = UIButton(type:.system)
-        buyButton.setTitle(NSLocalizedString("Buy", comment:"Buy button title"), for:.normal)
-        buyButton.addTarget(self, action:#selector(buyButtonPressed(button:)), for:.touchUpInside)
-        chartViewPlaceholder!.addSubview(buyButton)
-
-        let buySellButtonsSeparator = UIView()
-        buySellButtonsSeparator.backgroundColor = UIDefaults.SeparatorColor
-        chartViewPlaceholder!.addSubview(buySellButtonsSeparator)
-
-        buySellButtonsSeparator.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(UIDefaults.Spacing)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(1)
-            make.bottom.equalTo(separatorView.snp.top).offset(-UIDefaults.Spacing)
-        }
-
-        sellButton.snp.makeConstraints { (make) in
+        
+        sellButton!.setTitle(NSLocalizedString("Sell", comment:"Sell button title"), for:.normal)
+        sellButton!.backgroundColor = UIDefaults.RedColor
+        
+        buyButton!.setTitle(NSLocalizedString("Buy", comment:"Buy button title"), for:.normal)
+        buyButton!.backgroundColor = UIDefaults.GreenColor
+        
+        sellButton!.snp.remakeConstraints({ (make) in
             make.left.equalToSuperview()
             make.top.equalToSuperview()
-            make.bottom.equalTo(separatorView)
-            make.right.equalTo(chartViewPlaceholder!.snp.centerX)
-        }
-
-        buyButton.snp.makeConstraints { (make) in
-            make.left.equalTo(sellButton.snp.right)
-            make.top.equalTo(sellButton)
-            make.bottom.equalTo(sellButton)
+            make.bottom.equalToSuperview()
+            
+            if orderView == nil {
+                make.right.equalTo(sellButton!.superview!.snp.centerX)
+            }
+            else {
+                if orderView!.mode == .Buy {
+                    make.right.equalTo(sellButton!.superview!.snp.left)
+                }
+                else {
+                    make.right.equalToSuperview()
+                }
+            }
+        })
+        
+        buyButton!.snp.remakeConstraints({ (make) in
+            make.left.equalTo(sellButton!.snp.right)
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
             make.right.equalToSuperview()
-        }
-
+        })
+    }
+    
+    fileprivate func setupChartView() {
         chartViewPlaceholder!.addSubview(chartController.view)
 
         chartController.dataSource = self
 
         chartController.view.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.top.equalTo(separatorView.snp.bottom)
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
 
@@ -557,42 +605,51 @@ typealias CompletionHandler = () -> Void
 
         orderView?.removeFromSuperview()
 
-        let availableAmount = balanceFor(currency:currency)
         orderView = CreateOrderView(withMode:mode,
-                                    currency:currency,
-                                    availableCryptocurrencyAmount:availableAmount != nil ? availableAmount! : 0)
+                                    currency:currency)
         orderView?.backgroundColor = UIColor.white
         orderView?.delegate = self
         orderView?.layer.cornerRadius = UIDefaults.CornerRadius
 
         orderView?.alpha = 0
-        mainScrollView!.addSubview(orderView!)
+        chartViewPlaceholder?.addSubview(orderView!)
 
         orderView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(collectionViewPlaceholder!)
-            make.left.equalToSuperview().priority(750)
-            make.right.equalToSuperview().priority(750)
-            make.height.equalTo(CreateOrderView.PreferredHeight)
+            make.edges.equalToSuperview()
         })
 
         self.view.layoutIfNeeded()
-
-        self.stackViewPlaceholder!.snp.remakeConstraints({ (make) in
-            make.top.equalTo(self.orderView!.snp.bottom).offset(UIDefaults.Spacing)
-        })
-
+        
         UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration,
                        animations: {
-            self.orderView?.alpha = 1
-            self.collectionViewPlaceholder!.alpha = 0
-            self.chartViewPlaceholder!.alpha = 0
-
-            self.view.layoutIfNeeded()
-        })
-        { [weak self] (_) in
-            _ = self?.orderView?.becomeFirstResponder()
+                        [weak self] in
+            self?.collectionViewPlaceholder?.alpha = 0
+        }) { [weak self] (_) in
+            let verticalOffset = self!.chartViewPlaceholder!.frame.origin.y - UIDefaults.Spacing
+            let contentOffset = CGPoint(x:0, y:verticalOffset)
+            self?.mainScrollView?.setContentOffset(contentOffset,
+                                                   animated:true)
+            
+            DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + UIDefaults.DefaultAnimationDuration,
+                                           execute: {
+                    UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration,
+                                   animations: { [weak self] in
+                        self?.orderView?.alpha = 1
+                                                            
+                        self?.setupButtons()
+                        self?.view.layoutIfNeeded()
+                    })
+                    { [weak self] (_) in
+                        _ = self?.orderView?.becomeFirstResponder()
+                                                
+                        self?.mainScrollView?.contentInset = UIEdgeInsets(top:-verticalOffset,
+                                                                          left:0,
+                                                                          bottom:0,
+                                                                          right:0)
+                    }
+            })
         }
-
+        
         currentOrderCurrency = currency
 
         if mode == .Sell {
@@ -601,22 +658,26 @@ typealias CompletionHandler = () -> Void
     }
 
     fileprivate func dismissOrderView() {
-        self.stackViewPlaceholder!.snp.remakeConstraints({ (make) in
-            make.top.equalTo(self.chartViewPlaceholder!.snp.bottom).offset(UIDefaults.Spacing)
-        })
-
         UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration,
-                       animations: {
-            self.view.layoutIfNeeded()
+                       animations: { [weak self] in
+            self?.orderView?.alpha = 0
+                        
+            self?.mainScrollView?.setContentOffset(CGPoint(x:0, y:0), animated:true)
+        }) { [weak self] (_) in
+            self?.orderView?.removeFromSuperview()
+            self?.orderView = nil
 
-            self.orderView?.alpha = 0
-            self.collectionViewPlaceholder!.alpha = 1
-            self.chartViewPlaceholder!.alpha = 1
-        }) { (_) in
-            self.orderView?.removeFromSuperview()
-            self.orderView = nil
-
-            self.updateBalanceValueLabel()
+            UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration,
+                           animations: { [weak self] in
+                self?.collectionViewPlaceholder?.alpha = 1
+                self?.setupButtons()
+                            
+                self?.view.layoutIfNeeded()
+            },
+                           completion: { [weak self] (_) in
+                self?.mainScrollView?.contentInset = UIEdgeInsets(top:0, left:0, bottom:0, right:0)
+                self?.updateBalanceValueLabel()
+            })
         }
     }
 
@@ -631,86 +692,8 @@ typealias CompletionHandler = () -> Void
     func createOrderView(sender:CreateOrderView,
                          didSubmitRequestWithAmount amount:Double,
                          price:Double,
-                         forMode mode:OrderMode) {
-        let timeout = sender.isFirstResponder ? UIDefaults.DefaultAnimationDuration : 0
-        _ = sender.resignFirstResponder()
-        let orderCurrency = currentOrderCurrency
-        let pair = currentPair
-
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + timeout) {
-            self.animateOrderSubmitting(withOrderView:sender,
-                                        forMode:mode,
-                                        completion: {
-
-                let addPendingOrder = { (id:String) in
-                    let orderStatus = OrderStatusInfo(id:id,
-                                                      status:OrderStatus.Pending,
-                                                      date:Date(),
-                                                      currency:orderCurrency!,
-                                                      initialAmount:amount,
-                                                      remainingAmount:amount,
-                                                      price:price,
-                                                      type:mode == .Buy ? OrderType.Buy : OrderType.Sell)
-                    self.set(orderStatusInfo:orderStatus, forCurrencyPair:pair)
-                    self.userOrdersView.reloadData()
-                }
-
-                if mode == .Buy {
-                    self.btcTradeUAOrderProvider.performBuyOrderAsync(forCurrency:orderCurrency!,
-                                                                      amount:amount,
-                                                                      price:price,
-                                                                      publicKey:self.publicKey!,
-                                                                      privateKey:self.privateKey!,
-                                                                      onCompletion:
-                    { [weak self] (orderId) in
-                        if orderId == nil {
-                            return
-                        }
-
-                        self?.ordersDataFacade!.makeOrder(withInitializationBlock: { (order) in
-                            order.id = orderId
-                            order.isBuy = true
-                            order.currency = pair.rawValue as String
-                            order.date = Date()
-                            order.initialAmount = amount
-                            order.price = price
-                        })
-
-                        addPendingOrder(orderId!)
-
-                        self?.handleOrdersStatusUpdating {}
-                    })
-                }
-                else {
-                    self.btcTradeUAOrderProvider.performSellOrderAsync(forCurrency:self.currentOrderCurrency!,
-                                                                       amount:amount,
-                                                                       price:price,
-                                                                       publicKey:self.publicKey!,
-                                                                       privateKey:self.privateKey!,
-                                                                       onCompletion:
-                    { [weak self] (orderId) in
-                        if orderId == nil {
-                            return
-                        }
-
-                        self?.ordersDataFacade!.makeOrder(withInitializationBlock: { (order) in
-                            order.id = orderId
-                            order.isBuy = false
-                            order.currency = pair.rawValue as String
-                            order.date = Date()
-                            order.initialAmount = amount
-                            order.price = price
-                        })
-
-                        addPendingOrder(orderId!)
-
-                        self?.handleOrdersStatusUpdating {}
-                    })
-                }
-                                            
-                self.chartController.reloadData()
-            })
-        }
+                         mode:OrderMode) {
+        handleOrderSubmission(withCryptocurrencyAmount:amount, price:price, mode:mode)
     }
 
     fileprivate func animateOrderSubmitting(withOrderView orderView:CreateOrderView,
@@ -795,20 +778,27 @@ typealias CompletionHandler = () -> Void
     
     // MARK: Events handling
 
-    @objc fileprivate func buyButtonPressed(button:UIButton) -> Void {
-        loginIfNeeded { [weak self] () in
-            if self != nil {
-                self!.presentOrderView(withMode:.Buy,
-                                       forCurrency:self!.currenciesController.selectedCurrency!)
-            }
-        }
+    @IBAction fileprivate func buyButtonPressed(button:UIButton) -> Void {
+        handleButton(forOrderMode:.Buy)
     }
 
-    @objc fileprivate func sellButtonPressed(button:UIButton) -> Void {
+    @IBAction fileprivate func sellButtonPressed(button:UIButton) -> Void {
+        handleButton(forOrderMode:.Sell)
+    }
+    
+    fileprivate func handleButton(forOrderMode mode:OrderMode) {
         loginIfNeeded { [weak self] () in
             if self != nil {
-                self!.presentOrderView(withMode:.Sell,
-                                       forCurrency:self!.currenciesController.selectedCurrency!)
+                if self!.orderView == nil {
+                    self!.presentOrderView(withMode:mode,
+                                           forCurrency:self!.currenciesController.selectedCurrency!)
+                }
+                else if self!.orderView!.price != nil &&
+                        self!.orderView!.amount != nil {
+                    self!.handleOrderSubmission(withCryptocurrencyAmount:self!.orderView!.amount!,
+                                                price:self!.orderView!.price!,
+                                                mode:mode)
+                }
             }
         }
     }
@@ -822,7 +812,11 @@ typealias CompletionHandler = () -> Void
     @IBOutlet weak var mainScrollView:UIScrollView?
     @IBOutlet weak var collectionViewPlaceholder:UIView?
     @IBOutlet weak var chartViewPlaceholder:UIView?
+    @IBOutlet weak var buttonsPlaceholder:UIView?
     @IBOutlet weak var stackViewPlaceholder:UIView?
+    
+    @IBOutlet weak var buyButton:UIButton?
+    @IBOutlet weak var sellButton:UIButton?
 
     // MARK: Internal fields
 

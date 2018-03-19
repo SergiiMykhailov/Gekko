@@ -113,6 +113,17 @@ class OrdersView : UIView,
             headerView!.priceLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
             headerView!.remainingAmountLabel.text = NSLocalizedString("Remainder", comment:"Remaining order amount text")
             headerView!.remainingAmountLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
+            
+            let separatorView = UIView()
+            separatorView.backgroundColor = UIDefaults.SeparatorColor
+            headerView?.addSubview(separatorView)
+            
+            separatorView.snp.makeConstraints({ (make) in
+                make.left.equalToSuperview()
+                make.right.equalToSuperview()
+                make.height.equalTo(1)
+                make.bottom.equalToSuperview()
+            })
         }
 
         return headerView!
