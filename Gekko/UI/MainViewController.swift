@@ -381,13 +381,10 @@ class MainViewController : UIViewController,
     fileprivate func handleDealsUpdating(forPair pair:BTCTradeUACurrencyPair,
                                          onCompletion:@escaping () -> Void) {
         btcTradeUAOrderProvider.retrieveDealsAsync(forPair:pair,
-                                                   withCompletionHandler: { (deals,
-                                                    minPrice,
-                                                    maxPrice) in
+                                                   withCompletionHandler: { (deals, candle) in
             DispatchQueue.main.async { [weak self] () in
                 if (self != nil) {
-                    let currencyPairInfo = CurrencyPairInfo(minPrice:minPrice, maxPrice:maxPrice)
-                    self!.currencyPairToCompletedOrdersMap[pair] = currencyPairInfo
+                    self!.currencyPairToCompletedOrdersMap[pair] = candle
                     self!.currenciesController.collectionView!.reloadData()
                 }
                 
@@ -507,7 +504,12 @@ typealias CompletionHandler = () -> Void
         btcTradeUACandlesProvider.retrieveCandlesAsync(forPair:pair) { (candles) in
             DispatchQueue.main.async { [weak self] () in
                 if self != nil {
-                    self!.currencyPairToCandlesMap[pair] = candles
+                    var candlesToAssign = candles
+                    if let currentDayCandle = self!.currencyPairToCompletedOrdersMap[pair] {
+                        candlesToAssign.append(currentDayCandle)
+                    }
+
+                    self!.currencyPairToCandlesMap[pair] = candlesToAssign
                     self!.chartController.reloadData()
                 }
                 
@@ -572,7 +574,7 @@ typealias CompletionHandler = () -> Void
         let currencyPair = MainViewController.CurrencyToCurrencyPairMap[currency]
         let currencyPairInfo = currencyPairToCompletedOrdersMap[currencyPair!]
 
-        return currencyPairInfo != nil ? currencyPairInfo!.minPrice : nil
+        return currencyPairInfo != nil ? currencyPairInfo!.low : nil
     }
 
     internal func currenciesViewController(sender:CurrenciesCollectionViewController,
@@ -580,7 +582,7 @@ typealias CompletionHandler = () -> Void
         let currencyPair = MainViewController.CurrencyToCurrencyPairMap[currency]
         let currencyPairInfo = currencyPairToCompletedOrdersMap[currencyPair!]
 
-        return currencyPairInfo != nil ? currencyPairInfo!.maxPrice : nil
+        return currencyPairInfo != nil ? currencyPairInfo!.high : nil
     }
 
     // MARK: CurrenciesCollectionViewControllerDelegate implementation
@@ -825,7 +827,7 @@ typealias CompletionHandler = () -> Void
         var maxPrice:Double
     }
 
-    fileprivate var currencyPairToCompletedOrdersMap = [BTCTradeUACurrencyPair : CurrencyPairInfo]()
+    fileprivate var currencyPairToCompletedOrdersMap = [BTCTradeUACurrencyPair : CandleInfo]()
     fileprivate var currencyPairToBuyOrdersMap = [BTCTradeUACurrencyPair : [OrderInfo]]()
     fileprivate var currencyPairToSellOrdersMap = [BTCTradeUACurrencyPair : [OrderInfo]]()
     fileprivate var currencyPairToCandlesMap = [BTCTradeUACurrencyPair : [CandleInfo]]()
