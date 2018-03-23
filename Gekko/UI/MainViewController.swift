@@ -156,7 +156,7 @@ class MainViewController : UIViewController,
             })
         }
 
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.BalancePollTimeout) {
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PollTimeout) {
             [weak self] () in
             if (self != nil) {
                 self!.scheduleBalanceUpdating{}
@@ -198,7 +198,7 @@ class MainViewController : UIViewController,
     fileprivate func scheduleOrdersStatusUpdating() {
         handleOrdersStatusUpdating(onCompletion: {})
 
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.OrdersPollTimeout) {
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PollTimeout) {
             [weak self] () in
             if (self != nil) {
                 self!.scheduleOrdersStatusUpdating()
@@ -214,21 +214,19 @@ class MainViewController : UIViewController,
     
     fileprivate func updateOrdersStatus(forCurrencyPair currencyPair:BTCTradeUACurrencyPair,
                                         onCompletion:@escaping () -> Void) {
-        if let orders = ordersDataFacade?.orders(forCurrencyPair:currencyPair.rawValue as String) {
-            let requiredOrdersCount = orders.count
-            var ordersCount = 0
-            
-            if requiredOrdersCount == 0 {
+        var requiredOperationsCount = 1
+        var handledOperationsCount = 0
+
+        let completionHandler = {
+            handledOperationsCount += 1
+            if handledOperationsCount == requiredOperationsCount {
                 onCompletion()
             }
-            
-            let completionHandler = {
-                ordersCount += 1
-                if ordersCount == requiredOrdersCount {
-                    onCompletion()
-                }
-            }
-            
+        }
+
+        if let orders = ordersDataFacade?.orders(forCurrencyPair:currencyPair.rawValue as String) {
+            requiredOperationsCount = requiredOperationsCount + orders.count
+
             for order in orders {
                 if order.id == nil || publicKey == nil || privateKey == nil {
                     continue
@@ -252,6 +250,43 @@ class MainViewController : UIViewController,
                         completionHandler()
                     }
                 })
+            }
+        }
+
+        updateCompletedDeals(forCurrencyPair:currencyPair, onCompletion:completionHandler)
+    }
+
+    fileprivate func updateCompletedDeals(forCurrencyPair currencyPair:BTCTradeUACurrencyPair,
+                                          onCompletion:@escaping () -> Void) {
+        if publicKey == nil || privateKey == nil {
+            onCompletion()
+            return
+        }
+
+        var startDate = MainViewController.DealsUpdatingInitialDate
+        if let lastDealsUpdatingDate = UserDefaults.standard.string(forKey:MainViewController.LastDealsUpdatingDateKey) {
+            MainViewController.dateFormatter.dateFormat = "DD-MM-YYYY"
+            startDate = MainViewController.dateFormatter.date(from:lastDealsUpdatingDate)
+        }
+
+        let finishDate = Date()
+        btcTradeUADealsProvider.retrieveCompletedDealsAsync(forCurrencyPair:currencyPair,
+                                                            startDate:startDate!,
+                                                            finishDate:finishDate,
+                                                            publicKey:publicKey!,
+                                                            privateKey:privateKey!) {(deals) in
+                DispatchQueue.main.async { [weak self] in
+
+                if deals != nil {
+                    let lastDealsUpdatingDate = MainViewController.dateFormatter.string(from:finishDate)
+                    UserDefaults.standard.set(lastDealsUpdatingDate, forKey:MainViewController.LastDealsUpdatingDateKey)
+
+                    for deal in deals! {
+                        self?.set(orderStatusInfo:deal, forCurrencyPair:currencyPair)
+                    }
+                }
+
+                onCompletion()
             }
         }
     }
@@ -302,7 +337,7 @@ class MainViewController : UIViewController,
     fileprivate func scheduleOrdersUpdating() {
         handleOrdersUpdating(onCompletion: {})
         
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PricePollTimeout) {
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PollTimeout) {
             [weak self] () in
             if (self != nil) {
                 self!.scheduleOrdersUpdating()
@@ -359,12 +394,11 @@ class MainViewController : UIViewController,
             }
         })
     }
-
     
     fileprivate func scheduleDealsUpdating() {
         handleDealsUpdating(onCompletion:{})
 
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PricePollTimeout) {
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PollTimeout) {
             [weak self] () in
             if (self != nil) {
                 self!.scheduleDealsUpdating()
@@ -469,7 +503,7 @@ class MainViewController : UIViewController,
     fileprivate func scheduleCandlesUpdating() {
         handleCandlesUpdating(onCompletion: {})
 
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.CandlesPollTimeout) {
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PollTimeout) {
             [weak self] () in
             if (self != nil) {
                 self!.scheduleCandlesUpdating()
@@ -692,7 +726,7 @@ typealias CompletionHandler = () -> Void
     func createOrderView(sender:CreateOrderView,
                          didSubmitRequestWithAmount amount:Double,
                          price:Double,
-                         mode:OrderMode) {
+                         forMode mode:OrderMode) {
         handleOrderSubmission(withCryptocurrencyAmount:amount, price:price, mode:mode)
     }
 
@@ -833,6 +867,7 @@ typealias CompletionHandler = () -> Void
     fileprivate let btcTradeUABalanceProvider = BTCTradeUABalanceProvider()
     fileprivate let btcTradeUACandlesProvider = BTCTradeUACandlesProvider()
     fileprivate let btcTradeUAOrderProvider = BTCTradeUAOrderProvider()
+    fileprivate let btcTradeUADealsProvider = BTCTradeUADealsProvider()
     fileprivate let btcTradeUAOrdersStatusProvider = BTCTradeUAOrdersStatusProvider()
     fileprivate var currentOrderCurrency:Currency?
 
@@ -855,10 +890,7 @@ typealias LoginCompletionAction = () -> Void
 
     fileprivate var loginCompletionAction:LoginCompletionAction?
 
-    fileprivate static let BalancePollTimeout:TimeInterval = 20
-    fileprivate static let PricePollTimeout:TimeInterval = 10
-    fileprivate static let CandlesPollTimeout:TimeInterval = 30
-    fileprivate static let OrdersPollTimeout:TimeInterval = 10
+    fileprivate static let PollTimeout:TimeInterval = 15
     fileprivate static let PullDownRefreshingTimeout:TimeInterval = 5
 
     fileprivate static let SupportedCurrencyPairs = [BTCTradeUACurrencyPair.BtcUah,
@@ -890,5 +922,24 @@ typealias LoginCompletionAction = () -> Void
 
     fileprivate static let MainTabIndex = 0
     fileprivate static let SettingsTabIndex = 1
+
+    fileprivate static let dateFormatter = DateFormatter()
+    fileprivate static let DealsUpdatingInitialDate = Calendar(identifier:.gregorian).date(from:DateComponents(calendar:nil,
+                                                                                                               timeZone:nil,
+                                                                                                               era:nil,
+                                                                                                               year:2013,
+                                                                                                               month:0,
+                                                                                                               day:0,
+                                                                                                               hour:0,
+                                                                                                               minute:0,
+                                                                                                               second:0,
+                                                                                                               nanosecond:0,
+                                                                                                               weekday:nil,
+                                                                                                               weekdayOrdinal:nil,
+                                                                                                               quarter:nil,
+                                                                                                               weekOfMonth:nil,
+                                                                                                               weekOfYear:nil,
+                                                                                                               yearForWeekOfYear:nil))
+    fileprivate static let LastDealsUpdatingDateKey = "BTCTradeUALastDealsUpdating"
 }
 

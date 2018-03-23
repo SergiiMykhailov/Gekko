@@ -29,6 +29,7 @@
 		0240BB1E1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */; };
 		0240BB261FEC801B000EEAE0 /* TableViewInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */; };
 		0248532F1FFBD91000290BA1 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0248532E1FFBD91000290BA1 /* UIUtils.swift */; };
+		029964C220630FF000853ECF /* BTCTradeUADealsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029964C120630FF000853ECF /* BTCTradeUADealsProvider.swift */; };
 		02B32B812008122A00CA82D7 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B802008122900CA82D7 /* OrdersView.swift */; };
 		02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */; };
 		02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */; };
@@ -89,6 +90,7 @@
 		0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersStackViewTableCell.swift; sourceTree = "<group>"; };
 		0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewInputCell.swift; sourceTree = "<group>"; };
 		0248532E1FFBD91000290BA1 /* UIUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
+		029964C120630FF000853ECF /* BTCTradeUADealsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUADealsProvider.swift; sourceTree = "<group>"; };
 		02B32B802008122900CA82D7 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewCell.swift; sourceTree = "<group>"; };
 		02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
@@ -210,11 +212,12 @@
 				0207CDC11FC632DF0074EADF /* BTCTradeUABalanceProvider.swift */,
 				02D7D2F91FDB415D007C4557 /* BTCTradeUACandlesProvider.swift */,
 				0207CDC21FC632E00074EADF /* BTCTradeUACurrencies.swift */,
+				029964C120630FF000853ECF /* BTCTradeUADealsProvider.swift */,
 				0207CDC41FC632E00074EADF /* BTCTradeUALoginSession.swift */,
-				0207CDC01FC632DF0074EADF /* BTCTradeUAPostRequestFactory.swift */,
-				0207CDBF1FC632DF0074EADF /* BTCTradeUAProviderBase.swift */,
 				02D7D2FF1FDF2544007C4557 /* BTCTradeUAOrderProvider.swift */,
 				02B32B89200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift */,
+				0207CDC01FC632DF0074EADF /* BTCTradeUAPostRequestFactory.swift */,
+				0207CDBF1FC632DF0074EADF /* BTCTradeUAProviderBase.swift */,
 			);
 			path = BTCTradeUA;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				02D7D3021FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift in Sources */,
 				0207CDC71FC632E00074EADF /* BTCTradeUABalanceProvider.swift in Sources */,
 				02D7D2F41FDB4014007C4557 /* Currency.swift in Sources */,
+				029964C220630FF000853ECF /* BTCTradeUADealsProvider.swift in Sources */,
 				0207CDD81FD2F2140074EADF /* CurrencyCollectionViewCell.swift in Sources */,
 				02D7D2FE1FDDEA4B007C4557 /* UIDefaults.swift in Sources */,
 				02D7D2F81FDB409D007C4557 /* OrderTypes.swift in Sources */,

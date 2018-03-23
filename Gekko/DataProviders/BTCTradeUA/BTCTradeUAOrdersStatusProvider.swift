@@ -6,8 +6,6 @@ import Foundation
 
 class BTCTradeUAOrdersStatusProvider : BTCTradeUAProviderBase {
 
-typealias OrderStatusRetreivingCallback = ([OrderStatusInfo]) -> Void
-
     // MARK: Public methods and properties
     
 typealias OrderStatusCallback = (OrderStatusInfo?) -> Void
@@ -111,7 +109,6 @@ typealias OrderStatusCallback = (OrderStatusInfo?) -> Void
 
     private static let dateFormatter = DateFormatter()
 
-    private static let OrdersSuffix = "my_orders"
     private static let OrderStatusSuffix = "order/status"
 
     private static let StatusKey = "status"
