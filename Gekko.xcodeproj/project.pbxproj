@@ -88,6 +88,7 @@
 		0240BB1B1FE85DA6000EEAE0 /* OrdersStackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersStackViewController.swift; sourceTree = "<group>"; };
 		0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersStackViewTableCell.swift; sourceTree = "<group>"; };
 		0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewInputCell.swift; sourceTree = "<group>"; };
+		0242BCDC2069904500443686 /* Gekko 1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Gekko 1.2.xcdatamodel"; sourceTree = "<group>"; };
 		0248532E1FFBD91000290BA1 /* UIUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
 		02B32B802008122900CA82D7 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewCell.swift; sourceTree = "<group>"; };
@@ -746,9 +747,10 @@
 		0207CD7C1FC1A6ED0074EADF /* Gekko.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				0242BCDC2069904500443686 /* Gekko 1.2.xcdatamodel */,
 				0207CD7D1FC1A6ED0074EADF /* Gekko.xcdatamodel */,
 			);
-			currentVersion = 0207CD7D1FC1A6ED0074EADF /* Gekko.xcdatamodel */;
+			currentVersion = 0242BCDC2069904500443686 /* Gekko 1.2.xcdatamodel */;
 			path = Gekko.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

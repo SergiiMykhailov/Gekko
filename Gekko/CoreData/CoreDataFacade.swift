@@ -41,16 +41,17 @@ class CoreDataFacade : NSObject {
                 }
                 let storeURL = docURL.appendingPathComponent("\(CoreDataFacade.ModelName).sqlite")
                 do {
+                    let options = [NSMigratePersistentStoresAutomaticallyOption:true, NSInferMappingModelAutomaticallyOption:true]
                     try persistentStoreCoordinator.addPersistentStore(ofType:NSSQLiteStoreType,
                                                                       configurationName:nil,
                                                                       at:storeURL,
-                                                                      options:nil)
+                                                                      options:options)
+
+                    completionBlock()
                 } catch {
                     fatalError("Error migrating store: \(error)")
                 }
             }
-
-            completionBlock()
         })
     }
 
