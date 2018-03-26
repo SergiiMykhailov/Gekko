@@ -18,28 +18,33 @@ class MainViewController : UIViewController,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         stackViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         collectionViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         buttonsPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         chartViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
-
+        
         setupCurrenciesView()
 
         setupOrdersView()
         scheduleOrdersUpdating()
-
+        
         scheduleDealsUpdating()
 
         setupChartView()
         setupButtons()
         scheduleCandlesUpdating()
-
-        updateBalanceValueLabel()
         
         setupRefreshControl()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action:#selector(settingsButtonPressed))
+        
+        coreDataFacade = CoreDataFacade(completionBlock: { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.scheduleOrdersStatusUpdating()
+                self?.loadStoredBalance()
+            }
+        })
     }
 
     override func viewDidAppear(_ animated:Bool) {
@@ -49,7 +54,8 @@ class MainViewController : UIViewController,
 
         publicKey = userDefaults.string(forKey:UIUtils.PublicKeySettingsKey)
         privateKey = userDefaults.string(forKey:UIUtils.PrivateKeySettingsKey)
-
+        
+        updateBalanceValueLabel()
         scheduleBalanceUpdating{}
 
         if isAuthorized && loginCompletionAction != nil {
@@ -90,7 +96,7 @@ class MainViewController : UIViewController,
                             return
                         }
                                         
-                        self!.ordersDataFacade!.makeOrder(withInitializationBlock: { (order) in
+                        self!.coreDataFacade!.makeOrder(withInitializationBlock: { (order) in
                             order.id = orderId
                             order.isBuy = mode == .Buy
                             order.currency = pair.rawValue as String
@@ -146,6 +152,8 @@ class MainViewController : UIViewController,
                         self!.balance = balanceItems
                         self!.currenciesController.collectionView!.reloadData()
                         
+                        self!.coreDataFacade?.updateStoredBalance(withBalanceItems: balanceItems)
+        
                         if (self!.orderView?.superview == nil) {
                             self!.updateBalanceValueLabel()
                         }
@@ -187,12 +195,6 @@ class MainViewController : UIViewController,
         ordersStackController.view.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-
-        ordersDataFacade = CoreDataFacade(completionBlock: { [weak self] in
-            DispatchQueue.main.async { [weak self] in
-                self?.scheduleOrdersStatusUpdating()
-            }
-        })
     }
 
     fileprivate func scheduleOrdersStatusUpdating() {
@@ -214,7 +216,7 @@ class MainViewController : UIViewController,
     
     fileprivate func updateOrdersStatus(forCurrencyPair currencyPair:BTCTradeUACurrencyPair,
                                         onCompletion:@escaping () -> Void) {
-        if let orders = ordersDataFacade?.orders(forCurrencyPair:currencyPair.rawValue as String) {
+        if let orders = coreDataFacade?.orders(forCurrencyPair:currencyPair.rawValue as String) {
             let requiredOrdersCount = orders.count
             var ordersCount = 0
             
@@ -559,6 +561,20 @@ typealias CompletionHandler = () -> Void
             }
         }
     }
+    
+    fileprivate func loadStoredBalance() {
+        let balanceData = self.coreDataFacade!.allBalanceItems()
+        let tempArray = NSMutableArray()
+        
+        for item in balanceData {
+            let currency = Currency(rawValue: item.currency! as Currency.RawValue)
+            tempArray.add(BalanceItem(currency: currency!, amount: item.amount))
+            print("LOAD CoreData balance currency \(item.currency!) = \(item.amount)")
+        }
+        
+        self.balance = tempArray as! [BalanceItem]
+        self.currenciesController.collectionView!.reloadData()
+    }
 
     // MARK: CurrenciesCollectionViewControllerDataSource implementation
 
@@ -845,7 +861,7 @@ typealias CompletionHandler = () -> Void
     fileprivate let ordersStackController = OrdersStackViewController()
     fileprivate let userOrdersView = OrdersView()
     fileprivate var orderView:CreateOrderView?
-    fileprivate var ordersDataFacade:CoreDataFacade?
+    fileprivate var coreDataFacade:CoreDataFacade?
     fileprivate var currencyPairToUserOrdersStatusMap = [BTCTradeUACurrencyPair : [OrderStatusInfo]]()
 
     fileprivate var publicKey:String?
