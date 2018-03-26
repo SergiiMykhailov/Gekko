@@ -569,7 +569,6 @@ typealias CompletionHandler = () -> Void
         for item in balanceData {
             let currency = Currency(rawValue: item.currency! as Currency.RawValue)
             tempArray.add(BalanceItem(currency: currency!, amount: item.amount))
-            print("LOAD CoreData balance currency \(item.currency!) = \(item.amount)")
         }
         
         self.balance = tempArray as! [BalanceItem]
