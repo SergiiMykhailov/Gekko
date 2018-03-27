@@ -78,7 +78,7 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
 
         dailyPercentageLabel.setContentHuggingPriority(.required, for:.horizontal)
         dailyPercentageLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(currencyLabel.snp.right).offset(UIDefaults.SpacingSmall)
+            make.right.equalToSuperview().offset(-UIDefaults.Spacing)
             make.centerY.equalTo(currencyLabel)
         }
 
@@ -143,7 +143,7 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
 
     fileprivate func updateDailyPercentageText() {
         if dailyPercentage != nil {
-            let labelText = String(format:"%+.2f", dailyPercentage!)
+            let labelText = String(format:"%+.1f%", dailyPercentage!) + "%"
 
             dailyPercentageLabel.textColor = dailyPercentage! >= 0.0
                                              ? UIDefaults.GreenColor

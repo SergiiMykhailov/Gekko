@@ -604,7 +604,7 @@ typealias CompletionHandler = () -> Void
                                            dailyUpdateInPercentsForCurrency currency:Currency) -> Double? {
         let currencyPair = MainViewController.CurrencyToCurrencyPairMap[currency]
         if let currencyPairInfo = currencyPairToCompletedOrdersMap[currencyPair!] {
-            let percentage = (currencyPairInfo.close - currencyPairInfo.open) / currencyPairInfo.open
+            let percentage = 100 * (currencyPairInfo.close - currencyPairInfo.open) / currencyPairInfo.open
             return percentage
         }
 
