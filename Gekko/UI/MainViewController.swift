@@ -593,11 +593,22 @@ typealias CompletionHandler = () -> Void
     }
 
     internal func currenciesViewController(sender:CurrenciesCollectionViewController,
-                                  maxPriceForCurrency currency:Currency) -> Double? {
+                                           maxPriceForCurrency currency:Currency) -> Double? {
         let currencyPair = MainViewController.CurrencyToCurrencyPairMap[currency]
         let currencyPairInfo = currencyPairToCompletedOrdersMap[currencyPair!]
 
         return currencyPairInfo != nil ? currencyPairInfo!.high : nil
+    }
+
+    internal func currenciesViewController(sender:CurrenciesCollectionViewController,
+                                           dailyUpdateInPercentsForCurrency currency:Currency) -> Double? {
+        let currencyPair = MainViewController.CurrencyToCurrencyPairMap[currency]
+        if let currencyPairInfo = currencyPairToCompletedOrdersMap[currencyPair!] {
+            let percentage = (currencyPairInfo.close - currencyPairInfo.open) / currencyPairInfo.open
+            return percentage
+        }
+
+        return nil
     }
 
     // MARK: CurrenciesCollectionViewControllerDelegate implementation

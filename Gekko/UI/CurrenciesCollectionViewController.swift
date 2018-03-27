@@ -15,6 +15,9 @@ protocol CurrenciesCollectionViewControllerDataSource : class {
 
     func currenciesViewController(sender:CurrenciesCollectionViewController,
                                   maxPriceForCurrency:Currency) -> Double?
+
+    func currenciesViewController(sender:CurrenciesCollectionViewController,
+                                  dailyUpdateInPercentsForCurrency:Currency) -> Double?
 }
 
 @objc protocol CurrenciesCollectionViewControllerDelegate : class {
@@ -85,11 +88,14 @@ class CurrenciesCollectionViewController : UICollectionViewController {
                                                                     minPriceForCurrency:requestedCurrency!)
                 let maxPrice = dataSource!.currenciesViewController(sender:self,
                                                                     maxPriceForCurrency:requestedCurrency!)
+                let dailyPercentage = dataSource!.currenciesViewController(sender:self,
+                                                                           dailyUpdateInPercentsForCurrency:requestedCurrency!)
 
                 cell.balance = balance
                 cell.minPrice = minPrice
                 cell.maxPrice = maxPrice
                 cell.currencyText = requestedCurrency!.rawValue as String
+                cell.dailyPercentage = dailyPercentage
 
                 if requestedCurrency! == .UAH {
                     cell.balancePrecission = 2
