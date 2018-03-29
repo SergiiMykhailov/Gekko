@@ -4,6 +4,6 @@ Steps to build project:
    sudo gem install cocoapods
 - Run Terminal and navigate to repository root
 - Update Pods repo via:
-   pod repo updates
+   pod repo update
 - Update Pods via:
    pod install
