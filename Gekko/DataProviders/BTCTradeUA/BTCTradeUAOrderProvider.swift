@@ -7,7 +7,7 @@ import Foundation
 class BTCTradeUAOrderProvider : BTCTradeUAProviderBase {
 
 typealias OrderCompletionCallback = (String?) -> Void
-typealias CompletedOrdersCompletionCallback = ([OrderInfo], CandleInfo) -> Void
+typealias CompletedOrdersCompletionCallback = ([OrderInfo], CandleInfo?) -> Void
 typealias PendingOrdersCompletionCallback = ([OrderInfo]) -> Void
 typealias CancelOrderCompletionCallback = () -> Void
 
@@ -35,6 +35,9 @@ typealias CancelOrderCompletionCallback = () -> Void
                                                                   low:minPrice,
                                                                   open:openPrice,
                                                                   close:lastPrice))
+                }
+                else {
+                    completionHandler([OrderInfo](), nil)
                 }
             }
         }
