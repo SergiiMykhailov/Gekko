@@ -576,6 +576,22 @@ typealias CompletionHandler = () -> Void
         self.balance = tempArray as! [BalanceItem]
         self.currenciesController.collectionView!.reloadData()
     }
+    
+    fileprivate func setupServerErrorView() {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "serverError"))
+        imageView.alpha = 0.1
+        imageView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        imageView.layer.cornerRadius = UIDefaults.CornerRadius
+        imageView.isUserInteractionEnabled = false
+        
+        self.view.insertSubview(imageView, at: 0)
+        
+        imageView.snp.makeConstraints { (make) in
+            make.width.equalTo(100)
+            make.height.equalTo(100)
+            make.center.equalToSuperview()
+        }
+    }
 
     // MARK: CurrenciesCollectionViewControllerDataSource implementation
 
