@@ -21,6 +21,8 @@ class MainViewController : UIViewController,
 
         setupTradingPlatform()
 
+        currentPair = makePairForCurrency(forCurrency:.BTC)
+
         stackViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         collectionViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         buttonsPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
@@ -62,6 +64,8 @@ class MainViewController : UIViewController,
         tradingPlatformController = TradingPlatformController(tradingPlatform:tradingPlatform)
 
         subscribeForTradingPlatformDataUpdates()
+
+        tradingPlatformController!.start()
     }
 
     fileprivate func subscribeForTradingPlatformDataUpdates() {
