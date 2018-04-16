@@ -12,7 +12,8 @@ class MainViewController : UIViewController,
                            CreateOrderViewDelegate,
                            OrdersStackViewControllerDataSource,
                            OrdersViewDelegate,
-                           OrdersViewDataSource {
+                           OrdersViewDataSource,
+                           ChangeServerAccessibilityDelegate {
 
     // MARK: Overriden functions
 
@@ -36,6 +37,9 @@ class MainViewController : UIViewController,
         scheduleCandlesUpdating()
         
         setupRefreshControl()
+        
+        serverAccessibility.delegate = self
+        scheduleServerAccessibility()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action:#selector(settingsButtonPressed))
         
@@ -577,7 +581,18 @@ typealias CompletionHandler = () -> Void
         self.currenciesController.collectionView!.reloadData()
     }
     
-    fileprivate func setupServerErrorView() {
+    fileprivate func scheduleServerAccessibility() {
+        serverAccessibility.checkServerStatus()
+        
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.ServerStatusUpdatingTimeout) {
+            [weak self] () in
+            if (self != nil) {
+                self!.scheduleServerAccessibility()
+            }
+        }
+    }
+    
+    internal func setupServerErrorView() {
         let imageView = UIImageView(image: #imageLiteral(resourceName: "serverError"))
         imageView.alpha = 0
         imageView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -592,15 +607,15 @@ typealias CompletionHandler = () -> Void
             make.center.equalToSuperview()
         }
         
-        UIView.animate(withDuration: UIDefaults.DefaultAnimationDuration) {
+        UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration) {
             imageView.alpha = 0.1
         }
     }
     
-    fileprivate func removeServerErrorView() {
+    internal func removeServerErrorView() {
         let imageView = self.view.subviews.last!
         
-        UIView.animate(withDuration: UIDefaults.DefaultAnimationDuration) {
+        UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration) {
             imageView.alpha = 0
         }
         
@@ -908,6 +923,8 @@ typealias CompletionHandler = () -> Void
 
     fileprivate var publicKey:String?
     fileprivate var privateKey:String?
+    
+    fileprivate let serverAccessibility = TradingPlatformAccessibilityController()
 
 typealias LoginCompletionAction = () -> Void
 
@@ -918,6 +935,7 @@ typealias LoginCompletionAction = () -> Void
     fileprivate static let CandlesPollTimeout:TimeInterval = 30
     fileprivate static let OrdersPollTimeout:TimeInterval = 10
     fileprivate static let PullDownRefreshingTimeout:TimeInterval = 5
+    fileprivate static let ServerStatusUpdatingTimeout:TimeInterval = 10
 
     fileprivate static let SupportedCurrencyPairs = [BTCTradeUACurrencyPair.BtcUah,
                                                      BTCTradeUACurrencyPair.EthUah,

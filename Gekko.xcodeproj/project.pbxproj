@@ -46,6 +46,7 @@
 		33D4941C4439586FB3638DB1 /* Pods_Gekko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D9D9BC13EE40979D25FB1 /* Pods_Gekko.framework */; };
 		CA40E2D8205809B4000A3A8C /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA40E2D7205809B3000A3A8C /* LocalAuthentication.framework */; };
 		CA40E2DA205817FF000A3A8C /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA40E2D9205817FE000A3A8C /* AuthenticationViewController.swift */; };
+		CAD1BDB9207F28BF00911BC4 /* TradingPlatformAccessibilityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD1BDB8207F28BF00911BC4 /* TradingPlatformAccessibilityController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		386B48C09CA90EE9F7708A7E /* Pods-Gekko.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gekko.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gekko/Pods-Gekko.release.xcconfig"; sourceTree = "<group>"; };
 		CA40E2D7205809B3000A3A8C /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		CA40E2D9205817FE000A3A8C /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
+		CAD1BDB8207F28BF00911BC4 /* TradingPlatformAccessibilityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformAccessibilityController.swift; sourceTree = "<group>"; };
 		CB8B640BD9403F92144F88E2 /* Pods-Gekko.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gekko.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Gekko/Pods-Gekko.debug.xcconfig"; sourceTree = "<group>"; };
 		FF1D9D9BC13EE40979D25FB1 /* Pods_Gekko.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gekko.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -208,6 +210,7 @@
 		0207CDBE1FC632BC0074EADF /* BTCTradeUA */ = {
 			isa = PBXGroup;
 			children = (
+				CAD1BDB8207F28BF00911BC4 /* TradingPlatformAccessibilityController.swift */,
 				0207CDC11FC632DF0074EADF /* BTCTradeUABalanceProvider.swift */,
 				02D7D2F91FDB415D007C4557 /* BTCTradeUACandlesProvider.swift */,
 				0207CDC21FC632E00074EADF /* BTCTradeUACurrencies.swift */,
@@ -444,6 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0207CD761FC1A6ED0074EADF /* AppDelegate.swift in Sources */,
+				CAD1BDB9207F28BF00911BC4 /* TradingPlatformAccessibilityController.swift in Sources */,
 				02D7D2F61FDB406D007C4557 /* BalanceItem.swift in Sources */,
 				CA40E2DA205817FF000A3A8C /* AuthenticationViewController.swift in Sources */,
 				0207CDD61FD2E9570074EADF /* CurrenciesCollectionViewController.swift in Sources */,
