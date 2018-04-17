@@ -4,14 +4,14 @@
 
 import Foundation
 
-protocol TradingPlatformAccessibilityDelegate : class {
+protocol TradingPlatformAccessibilityControllerDelegate : class {
     func tradingPlatformAccessibilityControllerDidDetectConnectionFailure(_ sender:TradingPlatformAccessibilityController)
     func tradingPlatformAccessibilityControllerDidDetectConnectionRestore(_ sender:TradingPlatformAccessibilityController)
 }
 
 class TradingPlatformAccessibilityController {
     
-    public weak var delegate:TradingPlatformAccessibilityDelegate?
+    public weak var delegate:TradingPlatformAccessibilityControllerDelegate?
     
     // MARK: Internal methods
     

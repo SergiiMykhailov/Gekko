@@ -13,7 +13,7 @@ class MainViewController : UIViewController,
                            OrdersStackViewControllerDataSource,
                            OrdersViewDelegate,
                            OrdersViewDataSource,
-                           TradingPlatformAccessibilityDelegate {
+                           TradingPlatformAccessibilityControllerDelegate {
 
     // MARK: Overriden functions
 
