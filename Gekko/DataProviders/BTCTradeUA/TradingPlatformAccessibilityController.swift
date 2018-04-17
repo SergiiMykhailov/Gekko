@@ -4,38 +4,51 @@
 
 import Foundation
 
-protocol ChangeServerAccessibilityDelegate {
-    func setupServerErrorView()
-    func removeServerErrorView()
+protocol TradingPlatformAccessibilityDelegate : class {
+    func tradingPlatformAccessibilityControllerDidDetectConnectionFailure(_ sender:TradingPlatformAccessibilityController)
+    func tradingPlatformAccessibilityControllerDidDetectConnectionRestore(_ sender:TradingPlatformAccessibilityController)
 }
 
 class TradingPlatformAccessibilityController {
     
-    public var delegate:ChangeServerAccessibilityDelegate?
+    public weak var delegate:TradingPlatformAccessibilityDelegate?
     
-    // MARK: Private methods
+    // MARK: Internal methods
     
     public func checkServerStatus() {
         btcTradeUAOrderProvider.retrieveDealsAsync(forPair:BTCTradeUACurrencyPair.BtcUah,
                                                     withCompletionHandler: { (deals, candle) in
             DispatchQueue.main.async { [weak self] () in
                 if self != nil {
-                    if deals.isEmpty && self!.serverErrorViewInBackground {
-                        self!.delegate?.setupServerErrorView()
-                        self!.serverErrorViewInBackground = false
+                    if deals.isEmpty && self!.connectionEstablished {
+                        self!.delegate?.tradingPlatformAccessibilityControllerDidDetectConnectionFailure(self!)
+                        self!.connectionEstablished = false
                     }
-                    else if !deals.isEmpty && !self!.serverErrorViewInBackground {
-                        self!.delegate?.removeServerErrorView()
-                        self!.serverErrorViewInBackground = true
+                    else if !deals.isEmpty && !self!.connectionEstablished {
+                        self!.delegate?.tradingPlatformAccessibilityControllerDidDetectConnectionRestore(self!)
+                        self!.connectionEstablished = true
                     }
                 }
             }
         })
     }
     
+    public func startMonitoringAccessibility() {
+        checkServerStatus()
+        
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformAccessibilityController.ServerStatusUpdatingTimeout) {
+            [weak self] () in
+            if (self != nil) {
+                self!.startMonitoringAccessibility()
+            }
+        }
+    }
+    
     // MARK: Internal fields
     
     fileprivate let btcTradeUAOrderProvider = BTCTradeUAOrderProvider()
     
-    fileprivate var serverErrorViewInBackground = true
+    fileprivate var connectionEstablished = true
+    
+    fileprivate static let ServerStatusUpdatingTimeout:TimeInterval = 10
 }

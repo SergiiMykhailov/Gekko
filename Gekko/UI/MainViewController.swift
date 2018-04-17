@@ -13,7 +13,7 @@ class MainViewController : UIViewController,
                            OrdersStackViewControllerDataSource,
                            OrdersViewDelegate,
                            OrdersViewDataSource,
-                           ChangeServerAccessibilityDelegate {
+                           TradingPlatformAccessibilityDelegate {
 
     // MARK: Overriden functions
 
@@ -39,7 +39,7 @@ class MainViewController : UIViewController,
         setupRefreshControl()
         
         serverAccessibility.delegate = self
-        scheduleServerAccessibility()
+        serverAccessibility.startMonitoringAccessibility()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action:#selector(settingsButtonPressed))
         
@@ -581,18 +581,7 @@ typealias CompletionHandler = () -> Void
         self.currenciesController.collectionView!.reloadData()
     }
     
-    fileprivate func scheduleServerAccessibility() {
-        serverAccessibility.checkServerStatus()
-        
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.ServerStatusUpdatingTimeout) {
-            [weak self] () in
-            if (self != nil) {
-                self!.scheduleServerAccessibility()
-            }
-        }
-    }
-    
-    internal func setupServerErrorView() {
+    internal func tradingPlatformAccessibilityControllerDidDetectConnectionFailure(_ sender:TradingPlatformAccessibilityController) {
         let imageView = UIImageView(image: #imageLiteral(resourceName: "serverError"))
         imageView.alpha = 0
         imageView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -612,7 +601,7 @@ typealias CompletionHandler = () -> Void
         }
     }
     
-    internal func removeServerErrorView() {
+    internal func tradingPlatformAccessibilityControllerDidDetectConnectionRestore(_ sender:TradingPlatformAccessibilityController) {
         let imageView = self.view.subviews.last!
         
         UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration) {
@@ -935,7 +924,6 @@ typealias LoginCompletionAction = () -> Void
     fileprivate static let CandlesPollTimeout:TimeInterval = 30
     fileprivate static let OrdersPollTimeout:TimeInterval = 10
     fileprivate static let PullDownRefreshingTimeout:TimeInterval = 5
-    fileprivate static let ServerStatusUpdatingTimeout:TimeInterval = 10
 
     fileprivate static let SupportedCurrencyPairs = [BTCTradeUACurrencyPair.BtcUah,
                                                      BTCTradeUACurrencyPair.EthUah,
