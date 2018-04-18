@@ -299,6 +299,38 @@ class MainViewController : UIViewController,
         }
     }
 
+    // MARK: TradingPlatformAccessibilityControllerDelegate implementation
+
+    internal func tradingPlatformAccessibilityControllerDidDetectConnectionFailure(_ sender:TradingPlatformAccessibilityController) {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "serverError"))
+        imageView.alpha = 0
+        imageView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        imageView.layer.cornerRadius = UIDefaults.CornerRadius
+        imageView.isUserInteractionEnabled = false
+
+        self.view.addSubview(imageView)
+
+        imageView.snp.makeConstraints { (make) in
+            make.width.equalTo(100)
+            make.height.equalTo(100)
+            make.center.equalToSuperview()
+        }
+
+        UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration) {
+            imageView.alpha = 0.1
+        }
+    }
+
+    internal func tradingPlatformAccessibilityControllerDidDetectConnectionRestore(_ sender:TradingPlatformAccessibilityController) {
+        let imageView = self.view.subviews.last!
+
+        UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration) {
+            imageView.alpha = 0
+        }
+
+        imageView.removeFromSuperview()
+    }
+
     // MARK: CurrenciesCollectionViewControllerDataSource implementation
 
     internal func currenciesViewController(sender:CurrenciesCollectionViewController,
@@ -318,38 +350,6 @@ class MainViewController : UIViewController,
                                         
         return currencyPair
     }
-    
-    internal func tradingPlatformAccessibilityControllerDidDetectConnectionFailure(_ sender:TradingPlatformAccessibilityController) {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "serverError"))
-        imageView.alpha = 0
-        imageView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        imageView.layer.cornerRadius = UIDefaults.CornerRadius
-        imageView.isUserInteractionEnabled = false
-        
-        self.view.addSubview(imageView)
-        
-        imageView.snp.makeConstraints { (make) in
-            make.width.equalTo(100)
-            make.height.equalTo(100)
-            make.center.equalToSuperview()
-        }
-        
-        UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration) {
-            imageView.alpha = 0.1
-        }
-    }
-    
-    internal func tradingPlatformAccessibilityControllerDidDetectConnectionRestore(_ sender:TradingPlatformAccessibilityController) {
-        let imageView = self.view.subviews.last!
-        
-        UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration) {
-            imageView.alpha = 0
-        }
-        
-        imageView.removeFromSuperview()
-    }
-
-
 
     internal func currenciesViewController(sender:CurrenciesCollectionViewController,
                                            minPriceForCurrency currency:Currency) -> Double? {
