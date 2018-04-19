@@ -7,7 +7,7 @@ import Foundation
 class BTCTradeUAOrderProvider : BTCTradeUAProviderBase {
 
 typealias OrderCompletionCallback = (String?) -> Void
-typealias CompletedOrdersCompletionCallback = ([OrderInfo], Double, Double) -> Void
+typealias CompletedOrdersCompletionCallback = ([OrderInfo], CandleInfo?) -> Void
 typealias PendingOrdersCompletionCallback = ([OrderInfo]) -> Void
 typealias CancelOrderCompletionCallback = () -> Void
 
@@ -22,11 +22,23 @@ typealias CancelOrderCompletionCallback = () -> Void
             if (self != nil) {
                 let dealsCollection = self!.deals(fromResponseItems:items)
 
-                var minPrice:Double = 0
-                var maxPrice:Double = 0
-                self!.minMaxPrice(forDeals:dealsCollection, minValue:&minPrice, maxValue:&maxPrice)
+                if !dealsCollection.isEmpty {
+                    var minPrice:Double = 0
+                    var maxPrice:Double = 0
+                    self!.minMaxPrice(forDeals:dealsCollection, minValue:&minPrice, maxValue:&maxPrice)
 
-                completionHandler(dealsCollection, minPrice, maxPrice)
+                    let openPrice = dealsCollection.first!.price
+                    let lastPrice = dealsCollection.last!.price
+
+                    completionHandler(dealsCollection, CandleInfo(date:Date(),
+                                                                  high:maxPrice,
+                                                                  low:minPrice,
+                                                                  open:openPrice,
+                                                                  close:lastPrice))
+                }
+                else {
+                    completionHandler([OrderInfo](), nil)
+                }
             }
         }
     }

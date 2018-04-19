@@ -29,7 +29,13 @@
 		0240BB1E1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */; };
 		0240BB261FEC801B000EEAE0 /* TableViewInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */; };
 		0248532F1FFBD91000290BA1 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0248532E1FFBD91000290BA1 /* UIUtils.swift */; };
-		029964C220630FF000853ECF /* BTCTradeUADealsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029964C120630FF000853ECF /* BTCTradeUADealsProvider.swift */; };
+		025210B4206D817C008BE3D5 /* TradingPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210B3206D817C008BE3D5 /* TradingPlatform.swift */; };
+		025210B6206D81FB008BE3D5 /* TradingPlatformController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210B5206D81FB008BE3D5 /* TradingPlatformController.swift */; };
+		025210B8206D8221008BE3D5 /* TradingPlatformModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210B7206D8221008BE3D5 /* TradingPlatformModel.swift */; };
+		025210BD206D843D008BE3D5 /* BTCTradeUATradingPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210BC206D843D008BE3D5 /* BTCTradeUATradingPlatform.swift */; };
+		025210BF206D9350008BE3D5 /* TradingPlatformFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210BE206D9350008BE3D5 /* TradingPlatformFactory.swift */; };
+		025210CD2072D97B008BE3D5 /* MultiCallbacksWaiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210CC2072D97B008BE3D5 /* MultiCallbacksWaiter.swift */; };
+		025210D3207582D4008BE3D5 /* MainQueueAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210D2207582D4008BE3D5 /* MainQueueAccessor.swift */; };
 		02B32B812008122A00CA82D7 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B802008122900CA82D7 /* OrdersView.swift */; };
 		02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */; };
 		02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */; };
@@ -47,6 +53,7 @@
 		33D4941C4439586FB3638DB1 /* Pods_Gekko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1D9D9BC13EE40979D25FB1 /* Pods_Gekko.framework */; };
 		CA40E2D8205809B4000A3A8C /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA40E2D7205809B3000A3A8C /* LocalAuthentication.framework */; };
 		CA40E2DA205817FF000A3A8C /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA40E2D9205817FE000A3A8C /* AuthenticationViewController.swift */; };
+		CAD1BDB9207F28BF00911BC4 /* TradingPlatformAccessibilityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD1BDB8207F28BF00911BC4 /* TradingPlatformAccessibilityController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,8 +96,15 @@
 		0240BB1B1FE85DA6000EEAE0 /* OrdersStackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersStackViewController.swift; sourceTree = "<group>"; };
 		0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersStackViewTableCell.swift; sourceTree = "<group>"; };
 		0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewInputCell.swift; sourceTree = "<group>"; };
+		0242BCDC2069904500443686 /* Gekko 1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Gekko 1.2.xcdatamodel"; sourceTree = "<group>"; };
 		0248532E1FFBD91000290BA1 /* UIUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
-		029964C120630FF000853ECF /* BTCTradeUADealsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUADealsProvider.swift; sourceTree = "<group>"; };
+		025210B3206D817C008BE3D5 /* TradingPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatform.swift; sourceTree = "<group>"; };
+		025210B5206D81FB008BE3D5 /* TradingPlatformController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformController.swift; sourceTree = "<group>"; };
+		025210B7206D8221008BE3D5 /* TradingPlatformModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformModel.swift; sourceTree = "<group>"; };
+		025210BC206D843D008BE3D5 /* BTCTradeUATradingPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUATradingPlatform.swift; sourceTree = "<group>"; };
+		025210BE206D9350008BE3D5 /* TradingPlatformFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformFactory.swift; sourceTree = "<group>"; };
+		025210CC2072D97B008BE3D5 /* MultiCallbacksWaiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiCallbacksWaiter.swift; sourceTree = "<group>"; };
+		025210D2207582D4008BE3D5 /* MainQueueAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueAccessor.swift; sourceTree = "<group>"; };
 		02B32B802008122900CA82D7 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewCell.swift; sourceTree = "<group>"; };
 		02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
@@ -108,6 +122,7 @@
 		386B48C09CA90EE9F7708A7E /* Pods-Gekko.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gekko.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gekko/Pods-Gekko.release.xcconfig"; sourceTree = "<group>"; };
 		CA40E2D7205809B3000A3A8C /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		CA40E2D9205817FE000A3A8C /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
+		CAD1BDB8207F28BF00911BC4 /* TradingPlatformAccessibilityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformAccessibilityController.swift; sourceTree = "<group>"; };
 		CB8B640BD9403F92144F88E2 /* Pods-Gekko.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gekko.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Gekko/Pods-Gekko.debug.xcconfig"; sourceTree = "<group>"; };
 		FF1D9D9BC13EE40979D25FB1 /* Pods_Gekko.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gekko.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -156,12 +171,14 @@
 		0207CD741FC1A6ED0074EADF /* Gekko */ = {
 			isa = PBXGroup;
 			children = (
-				02B32B84200AB7C900CA82D7 /* CoreData */,
+				025210D420758336008BE3D5 /* Utils */,
 				02D7D2F01FDB3F8F007C4557 /* CommonTypes */,
-				0207CDD21FD2E8D70074EADF /* UI */,
+				02B32B84200AB7C900CA82D7 /* CoreData */,
 				0207CDBD1FC632B10074EADF /* DataProviders */,
 				0207CDAF1FC62E940074EADF /* Resources */,
 				0207CD9C1FC234210074EADF /* RESTAPI */,
+				025210B2206D812B008BE3D5 /* TradingPlatforms */,
+				0207CDD21FD2E8D70074EADF /* UI */,
 				0207CD751FC1A6ED0074EADF /* AppDelegate.swift */,
 				0207CDAC1FC4E6940074EADF /* Gekko-Bridging-Header.h */,
 			);
@@ -209,15 +226,15 @@
 		0207CDBE1FC632BC0074EADF /* BTCTradeUA */ = {
 			isa = PBXGroup;
 			children = (
+				CAD1BDB8207F28BF00911BC4 /* TradingPlatformAccessibilityController.swift */,
 				0207CDC11FC632DF0074EADF /* BTCTradeUABalanceProvider.swift */,
 				02D7D2F91FDB415D007C4557 /* BTCTradeUACandlesProvider.swift */,
 				0207CDC21FC632E00074EADF /* BTCTradeUACurrencies.swift */,
-				029964C120630FF000853ECF /* BTCTradeUADealsProvider.swift */,
 				0207CDC41FC632E00074EADF /* BTCTradeUALoginSession.swift */,
-				02D7D2FF1FDF2544007C4557 /* BTCTradeUAOrderProvider.swift */,
-				02B32B89200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift */,
 				0207CDC01FC632DF0074EADF /* BTCTradeUAPostRequestFactory.swift */,
 				0207CDBF1FC632DF0074EADF /* BTCTradeUAProviderBase.swift */,
+				02D7D2FF1FDF2544007C4557 /* BTCTradeUAOrderProvider.swift */,
+				02B32B89200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift */,
 			);
 			path = BTCTradeUA;
 			sourceTree = "<group>";
@@ -242,6 +259,35 @@
 				0248532E1FFBD91000290BA1 /* UIUtils.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		025210B2206D812B008BE3D5 /* TradingPlatforms */ = {
+			isa = PBXGroup;
+			children = (
+				025210BB206D841C008BE3D5 /* BTCTradeUA */,
+				025210B3206D817C008BE3D5 /* TradingPlatform.swift */,
+				025210B5206D81FB008BE3D5 /* TradingPlatformController.swift */,
+				025210BE206D9350008BE3D5 /* TradingPlatformFactory.swift */,
+				025210B7206D8221008BE3D5 /* TradingPlatformModel.swift */,
+			);
+			path = TradingPlatforms;
+			sourceTree = "<group>";
+		};
+		025210BB206D841C008BE3D5 /* BTCTradeUA */ = {
+			isa = PBXGroup;
+			children = (
+				025210BC206D843D008BE3D5 /* BTCTradeUATradingPlatform.swift */,
+			);
+			path = BTCTradeUA;
+			sourceTree = "<group>";
+		};
+		025210D420758336008BE3D5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				025210CC2072D97B008BE3D5 /* MultiCallbacksWaiter.swift */,
+				025210D2207582D4008BE3D5 /* MainQueueAccessor.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		02B32B84200AB7C900CA82D7 /* CoreData */ = {
@@ -446,17 +492,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				0207CD761FC1A6ED0074EADF /* AppDelegate.swift in Sources */,
+				CAD1BDB9207F28BF00911BC4 /* TradingPlatformAccessibilityController.swift in Sources */,
 				02D7D2F61FDB406D007C4557 /* BalanceItem.swift in Sources */,
 				CA40E2DA205817FF000A3A8C /* AuthenticationViewController.swift in Sources */,
 				0207CDD61FD2E9570074EADF /* CurrenciesCollectionViewController.swift in Sources */,
 				0207CDA01FC234F70074EADF /* RestApiRequestsExecutor.swift in Sources */,
 				0207CDC61FC632E00074EADF /* BTCTradeUAPostRequestFactory.swift in Sources */,
 				02D7D3001FDF2544007C4557 /* BTCTradeUAOrderProvider.swift in Sources */,
+				025210BF206D9350008BE3D5 /* TradingPlatformFactory.swift in Sources */,
 				0240BB1C1FE85DA6000EEAE0 /* OrdersStackViewController.swift in Sources */,
 				02D7D3021FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift in Sources */,
 				0207CDC71FC632E00074EADF /* BTCTradeUABalanceProvider.swift in Sources */,
 				02D7D2F41FDB4014007C4557 /* Currency.swift in Sources */,
-				029964C220630FF000853ECF /* BTCTradeUADealsProvider.swift in Sources */,
 				0207CDD81FD2F2140074EADF /* CurrencyCollectionViewCell.swift in Sources */,
 				02D7D2FE1FDDEA4B007C4557 /* UIDefaults.swift in Sources */,
 				02D7D2F81FDB409D007C4557 /* OrderTypes.swift in Sources */,
@@ -465,18 +512,24 @@
 				0207CD7E1FC1A6ED0074EADF /* Gekko.xcdatamodeld in Sources */,
 				02B32B8A200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift in Sources */,
 				02D7D3041FE1E519007C4557 /* QRCodePickerViewController.swift in Sources */,
+				025210D3207582D4008BE3D5 /* MainQueueAccessor.swift in Sources */,
+				025210B6206D81FB008BE3D5 /* TradingPlatformController.swift in Sources */,
 				02D7D2FC1FDDDECA007C4557 /* CreateOrderView.swift in Sources */,
 				02D7D2F21FDB3FC2007C4557 /* CandleInfo.swift in Sources */,
 				02D7D2FA1FDB415D007C4557 /* BTCTradeUACandlesProvider.swift in Sources */,
 				022E3DB41FD747E300D778D2 /* ChartViewController.swift in Sources */,
 				0240BB261FEC801B000EEAE0 /* TableViewInputCell.swift in Sources */,
 				02B32B812008122A00CA82D7 /* OrdersView.swift in Sources */,
+				025210CD2072D97B008BE3D5 /* MultiCallbacksWaiter.swift in Sources */,
 				0240BB1E1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift in Sources */,
 				0207CDC81FC632E00074EADF /* BTCTradeUACurrencies.swift in Sources */,
 				02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */,
 				02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */,
 				0207CDD41FD2E91F0074EADF /* MainViewController.swift in Sources */,
+				025210B4206D817C008BE3D5 /* TradingPlatform.swift in Sources */,
+				025210B8206D8221008BE3D5 /* TradingPlatformModel.swift in Sources */,
 				0248532F1FFBD91000290BA1 /* UIUtils.swift in Sources */,
+				025210BD206D843D008BE3D5 /* BTCTradeUATradingPlatform.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -750,9 +803,10 @@
 		0207CD7C1FC1A6ED0074EADF /* Gekko.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				0242BCDC2069904500443686 /* Gekko 1.2.xcdatamodel */,
 				0207CD7D1FC1A6ED0074EADF /* Gekko.xcdatamodel */,
 			);
-			currentVersion = 0207CD7D1FC1A6ED0074EADF /* Gekko.xcdatamodel */;
+			currentVersion = 0242BCDC2069904500443686 /* Gekko 1.2.xcdatamodel */;
 			path = Gekko.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

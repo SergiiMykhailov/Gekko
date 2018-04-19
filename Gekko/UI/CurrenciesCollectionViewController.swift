@@ -15,6 +15,9 @@ protocol CurrenciesCollectionViewControllerDataSource : class {
 
     func currenciesViewController(sender:CurrenciesCollectionViewController,
                                   maxPriceForCurrency:Currency) -> Double?
+
+    func currenciesViewController(sender:CurrenciesCollectionViewController,
+                                  dailyUpdateInPercentsForCurrency:Currency) -> Double?
 }
 
 @objc protocol CurrenciesCollectionViewControllerDelegate : class {
@@ -85,11 +88,14 @@ class CurrenciesCollectionViewController : UICollectionViewController {
                                                                     minPriceForCurrency:requestedCurrency!)
                 let maxPrice = dataSource!.currenciesViewController(sender:self,
                                                                     maxPriceForCurrency:requestedCurrency!)
+                let dailyPercentage = dataSource!.currenciesViewController(sender:self,
+                                                                           dailyUpdateInPercentsForCurrency:requestedCurrency!)
 
                 cell.balance = balance
                 cell.minPrice = minPrice
                 cell.maxPrice = maxPrice
                 cell.currencyText = requestedCurrency!.rawValue as String
+                cell.dailyPercentage = dailyPercentage
 
                 if requestedCurrency! == .UAH {
                     cell.balancePrecission = 2
@@ -170,10 +176,7 @@ class CurrenciesCollectionViewController : UICollectionViewController {
                                                      3 : Currency.XMR,
                                                      4 : Currency.DOGE,
                                                      5 : Currency.DASH,
-                                                     6 : Currency.SIB,
-                                                     7 : Currency.KRB,
-                                                     8 : Currency.ZEC,
-                                                     9 : Currency.BCH,
-                                                     10 : Currency.ETC,
-                                                     11 : Currency.NVC]
+                                                     6 : Currency.ZEC,
+                                                     7 : Currency.BCH,
+                                                     8 : Currency.ETC]
 }

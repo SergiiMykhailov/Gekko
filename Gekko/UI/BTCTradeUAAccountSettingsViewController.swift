@@ -29,7 +29,7 @@ class BTCTradeUAAccountSettingsViewController : UIViewController {
                                                                  target:self,
                                                                  action:#selector(applyButtonPressed))
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("< Back", comment:"Back navigation button"), style: .plain, target: self, action: #selector(backButtonPressed))
+        setupBackButton()
     }
 
     override func prepare(for segue:UIStoryboardSegue, sender:Any?) {
@@ -59,6 +59,19 @@ class BTCTradeUAAccountSettingsViewController : UIViewController {
         })
 
         controller.delegate = qrCodeCaptureHandler
+    }
+    
+    fileprivate func setupBackButton() {
+        let button = UIButton(type: .system)
+        
+        button.setImage(#imageLiteral(resourceName: "backArrow"), for: .normal)
+        button.setTitle(NSLocalizedString("Back", comment:"Back navigation button"), for: .normal)
+        button.sizeToFit()
+        button.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
+        
+        let backButtonItem = UIBarButtonItem(customView:button)
+        
+        self.navigationItem.leftBarButtonItem = backButtonItem
     }
 
     // MARK: Events handling

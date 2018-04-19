@@ -57,6 +57,10 @@ class QRCodePickerViewController : UIViewController,
 
         super.dismiss(animated:flag, completion:completion)
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     // MARK: AVCaptureMetadataOutputObjectsDelegate implementation
 
@@ -97,7 +101,7 @@ class QRCodePickerViewController : UIViewController,
             make.top.equalToSuperview()
             make.left.equalToSuperview()
             make.width.equalToSuperview()
-            make.height.equalTo(60)
+            make.height.equalTo(50)
         }
         
         let label = UILabel()
@@ -110,7 +114,7 @@ class QRCodePickerViewController : UIViewController,
         
         label.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-UIDefaults.Spacing)
+            make.centerY.equalToSuperview()
         }
         
         let cancelButton = UIButton(type:.system)
@@ -121,7 +125,7 @@ class QRCodePickerViewController : UIViewController,
         topBar.addSubview(cancelButton)
 
         cancelButton.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(-12)
+            make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-12)
             make.height.equalTo(18)
             make.width.equalTo(18)

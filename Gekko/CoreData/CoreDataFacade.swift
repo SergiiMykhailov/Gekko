@@ -41,16 +41,17 @@ class CoreDataFacade : NSObject {
                 }
                 let storeURL = docURL.appendingPathComponent("\(CoreDataFacade.ModelName).sqlite")
                 do {
+                    let options = [NSMigratePersistentStoresAutomaticallyOption:true, NSInferMappingModelAutomaticallyOption:true]
                     try persistentStoreCoordinator.addPersistentStore(ofType:NSSQLiteStoreType,
                                                                       configurationName:nil,
                                                                       at:storeURL,
-                                                                      options:nil)
+                                                                      options:options)
+
+                    completionBlock()
                 } catch {
                     fatalError("Error migrating store: \(error)")
                 }
             }
-
-            completionBlock()
         })
     }
 
@@ -94,13 +95,69 @@ class CoreDataFacade : NSObject {
             return [StoredOrder]()
         }
     }
+    
+    public func updateStoredBalance(withBalanceItems balanceItems:[BalanceItem]) {
+        if managedObjectContext == nil {
+            return
+        }
+        
+        for item in balanceItems {
+            if let balanceDataItem = self.balanceItem(forCurrency:String(item.currency.rawValue)) {
+                balanceDataItem.currency = String(item.currency.rawValue)
+                balanceDataItem.amount = item.amount
+            }
+            else {
+                let balanceData = NSEntityDescription.insertNewObject(forEntityName:CoreDataFacade.BalanceDataEntityName,
+                                                                      into:managedObjectContext!) as! BalanceData
+                balanceData.currency = String(item.currency.rawValue)
+                balanceData.amount = item.amount
+            }
+        }
+        
+        do {
+            try managedObjectContext!.save()
+            managedObjectContext!.reset()
+        } catch {
+            fatalError("Failed to save context: \(error)")
+        }
+    }
+    
+    fileprivate func balanceItem(forCurrency currency:String) -> BalanceData? {
+        do {
+            let fetch = balanceFetch.copy() as! NSFetchRequest<NSFetchRequestResult>
+            fetch.predicate = NSPredicate(format: "currency = %@", currency)
+            
+            if let fetchedBalanceItem = try managedObjectContext!.fetch(fetch) as? [BalanceData] {
+                let balanceDataItem = fetchedBalanceItem.first
+                return balanceDataItem
+            }
+            
+            return nil
+        }
+        catch {
+            return nil
+        }
+    }
+    
+    public func allBalanceItems() -> [BalanceData] {
+        do {
+            let fetchedBalanceItems = try managedObjectContext!.fetch(balanceFetch) as! [BalanceData]
+            
+            return fetchedBalanceItems
+        }
+        catch {
+            return [BalanceData]()
+        }
+    }
 
     // MARK: Internal fields
 
     fileprivate var persistentContainer:NSPersistentContainer = NSPersistentContainer(name:CoreDataFacade.ModelName)
     fileprivate var managedObjectContext:NSManagedObjectContext?
     fileprivate var ordersFetch = NSFetchRequest<NSFetchRequestResult>(entityName:CoreDataFacade.StoredOrderEntityName)
+    fileprivate var balanceFetch = NSFetchRequest<NSFetchRequestResult>(entityName:CoreDataFacade.BalanceDataEntityName)
 
     fileprivate static let ModelName = "Gekko"
     fileprivate static let StoredOrderEntityName = "StoredOrder"
+    fileprivate static let BalanceDataEntityName = "BalanceData"
 }
