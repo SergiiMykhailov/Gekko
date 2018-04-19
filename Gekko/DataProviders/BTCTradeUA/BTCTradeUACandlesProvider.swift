@@ -72,7 +72,9 @@ class BTCTradeUACandlesProvider : BTCTradeUAProviderBase {
         var result = [CandleInfo]()
 
         let calendar = Calendar.current
+        let timeZone = TimeZone(secondsFromGMT:0)
         var dailyCandle = candles.first!
+        var dailyCandleComponents = calendar.dateComponents(in:timeZone!, from:dailyCandle.date)
 
         var lastCandleInDay = dailyCandle
 
@@ -80,7 +82,8 @@ class BTCTradeUACandlesProvider : BTCTradeUAProviderBase {
             dailyCandle.low = min(dailyCandle.low, candle.low)
             dailyCandle.high = max(dailyCandle.high, candle.high)
 
-            let isCandleInSameDay = calendar.isDate(dailyCandle.date, inSameDayAs:candle.date)
+            let candleDateComponents = calendar.dateComponents(in:timeZone!, from:candle.date)
+            let isCandleInSameDay = candleDateComponents.day == dailyCandleComponents.day
 
             if isCandleInSameDay {
                 lastCandleInDay = candle
@@ -91,14 +94,13 @@ class BTCTradeUACandlesProvider : BTCTradeUAProviderBase {
                 result.append(dailyCandle)
 
                 dailyCandle = candle
+                dailyCandleComponents = calendar.dateComponents(in:timeZone!, from:dailyCandle.date)
                 lastCandleInDay = dailyCandle
             }
         }
 
         return result
     }
-
-
 
     // MARK: Internal fields and properties
 

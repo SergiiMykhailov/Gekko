@@ -168,12 +168,7 @@ typealias CompletionHandler = () -> Void
                                               onCompletion:@escaping () -> Void) {
         tradingPlatform.retrieveCandlesAsync(forPair:pair) { [weak self] (candles) in
             self?.tradingPlatformData.accessInMainQueue { (model) in
-                var candlesToAssign = candles
-                if let currentDayCandle = model.currencyPairToCompletedOrdersMap[pair] {
-                    candlesToAssign.append(currentDayCandle)
-                }
-
-                model.currencyPairToCandlesMap[pair] = candlesToAssign
+                model.currencyPairToCandlesMap[pair] = candles
 
                 onCompletion()
             }
