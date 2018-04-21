@@ -44,6 +44,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                              onCompletion:@escaping BalanceCompletionCallback) {
         if !isAuthorized {
             onCompletion(nil)
+            return
         }
 
         let handleBalanceRetrieving = { () -> Bool in
@@ -125,6 +126,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                               onCompletion:@escaping OrderCompletionCallback) {
         if !isAuthorized {
             onCompletion(nil)
+            return
         }
 
         let currency = pair.primaryCurrency == mainCurrency ? pair.secondaryCurrency : pair.primaryCurrency
@@ -142,6 +144,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                onCompletion:@escaping OrderCompletionCallback) {
         if !isAuthorized {
             onCompletion(nil)
+            return
         }
 
         let currency = pair.primaryCurrency == mainCurrency ? pair.secondaryCurrency : pair.primaryCurrency
@@ -157,6 +160,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                           onCompletion:@escaping CancelOrderCompletionCallback) {
         if !isAuthorized {
             onCompletion()
+            return
         }
 
         btcTradeUAOrderProvider.cancelOrderAsync(withID:id,
@@ -168,6 +172,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
     func retrieveOrderStatusAsync(withID id:String, onCompletion:@escaping OrderStatusCallback) {
         if !isAuthorized {
             onCompletion(nil)
+            return
         }
 
         btcTradeUAOrdersStatusProvider.retrieveStatusAsync(forOrderWithID:id,
