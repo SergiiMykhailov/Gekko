@@ -99,7 +99,7 @@ typealias CancelOrderCompletionCallback = () -> Void
             onCompletion()
         }
     }
-    
+
     // MARK: Internal methods
 
     fileprivate func handleOrders(withSuffix suffix:String,
@@ -224,37 +224,8 @@ typealias CancelOrderCompletionCallback = () -> Void
             if let deals = value as? [Any] {
                 for deal in deals {
                     if let singleDealDictionary = deal as? [String : Any] {
-                        let traditionalCurrencyAmount =
-                            singleDealDictionary[BTCTradeUAOrderProvider.TraditionalCurrencyAmountKey] as? String
-                        let cryptoCurrencyAmount =
-                            singleDealDictionary[BTCTradeUAOrderProvider.CryptoCurrencyAmountKey] as? String
-                        let price = singleDealDictionary[BTCTradeUAOrderProvider.PriceKey] as? String
-                        let date = singleDealDictionary[BTCTradeUAOrderProvider.DateKey] as? String
-                        let user = singleDealDictionary[BTCTradeUAOrderProvider.UserKey] as? String
-                        let type = singleDealDictionary[BTCTradeUAOrderProvider.DealTypeKey] as? String
-
-                        if traditionalCurrencyAmount != nil &&
-                            cryptoCurrencyAmount != nil &&
-                            price != nil &&
-                            date != nil &&
-                            type != nil {
-                            let traditionalCurrencyAmountCasted = Double(traditionalCurrencyAmount!)
-                            let cryptoCurrencyAmountCasted = Double(cryptoCurrencyAmount!)
-                            let priceCasted = Double(price!)
-                            let isBuy = type! == "buy"
-
-                            if traditionalCurrencyAmountCasted != nil &&
-                                cryptoCurrencyAmountCasted != nil &&
-                                priceCasted != nil {
-                                let itemToInsert =
-                                    OrderInfo(fiatCurrencyAmount:traditionalCurrencyAmountCasted!,
-                                              cryptoCurrencyAmount:cryptoCurrencyAmountCasted!,
-                                              price:priceCasted!,
-                                              user:user!,
-                                              isBuy:isBuy)
-
-                                result.append(itemToInsert)
-                            }
+                        if let orderInfo = BTCTradeUAUtils.orderInfo(fromDictionary:singleDealDictionary) {
+                            result.append(orderInfo)
                         }
                     }
                 }
@@ -282,13 +253,6 @@ typealias CancelOrderCompletionCallback = () -> Void
 
     fileprivate static let BuySuffix = "buy"
     fileprivate static let SellSuffix = "sell"
-
-    fileprivate static let TraditionalCurrencyAmountKey = "amnt_base"
-    fileprivate static let CryptoCurrencyAmountKey = "amnt_trade"
-    fileprivate static let PriceKey = "price"
-    fileprivate static let DateKey = "pub_date"
-    fileprivate static let UserKey = "user"
-    fileprivate static let DealTypeKey = "type"
 
     fileprivate static let OrdersListKey = "list"
     fileprivate static let OrderAmountKey = "currency_trade"

@@ -11,11 +11,12 @@ class TradingPlatformModel : NSObject {
     public var currencyPairToSellOrdersMap = [CurrencyPair : [OrderInfo]]()
     public var currencyPairToCandlesMap = [CurrencyPair : [CandleInfo]]()
     public var currencyPairToUserOrdersStatusMap = [CurrencyPair : [OrderStatusInfo]]()
+    public var currencyPairToUserDealsMap = [CurrencyPair : [OrderStatusInfo]]()
 
     public var balance = [BalanceItem]()
 
-    public func set(orderStatusInfo statusInfo:OrderStatusInfo,
-                    forCurrencyPair currencyPair:CurrencyPair) {
+    public func handle(orderStatusInfo statusInfo:OrderStatusInfo,
+                       forCurrencyPair currencyPair:CurrencyPair) {
         if (self.currencyPairToUserOrdersStatusMap[currencyPair] == nil) {
             self.currencyPairToUserOrdersStatusMap[currencyPair] = [OrderStatusInfo]()
         }
@@ -24,9 +25,14 @@ class TradingPlatformModel : NSObject {
         if let existingOrderIndex = ordersForCurrencyPair?.index(where: { (currentOrder) -> Bool in
             return currentOrder.id == statusInfo.id
         }) {
-            ordersForCurrencyPair![existingOrderIndex] = statusInfo
+            if statusInfo.status == .Pending {
+                ordersForCurrencyPair![existingOrderIndex] = statusInfo
+            }
+            else {
+                ordersForCurrencyPair!.remove(at:existingOrderIndex)
+            }
         }
-        else {
+        else if statusInfo.status == .Pending {
             ordersForCurrencyPair!.append(statusInfo)
         }
 

@@ -13,24 +13,24 @@ class BTCTradeUATradingPlatform : TradingPlatform {
 
     // MARK: TradingPlatform implementation
 
-    var isAuthorized:Bool {
+    public var isAuthorized:Bool {
         return publicKey != nil && !publicKey!.isEmpty && privateKey != nil && !publicKey!.isEmpty
     }
 
-    var mainCurrency:Currency {
+    public var mainCurrency:Currency {
         return .UAH
     }
 
-    var supportedCurrencies:[Currency] {
+    public var supportedCurrencies:[Currency] {
         return BTCTradeUATradingPlatform.SupportedCurrencies
     }
 
-    var supportedCurrencyPairs:[CurrencyPair] {
+    public var supportedCurrencyPairs:[CurrencyPair] {
         return BTCTradeUATradingPlatform.SupportedCurrencyPairs
     }
 
-    func retrieveCandlesAsync(forPair pair:CurrencyPair,
-                              onCompletion:@escaping CandlesCompletionCallback) {
+    public func retrieveCandlesAsync(forPair pair:CurrencyPair,
+                                     onCompletion:@escaping CandlesCompletionCallback) {
         if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
             btcTradeUACandlesProvider.retrieveCandlesAsync(forPair:convertedPair,
                                                            withCompletionHandler:onCompletion)
@@ -40,8 +40,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
     }
 
-    func retriveBalanceAsync(forCurrency currency:Currency,
-                             onCompletion:@escaping BalanceCompletionCallback) {
+    public func retriveBalanceAsync(forCurrency currency:Currency,
+                                    onCompletion:@escaping BalanceCompletionCallback) {
         if !isAuthorized {
             onCompletion(nil)
             return
@@ -80,8 +80,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
     }
 
-    func retrieveDealsAsync(forPair pair:CurrencyPair,
-                            onCompletion:@escaping CompletedOrdersCompletionCallback) {
+    public func retrieveDealsAsync(forPair pair:CurrencyPair,
+                                   onCompletion:@escaping CompletedOrdersCompletionCallback) {
         if !isAuthorized {
             onCompletion([OrderInfo](), nil)
             return
@@ -98,8 +98,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
     }
 
-    func retrieveBuyOrdersAsync(forPair pair:CurrencyPair,
-                                onCompletion:@escaping PendingOrdersCompletionCallback) {
+    public func retrieveBuyOrdersAsync(forPair pair:CurrencyPair,
+                                       onCompletion:@escaping PendingOrdersCompletionCallback) {
         if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
             btcTradeUAOrderProvider.retrieveBuyOrdersAsync(forPair:convertedPair,
                                                            withCompletionHandler:onCompletion)
@@ -109,8 +109,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
     }
 
-    func retrieveSellOrdersAsync(forPair pair:CurrencyPair,
-                                 onCompletion:@escaping PendingOrdersCompletionCallback) {
+    public func retrieveSellOrdersAsync(forPair pair:CurrencyPair,
+                                        onCompletion:@escaping PendingOrdersCompletionCallback) {
         if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
             btcTradeUAOrderProvider.retrieveSellOrdersAsync(forPair:convertedPair,
                                                             withCompletionHandler:onCompletion)
@@ -120,10 +120,10 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
     }
 
-    func performBuyOrderAsync(forPair pair:CurrencyPair,
-                              amount:Double,
-                              price:Double,
-                              onCompletion:@escaping OrderCompletionCallback) {
+    public func performBuyOrderAsync(forPair pair:CurrencyPair,
+                                     amount:Double,
+                                     price:Double,
+                                     onCompletion:@escaping OrderCompletionCallback) {
         if !isAuthorized {
             onCompletion(nil)
             return
@@ -138,10 +138,10 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                                      onCompletion:onCompletion)
     }
 
-    func performSellOrderAsync(forPair pair:CurrencyPair,
-                               amount:Double,
-                               price:Double,
-                               onCompletion:@escaping OrderCompletionCallback) {
+    public func performSellOrderAsync(forPair pair:CurrencyPair,
+                                      amount:Double,
+                                      price:Double,
+                                      onCompletion:@escaping OrderCompletionCallback) {
         if !isAuthorized {
             onCompletion(nil)
             return
@@ -156,8 +156,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                                       onCompletion:onCompletion)
     }
 
-    func cancelOrderAsync(withID id:String,
-                          onCompletion:@escaping CancelOrderCompletionCallback) {
+    public func cancelOrderAsync(withID id:String,
+                                 onCompletion:@escaping CancelOrderCompletionCallback) {
         if !isAuthorized {
             onCompletion()
             return
@@ -169,7 +169,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                                  onCompletion:onCompletion)
     }
 
-    func retrieveOrderStatusAsync(withID id:String, onCompletion:@escaping OrderStatusCallback) {
+    public func retrieveOrderStatusAsync(withID id:String,
+                                         onCompletion:@escaping OrderStatusCallback) {
         if !isAuthorized {
             onCompletion(nil)
             return
@@ -179,6 +180,38 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                                            publicKey:publicKey!,
                                                            privateKey:privateKey!,
                                                            onCompletion:onCompletion)
+    }
+
+    public func retrieveUserDealsAsync(forPair pair:CurrencyPair,
+                                       fromDate:Date,
+                                       toDate:Date,
+                                       onCompletion:@escaping UserDealsCallback) {
+        if !isAuthorized {
+            onCompletion([OrderStatusInfo]())
+            return
+        }
+
+        if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
+            btcTradeUAUserDealsProvider.retrieveCompletedDealsAsync(forCurrencyPair:convertedPair,
+                                                                    startDate:fromDate,
+                                                                    finishDate:toDate,
+                                                                    publicKey:publicKey!,
+                                                                    privateKey:privateKey!,
+                                                                    onCompletion: {
+                (deals) in
+
+                // Deals provider returns data with invalid cryptocurrency.
+                // Need to update.
+                for deal in deals {
+                    deal.currency = pair.secondaryCurrency
+                }
+
+                onCompletion(deals)
+            })
+        }
+        else {
+            onCompletion([OrderStatusInfo]())
+        }
     }
 
     // MARK: Internal methods
@@ -195,6 +228,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
     fileprivate let btcTradeUACandlesProvider = BTCTradeUACandlesProvider()
     fileprivate let btcTradeUAOrderProvider = BTCTradeUAOrderProvider()
     fileprivate let btcTradeUAOrdersStatusProvider = BTCTradeUAOrdersStatusProvider()
+    fileprivate let btcTradeUAUserDealsProvider = BTCTradeUADealsProvider()
 
     fileprivate var currencyToBalanceMap = [Currency : Double?]()
 
