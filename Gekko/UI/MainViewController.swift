@@ -97,6 +97,7 @@ class MainViewController : UIViewController,
 
         tradingPlatformController?.onCompletedOrdersUpdated = {
             [weak self] in
+            UIUtils.blink(aboveView:self!.currenciesController.collectionView!)
             self?.currenciesController.collectionView!.reloadData()
         }
 
@@ -107,6 +108,7 @@ class MainViewController : UIViewController,
 
         tradingPlatformController?.onUserOrdersStatusUpdated = {
             [weak self] in
+            UIUtils.blink(aboveView:self!.userOrdersView)
             self?.userOrdersView.reloadData()
         }
     }
@@ -389,7 +391,7 @@ class MainViewController : UIViewController,
             }
         }
 
-        return nil
+        return result
     }
 
     // MARK: CurrenciesCollectionViewControllerDelegate implementation
@@ -549,25 +551,25 @@ class MainViewController : UIViewController,
     // MARK: OrdersStackViewControllerDataSource implementation
 
     func sellOrdersForOrdersViewController(sender:OrdersStackViewController) -> [OrderInfo] {
-        var orders:[OrderInfo]? = nil
+        var orders = [OrderInfo]()
 
         tradingPlatformController!.tradingPlatformData.accessInMainQueue(withBlock: {
             [weak self] (model) in
             orders = self!.orders(fromDictionary:model.currencyPairToSellOrdersMap)
         })
 
-        return orders != nil ? orders! : [OrderInfo]()
+        return orders
     }
 
     func buyOrdersForOrdersViewController(sender:OrdersStackViewController) -> [OrderInfo] {
-        var orders:[OrderInfo]? = nil
+        var orders = [OrderInfo]()
 
         tradingPlatformController!.tradingPlatformData.accessInMainQueue(withBlock: {
             [weak self] (model) in
             orders = self!.orders(fromDictionary:model.currencyPairToBuyOrdersMap)
         })
 
-        return orders != nil ? orders! : [OrderInfo]()
+        return orders
     }
 
     fileprivate func orders(fromDictionary dictionary:[CurrencyPair : [OrderInfo]]) -> [OrderInfo] {
@@ -581,15 +583,19 @@ class MainViewController : UIViewController,
     // MARK: OrdersViewDataSource implementation
 
     func ordersFor(ordersView sender:OrdersView) -> [OrderStatusInfo] {
-        var result:[OrderStatusInfo]? = [OrderStatusInfo]()
+        var result = [OrderStatusInfo]()
 
         tradingPlatformController!.tradingPlatformData.accessInMainQueue { [weak self] (model) in
             if let orderStatus = model.currencyPairToUserOrdersStatusMap[self!.currentPair!] {
-                result = orderStatus
+                result.append(contentsOf:orderStatus)
+            }
+
+            if let completedDeals = model.currencyPairToUserDealsMap[self!.currentPair!] {
+                result.append(contentsOf:completedDeals)
             }
         }
 
-        return result!
+        return result
     }
 
     // MARK: OrdersViewDelegate implementation

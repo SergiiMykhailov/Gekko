@@ -24,10 +24,11 @@ typealias CompletionHandler = () -> Void
 
     init(tradingPlatform:TradingPlatform) {
         self.tradingPlatform = tradingPlatform
+        self.dealsHandler = TradingPlatformUserDealsHandler(withTradingPlatform:tradingPlatform)
 
         super.init()
 
-        coreDataFacade = CoreDataFacade(completionBlock: { [weak self] in
+        self.coreDataFacade = CoreDataFacade(completionBlock: { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.scheduleOrdersStatusUpdating()
                 self?.loadStoredBalance()
@@ -122,7 +123,7 @@ typealias CompletionHandler = () -> Void
                                                   price:price,
                                                   type:isBuy ? OrderType.Buy : OrderType.Sell)
 
-                model.set(orderStatusInfo:orderStatus, forCurrencyPair:pair)
+                model.handle(orderStatusInfo:orderStatus, forCurrencyPair:pair)
 
                 self?.handleOrdersStatusUpdating {}
 
@@ -255,11 +256,14 @@ typealias CompletionHandler = () -> Void
 
     fileprivate func updateOrdersStatus(forCurrencyPair currencyPair:CurrencyPair,
                                         onCompletion:@escaping () -> Void) {
-        if let orders = coreDataFacade?.orders(forCurrencyPair:currencyPair.toString()) {
-            let requiredOrdersCount = UInt32(orders.count)
+        var requiredOperationsCount:UInt32 = 1
+        var callbacksWaiter:MultiCallbacksWaiter? = nil
 
-            let callbacksWaiter = MultiCallbacksWaiter(withNumberOfInvokations:requiredOrdersCount,
-                                                       onCompletion:onCompletion)
+        if let orders = coreDataFacade?.orders(forCurrencyPair:currencyPair.secondaryCurrency.rawValue as String) {
+            requiredOperationsCount += UInt32(orders.count)
+
+            callbacksWaiter = MultiCallbacksWaiter(withNumberOfInvokations:requiredOperationsCount,
+                                                   onCompletion:onCompletion)
 
             for order in orders {
                 if order.id == nil {
@@ -273,12 +277,48 @@ typealias CompletionHandler = () -> Void
                         }
 
                         self!.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
-                            model.set(orderStatusInfo:status!, forCurrencyPair:currencyPair)
-                            callbacksWaiter.handleCompletion()
+                            model.handle(orderStatusInfo:status!, forCurrencyPair:currencyPair)
+                            callbacksWaiter?.handleCompletion()
                         })
                     }
                 })
             }
+        }
+
+        callbacksWaiter = callbacksWaiter ?? MultiCallbacksWaiter(withNumberOfInvokations:requiredOperationsCount,
+                                                                  onCompletion:onCompletion)
+
+        handleNextDateRangeForCompletedDeals(forCurrencyPair:currencyPair, onCompletion: {
+            callbacksWaiter?.handleCompletion()
+        })
+    }
+
+    fileprivate func handleNextDateRangeForCompletedDeals(forCurrencyPair currencyPair:CurrencyPair,
+                                                          onCompletion:@escaping () -> Void) {
+        dealsHandler.handleNextDateRange(forCurrencyPair:currencyPair) {
+            [weak self] (completedDeals) in
+            self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
+                if completedDeals != nil {
+                    var currencyPairDeals = model.currencyPairToUserDealsMap[currencyPair]
+
+                    if currencyPairDeals != nil {
+                        // Single date range may be handled multiple times.
+                        // Thus we need to ensure that orders are displayed only once.
+                        for deal in completedDeals! {
+                            if !currencyPairDeals!.contains(where: { return $0.id == deal.id }) {
+                                currencyPairDeals?.append(deal)
+                            }
+                        }
+                    }
+                    else {
+                        currencyPairDeals = completedDeals!
+                    }
+
+                    model.currencyPairToUserDealsMap[currencyPair] = currencyPairDeals
+                }
+
+                onCompletion()
+            })
         }
     }
 
@@ -377,6 +417,8 @@ typealias CompletionHandler = () -> Void
     // MARK: Internal fields
 
     fileprivate var coreDataFacade:CoreDataFacade?
+
+    fileprivate let dealsHandler:TradingPlatformUserDealsHandler
 
     fileprivate static let PollTimeout:TimeInterval = 10
 }

@@ -104,6 +104,7 @@ class OrdersView : UIView,
     internal func tableView(_ tableView:UITableView, viewForHeaderInSection section:Int) -> UIView? {
         if headerView == nil {
             headerView = OrdersViewCell(style:.default, reuseIdentifier:OrdersView.CellIdentifier)
+            headerView?.backgroundColor = UIColor.white
 
             headerView!.dateLabel.text = NSLocalizedString("Date", comment:"Order publishing date label title")
             headerView!.dateLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
