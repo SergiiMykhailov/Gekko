@@ -243,6 +243,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                                   Currency.ETC]
 
     fileprivate static let SupportedCurrencyPairs:[CurrencyPair] =
+        [CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.BTC),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.ETH),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.LTC),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.XMR),
