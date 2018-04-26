@@ -542,6 +542,12 @@ class MainViewController : UIViewController,
             [weak self] (model) in
             if let candles = model.currencyPairToCandlesMap[self!.currentPair!] {
                 result = candles
+
+                if let deals = model.currencyPairToCompletedOrdersMap[self!.currentPair!] {
+                    if !result.isEmpty {
+                        result[result.count - 1].close = deals.close
+                    }
+                }
             }
         })
 

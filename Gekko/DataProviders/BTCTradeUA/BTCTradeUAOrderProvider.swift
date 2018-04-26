@@ -27,8 +27,8 @@ typealias CancelOrderCompletionCallback = () -> Void
                     var maxPrice:Double = 0
                     self!.minMaxPrice(forDeals:dealsCollection, minValue:&minPrice, maxValue:&maxPrice)
 
-                    let openPrice = dealsCollection.first!.price
-                    let lastPrice = dealsCollection.last!.price
+                    let openPrice = dealsCollection.last!.price
+                    let lastPrice = dealsCollection.first!.price
 
                     completionHandler(dealsCollection, CandleInfo(date:Date(),
                                                                   high:maxPrice,

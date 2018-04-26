@@ -87,6 +87,10 @@ class BTCTradeUACandlesProvider : BTCTradeUAProviderBase {
 
             if isCandleInSameDay {
                 lastCandleInDay = candle
+
+                if index == candles.count - 1 {
+                    result.append(dailyCandle)
+                }
             }
             else if isCandleInSameDay == false || index == candles.count - 1 {
                 dailyCandle.close = lastCandleInDay.close
@@ -94,7 +98,7 @@ class BTCTradeUACandlesProvider : BTCTradeUAProviderBase {
                 result.append(dailyCandle)
 
                 dailyCandle = candle
-                dailyCandleComponents = calendar.dateComponents(in:timeZone!, from:dailyCandle.date)
+                dailyCandleComponents = candleDateComponents
                 lastCandleInDay = dailyCandle
             }
         }
