@@ -10,6 +10,7 @@ class BTCTradeUAUtils {
 
     public static func publishDate(fromDictionary dictionary:[String : Any]) -> Date? {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier:"en_US")
         dateFormatter.dateFormat = "dd-MMM-yyyy HH:mm:ss"
 
         var result:Date? = nil
