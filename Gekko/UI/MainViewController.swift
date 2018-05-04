@@ -304,7 +304,6 @@ class MainViewController : UIViewController,
     }
     
     fileprivate func setupServerErrorView () {
-        serverErrorView = UIView()
         serverErrorView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         serverErrorView.layer.cornerRadius = UIDefaults.CornerRadius
         serverErrorView.isUserInteractionEnabled = false
@@ -681,7 +680,7 @@ class MainViewController : UIViewController,
     fileprivate let ordersStackController = OrdersStackViewController()
     fileprivate let userOrdersView = OrdersView()
     fileprivate var orderView:CreateOrderView?
-    fileprivate var serverErrorView:UIView!
+    fileprivate let serverErrorView = UIView()
     
     fileprivate let serverAccessibility = TradingPlatformAccessibilityController()
 
