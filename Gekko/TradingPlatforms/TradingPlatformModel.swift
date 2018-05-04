@@ -6,7 +6,7 @@ import Foundation
 
 class TradingPlatformModel : NSObject {
 
-    public var currencyPairToCompletedOrdersMap = [CurrencyPair : CandleInfo]()
+    public var currencyPairToDealsMap = [CurrencyPair : CandleInfo]()
     public var currencyPairToBuyOrdersMap = [CurrencyPair : [OrderInfo]]()
     public var currencyPairToSellOrdersMap = [CurrencyPair : [OrderInfo]]()
     public var currencyPairToCandlesMap = [CurrencyPair : [CandleInfo]]()
