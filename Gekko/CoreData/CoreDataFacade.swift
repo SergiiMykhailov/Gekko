@@ -115,8 +115,10 @@ class CoreDataFacade : NSObject {
         }
         
         do {
-            try managedObjectContext!.save()
-            managedObjectContext!.reset()
+            if !balanceItems.isEmpty {
+                try managedObjectContext!.save()
+                managedObjectContext!.reset()
+            }
         } catch {
             fatalError("Failed to save context: \(error)")
         }

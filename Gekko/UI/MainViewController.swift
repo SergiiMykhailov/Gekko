@@ -36,6 +36,8 @@ class MainViewController : UIViewController,
         setupChartView()
         setupButtons()
         
+        setupServerErrorView()
+        
         setupRefreshControl()
         
         serverAccessibility.delegate = self
@@ -300,37 +302,47 @@ class MainViewController : UIViewController,
             }
         }
     }
-
-    // MARK: TradingPlatformAccessibilityControllerDelegate implementation
-
-    internal func tradingPlatformAccessibilityControllerDidDetectConnectionFailure(_ sender:TradingPlatformAccessibilityController) {
+    
+    fileprivate func setupServerErrorView () {
+        serverErrorView = UIView()
+        serverErrorView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        serverErrorView.layer.cornerRadius = UIDefaults.CornerRadius
+        serverErrorView.isUserInteractionEnabled = false
+        serverErrorView.alpha = 0
+        
         let imageView = UIImageView(image: #imageLiteral(resourceName: "serverError"))
-        imageView.alpha = 0
-        imageView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        imageView.layer.cornerRadius = UIDefaults.CornerRadius
-        imageView.isUserInteractionEnabled = false
-
-        self.view.addSubview(imageView)
-
+        serverErrorView.addSubview(imageView)
+        
         imageView.snp.makeConstraints { (make) in
             make.width.equalTo(100)
             make.height.equalTo(100)
             make.center.equalToSuperview()
         }
+    }
 
-        UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration) {
-            imageView.alpha = 0.1
+    // MARK: TradingPlatformAccessibilityControllerDelegate implementation
+
+    internal func tradingPlatformAccessibilityControllerDidDetectConnectionFailure(_ sender:TradingPlatformAccessibilityController) {
+        self.view.addSubview(serverErrorView)
+        
+        serverErrorView.snp.makeConstraints { (make) in
+            make.width.equalTo(150)
+            make.height.equalTo(150)
+            make.center.equalToSuperview()
+        }
+        
+        UIView.animate(withDuration: UIDefaults.DefaultAnimationDuration) {
+            self.serverErrorView.alpha = 0.1
         }
     }
 
     internal func tradingPlatformAccessibilityControllerDidDetectConnectionRestore(_ sender:TradingPlatformAccessibilityController) {
-        let imageView = self.view.subviews.last!
-
-        UIView.animate(withDuration:UIDefaults.DefaultAnimationDuration) {
-            imageView.alpha = 0
-        }
-
-        imageView.removeFromSuperview()
+        UIView.animate(withDuration: UIDefaults.DefaultAnimationDuration,
+                       animations: {
+                        self.serverErrorView.alpha = 0
+                    }, completion: ({ _ in
+                        self.serverErrorView.removeFromSuperview()
+                    }))
     }
 
     // MARK: CurrenciesCollectionViewControllerDataSource implementation
@@ -669,6 +681,7 @@ class MainViewController : UIViewController,
     fileprivate let ordersStackController = OrdersStackViewController()
     fileprivate let userOrdersView = OrdersView()
     fileprivate var orderView:CreateOrderView?
+    fileprivate var serverErrorView:UIView!
     
     fileprivate let serverAccessibility = TradingPlatformAccessibilityController()
 
