@@ -75,8 +75,8 @@ class MainViewController : UIViewController,
     }
 
     fileprivate func subscribeForTradingPlatformDataUpdates() {
-        tradingPlatformController?.onBalanceUpdated = {
-            [weak self] in
+        tradingPlatformController?.onUserBalanceUpdated = {
+            [weak self] (currency) in
             self?.tradingPlatformController?.tradingPlatformData.accessInMainQueue(withBlock: {
                 [weak self] (model) in
                 if self != nil && !model.balance.isEmpty {
@@ -89,29 +89,48 @@ class MainViewController : UIViewController,
             })
         }
 
-        let handleOrdersUpdating = { [weak self] in
-            UIUtils.blink(aboveView:self!.ordersStackController.view)
-            self?.ordersStackController.reloadData()
+        let executeIfCurrencyPairMatches = { [weak self] (currencyPair:CurrencyPair,
+                                                          block:() -> Void) in
+            if self != nil && self!.currentPair! == currencyPair {
+                block()
+            }
+        }
+
+        let handleOrdersUpdating = { (currencyPair:CurrencyPair) in
+            executeIfCurrencyPairMatches(currencyPair,
+                                         { [weak self] in
+                UIUtils.blink(aboveView:self!.ordersStackController.view)
+                self?.ordersStackController.reloadData()
+            })
         }
 
         tradingPlatformController?.onBuyOrdersUpdated = handleOrdersUpdating
         tradingPlatformController?.onSellOrdersUpdated = handleOrdersUpdating
 
-        tradingPlatformController?.onCompletedOrdersUpdated = {
-            [weak self] in
-            UIUtils.blink(aboveView:self!.currenciesController.collectionView!)
-            self?.currenciesController.collectionView!.reloadData()
+        tradingPlatformController?.onDealsUpdated = {
+            (currencyPair) in
+            executeIfCurrencyPairMatches(currencyPair,
+                                         { [weak self] in
+                UIUtils.blink(aboveView:self!.currenciesController.collectionView!)
+                self?.currenciesController.collectionView!.reloadData()
+            })
         }
 
         tradingPlatformController?.onCandlesUpdated = {
-            [weak self] in
-            self?.chartController.reloadData()
+            (currencyPair) in
+            executeIfCurrencyPairMatches(currencyPair,
+                                         { [weak self] in
+                self?.chartController.reloadData()
+            })
         }
 
         tradingPlatformController?.onUserOrdersStatusUpdated = {
-            [weak self] in
-            UIUtils.blink(aboveView:self!.userOrdersView)
-            self?.userOrdersView.reloadData()
+            (currencyPair) in
+            executeIfCurrencyPairMatches(currencyPair,
+                                         { [weak self] in
+                                            UIUtils.blink(aboveView:self!.userOrdersView)
+                                            self?.userOrdersView.reloadData()
+            })
         }
     }
 
@@ -291,14 +310,12 @@ class MainViewController : UIViewController,
     }
     
     @objc fileprivate func refreshMainView(sender:UIRefreshControl) {
-        tradingPlatformController?.refreshAll {
-            sender.endRefreshing()
-        }
+        tradingPlatformController?.refreshAll()
         
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + MainViewController.PullDownRefreshingTimeout) {
             [weak self] () in
-            if (self != nil) && sender.isRefreshing {
-                    sender.endRefreshing()
+            if self != nil && sender.isRefreshing {
+                sender.endRefreshing()
             }
         }
     }
@@ -370,7 +387,7 @@ class MainViewController : UIViewController,
         var result:Double?
 
         tradingPlatformController!.tradingPlatformData.accessInMainQueue { (model) in
-            let currencyPairInfo = model.currencyPairToCompletedOrdersMap[currencyPair]
+            let currencyPairInfo = model.currencyPairToDealsMap[currencyPair]
             result = currencyPairInfo?.low
         }
 
@@ -383,7 +400,7 @@ class MainViewController : UIViewController,
         var result:Double?
 
         tradingPlatformController!.tradingPlatformData.accessInMainQueue { (model) in
-            let currencyPairInfo = model.currencyPairToCompletedOrdersMap[currencyPair]
+            let currencyPairInfo = model.currencyPairToDealsMap[currencyPair]
             result = currencyPairInfo?.high
         }
 
@@ -396,7 +413,7 @@ class MainViewController : UIViewController,
         var result:Double?
 
         tradingPlatformController!.tradingPlatformData.accessInMainQueue { (model) in
-            if let currencyPairInfo = model.currencyPairToCompletedOrdersMap[currencyPair] {
+            if let currencyPairInfo = model.currencyPairToDealsMap[currencyPair] {
                 let percentage = 100 * (currencyPairInfo.close - currencyPairInfo.open) / currencyPairInfo.open
                 result = percentage
             }
@@ -554,7 +571,7 @@ class MainViewController : UIViewController,
             if let candles = model.currencyPairToCandlesMap[self!.currentPair!] {
                 result = candles
 
-                if let deals = model.currencyPairToCompletedOrdersMap[self!.currentPair!] {
+                if let deals = model.currencyPairToDealsMap[self!.currentPair!] {
                     if !result.isEmpty {
                         result[result.count - 1].close = deals.close
                     }

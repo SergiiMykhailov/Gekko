@@ -7,15 +7,17 @@ import Foundation
 class TradingPlatformController : NSObject {
 
 typealias CompletionHandler = () -> Void
+typealias CurrencyPairCompletionHandler = (CurrencyPair) -> Void
+typealias BalanceCompletionHandler = (Currency) -> Void
 
     // MARK: Public methods and properties
 
-    public var onCompletedOrdersUpdated:CompletionHandler?
-    public var onBuyOrdersUpdated:CompletionHandler?
-    public var onSellOrdersUpdated:CompletionHandler?
-    public var onCandlesUpdated:CompletionHandler?
-    public var onUserOrdersStatusUpdated:CompletionHandler?
-    public var onBalanceUpdated:CompletionHandler?
+    public var onDealsUpdated:CurrencyPairCompletionHandler?
+    public var onBuyOrdersUpdated:CurrencyPairCompletionHandler?
+    public var onSellOrdersUpdated:CurrencyPairCompletionHandler?
+    public var onCandlesUpdated:CurrencyPairCompletionHandler?
+    public var onUserOrdersStatusUpdated:CurrencyPairCompletionHandler?
+    public var onUserBalanceUpdated:BalanceCompletionHandler?
 
     public let tradingPlatform:TradingPlatform
 
@@ -40,18 +42,16 @@ typealias CompletionHandler = () -> Void
         scheduleOrdersUpdating()
         scheduleDealsUpdating()
         scheduleCandlesUpdating()
-        scheduleBalanceUpdating{}
+        scheduleUserBalanceUpdating()
         scheduleOrdersStatusUpdating()
     }
 
-    public func refreshAll(withCompletion completion:@escaping CompletionHandler) {
-        let callbacksWaiter = MultiCallbacksWaiter(withNumberOfInvokations:5, onCompletion:completion)
-
-        handleDealsUpdating(onCompletion:{ callbacksWaiter.handleCompletion() })
-        handleOrdersUpdating(onCompletion:{ callbacksWaiter.handleCompletion() })
-        handleOrdersStatusUpdating(onCompletion:{ callbacksWaiter.handleCompletion() })
-        scheduleBalanceUpdating(onCompletion:{ callbacksWaiter.handleCompletion() })
-        handleCandlesUpdating(onCompletion:{ callbacksWaiter.handleCompletion() })
+    public func refreshAll() {
+        handleDealsUpdating()
+        handleOrdersUpdating()
+        handleUserOrdersUpdating()
+        handleUserBalanceUpdating()
+        handleCandlesUpdating()
     }
 
     public func performBuyOrderAsync(forPair pair:CurrencyPair,
@@ -125,31 +125,21 @@ typealias CompletionHandler = () -> Void
 
                 model.handle(orderStatusInfo:orderStatus, forCurrencyPair:pair)
 
-                self?.handleOrdersStatusUpdating {}
+                self?.handleUserOrdersUpdating()
 
                 onCompletion(orderID)
             })
         }
     }
 
-    fileprivate func handlePropertyUpdating(withBlock block:(CurrencyPair, @escaping CompletionHandler) -> Void,
-                                            onCompletion:@escaping CompletionHandler) {
-        let callbacksWaiter = MultiCallbacksWaiter(withNumberOfInvokations:UInt32(self.tradingPlatform.supportedCurrencyPairs.count),
-                                                   onCompletion:onCompletion)
-
+    fileprivate func handlePropertyUpdating(withBlock block:(CurrencyPair) -> Void) {
         for currencyPair in self.tradingPlatform.supportedCurrencyPairs {
-            block(currencyPair, { callbacksWaiter.handleCompletion() })
+            block(currencyPair)
         }
     }
 
     fileprivate func scheduleCandlesUpdating() {
-        handleCandlesUpdating(onCompletion: { [weak self] in
-            if self != nil {
-                DispatchQueue.main.async {
-                    self?.onCandlesUpdated?()
-                }
-            }
-        })
+        handleCandlesUpdating()
 
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.PollTimeout) {
             [weak self] () in
@@ -159,10 +149,13 @@ typealias CompletionHandler = () -> Void
         }
     }
 
-    fileprivate func handleCandlesUpdating(onCompletion:@escaping () -> Void) {
-        handlePropertyUpdating(withBlock: { (currencyPair, completionHandler) in
-            handleCandlesUpdatingFor(pair:currencyPair, onCompletion:completionHandler)
-        }, onCompletion:onCompletion)
+    fileprivate func handleCandlesUpdating() {
+        handlePropertyUpdating(withBlock: { (currencyPair) in
+            handleCandlesUpdatingFor(pair:currencyPair,
+                                     onCompletion: { [weak self] in
+                self?.onCandlesUpdated?(currencyPair)
+            })
+        })
     }
 
     fileprivate func handleCandlesUpdatingFor(pair:CurrencyPair,
@@ -176,20 +169,25 @@ typealias CompletionHandler = () -> Void
         }
     }
 
-    fileprivate func scheduleBalanceUpdating(onCompletion:@escaping () -> Void) {
-        let callbacksWaiter = MultiCallbacksWaiter(withNumberOfInvokations:UInt32(allCurrencies.count)) {
-            [weak self] in
-            self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
-                self?.coreDataFacade?.updateStoredBalance(withBalanceItems:model.balance)
-                self?.onBalanceUpdated?()
+    fileprivate func scheduleUserBalanceUpdating() {
+        handleUserBalanceUpdating()
 
-                onCompletion()
-            })
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.PollTimeout) {
+            [weak self] () in
+            if (self != nil) {
+                self!.scheduleUserBalanceUpdating()
+            }
         }
+    }
 
+    fileprivate func handleUserBalanceUpdating() {
         for supportedCurrency in allCurrencies {
-            handleBalanceUpdating(forCurrency:supportedCurrency, onCompletion: {
-                callbacksWaiter.handleCompletion()
+            handleBalanceUpdating(forCurrency:supportedCurrency,
+                                  onCompletion: { [weak self] in
+                self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
+                    self?.coreDataFacade?.updateStoredBalance(withBalanceItems:model.balance)
+                    self?.onUserBalanceUpdated?(supportedCurrency)
+                })
             })
         }
     }
@@ -234,11 +232,7 @@ typealias CompletionHandler = () -> Void
     }
 
     fileprivate func scheduleOrdersStatusUpdating() {
-        handleOrdersStatusUpdating(onCompletion: { [weak self] in
-            if self != nil {
-                self!.onUserOrdersStatusUpdated?()
-            }
-        })
+        handleUserOrdersUpdating()
 
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.PollTimeout) {
             [weak self] () in
@@ -248,14 +242,17 @@ typealias CompletionHandler = () -> Void
         }
     }
 
-    fileprivate func handleOrdersStatusUpdating(onCompletion:@escaping () -> Void) {
-        handlePropertyUpdating(withBlock: { (currencyPair, completionHandler) in
-            updateOrdersStatus(forCurrencyPair:currencyPair, onCompletion:completionHandler)
-        }, onCompletion:onCompletion)
+    fileprivate func handleUserOrdersUpdating() {
+        handlePropertyUpdating(withBlock: { (currencyPair) in
+            updateUserOrders(forCurrencyPair:currencyPair,
+                             onCompletion: { [weak self] in
+                self?.onUserOrdersStatusUpdated?(currencyPair)
+            })
+        })
     }
 
-    fileprivate func updateOrdersStatus(forCurrencyPair currencyPair:CurrencyPair,
-                                        onCompletion:@escaping () -> Void) {
+    fileprivate func updateUserOrders(forCurrencyPair currencyPair:CurrencyPair,
+                                      onCompletion:@escaping () -> Void) {
         var requiredOperationsCount:UInt32 = 1
         var callbacksWaiter:MultiCallbacksWaiter? = nil
 
@@ -323,12 +320,7 @@ typealias CompletionHandler = () -> Void
     }
 
     fileprivate func scheduleOrdersUpdating() {
-        handleOrdersUpdating(onCompletion: { [weak self] in
-            if self != nil {
-                self!.onBuyOrdersUpdated?()
-                self!.onSellOrdersUpdated?()
-            }
-        })
+        handleOrdersUpdating()
 
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.PollTimeout) {
             [weak self] () in
@@ -338,10 +330,14 @@ typealias CompletionHandler = () -> Void
         }
     }
 
-    fileprivate func handleOrdersUpdating(onCompletion:@escaping () -> Void) {
-        handlePropertyUpdating(withBlock: { (currencyPair, completionHandler) in
-            handleOrdersUpdating(forPair:currencyPair, onCompletion:completionHandler)
-        }, onCompletion:onCompletion)
+    fileprivate func handleOrdersUpdating() {
+        handlePropertyUpdating(withBlock: { (currencyPair) in
+            handleOrdersUpdating(forPair:currencyPair,
+                                 onCompletion: { [weak self] in
+                self?.onBuyOrdersUpdated?(currencyPair)
+                self?.onSellOrdersUpdated?(currencyPair)
+            })
+        })
     }
 
     fileprivate func handleOrdersUpdating(forPair pair:CurrencyPair,
@@ -370,9 +366,7 @@ typealias CompletionHandler = () -> Void
     }
 
     fileprivate func scheduleDealsUpdating() {
-        handleDealsUpdating(onCompletion:{ [weak self] in
-            self?.onCompletedOrdersUpdated?()
-        })
+        handleDealsUpdating()
 
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.PollTimeout) {
             [weak self] () in
@@ -382,10 +376,13 @@ typealias CompletionHandler = () -> Void
         }
     }
 
-    fileprivate func handleDealsUpdating(onCompletion:@escaping () -> Void) {
-        handlePropertyUpdating(withBlock: { (currencyPair, completionHandler) in
-            handleDealsUpdating(forPair:currencyPair, onCompletion:completionHandler)
-        }, onCompletion:onCompletion)
+    fileprivate func handleDealsUpdating() {
+        handlePropertyUpdating(withBlock: { (currencyPair) in
+            handleDealsUpdating(forPair:currencyPair,
+                                onCompletion: { [weak self] in
+                self?.onDealsUpdated?(currencyPair)
+            })
+        })
     }
 
     fileprivate func handleDealsUpdating(forPair pair:CurrencyPair,
@@ -393,7 +390,7 @@ typealias CompletionHandler = () -> Void
         tradingPlatform.retrieveDealsAsync(forPair:pair,
                                            onCompletion: { (deals, candle) in
             self.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
-                model.currencyPairToCompletedOrdersMap[pair] = candle
+                model.currencyPairToDealsMap[pair] = candle
 
                 onCompletion()
             })
