@@ -49,6 +49,8 @@ class MainViewController : UIViewController,
     override func viewDidAppear(_ animated:Bool) {
         super.viewDidAppear(animated)
         
+        setupTradingPlatform()
+        
         updateBalanceValueLabel()
 
         if tradingPlatform.isAuthorized && loginCompletionAction != nil {
