@@ -82,11 +82,6 @@ class BTCTradeUATradingPlatform : TradingPlatform {
 
     public func retrieveDealsAsync(forPair pair:CurrencyPair,
                                    onCompletion:@escaping CompletedOrdersCompletionCallback) {
-        if !isAuthorized {
-            onCompletion([OrderInfo](), nil)
-            return
-        }
-
         if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
             btcTradeUAOrderProvider.retrieveDealsAsync(forPair:convertedPair,
                                                        withCompletionHandler: { (orders, candle) in
