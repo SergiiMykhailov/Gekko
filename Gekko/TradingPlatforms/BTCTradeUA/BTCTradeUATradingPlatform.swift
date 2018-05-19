@@ -123,7 +123,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
     func retrieveUserOrdersAsync(forPair pair:CurrencyPair,
                                  onCompletion:@escaping UserOrdersCallback) {
         if !isAuthorized {
-            onCompletion([OrderStatusInfo]())
+            onCompletion(nil)
             return
         }
 
@@ -134,7 +134,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                                                  onCompletion:onCompletion)
         }
         else {
-            onCompletion([OrderStatusInfo]())
+            onCompletion(nil)
         }
     }
 
@@ -205,7 +205,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                        toDate:Date,
                                        onCompletion:@escaping UserDealsCallback) {
         if !isAuthorized {
-            onCompletion([OrderStatusInfo]())
+            onCompletion(nil)
             return
         }
 
@@ -228,7 +228,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
             })
         }
         else {
-            onCompletion([OrderStatusInfo]())
+            onCompletion(nil)
         }
     }
 

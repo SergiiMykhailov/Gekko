@@ -296,6 +296,8 @@ typealias BalanceCompletionHandler = (Currency) -> Void
                         currencyPairDeals = completedDeals!
                     }
 
+                    currencyPairDeals?.sort(by: { return $0.date.compare($1.date) == .orderedDescending })
+
                     model.currencyPairToUserDealsMap[currencyPair] = currencyPairDeals
                 }
 
