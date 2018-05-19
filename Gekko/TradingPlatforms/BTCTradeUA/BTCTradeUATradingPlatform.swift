@@ -251,7 +251,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
 
     fileprivate var currencyToBalanceMap = [Currency : Double?]()
 
-    fileprivate static let SupportedCurrencies = [Currency.BTC/*,
+    fileprivate static let SupportedCurrencies = [Currency.BTC,
                                                   Currency.ETH,
                                                   Currency.LTC,
                                                   Currency.XMR,
@@ -259,7 +259,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                                   Currency.DASH,
                                                   Currency.ZEC,
                                                   Currency.BCH,
-                                                  Currency.ETC*/]
+                                                  Currency.ETC]
 
     fileprivate static let SupportedCurrencyPairs:[CurrencyPair] =
         [CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.BTC)/*,
@@ -270,7 +270,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.DASH),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.ZEC),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.BCH),
-         CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.ETC)*/]
+         CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.ETC)]
 
     fileprivate static let CurrencyToCurrencyPairMap = [Currency.BTC : BTCTradeUACurrencyPair.BtcUah,
                                                         Currency.ETH : BTCTradeUACurrencyPair.EthUah,
