@@ -28,43 +28,10 @@ class BTCTradeUADealsProvider : BTCTradeUAProviderBase {
                                       privateKey:privateKey,
                                       body:body) { [weak self] (items, error) in
             if self != nil {
-                let result = self!.deals(fromResponseItems:items)
+                let result = BTCTradeUAUtils.ordersStatus(fromResponseItems:items, withStatus:.Completed)
                 onCompletion(result)
             }
         }
-    }
-
-    // MARK: Internal methods
-
-    fileprivate func deals(fromResponseItems items:[String : Any]) -> [OrderStatusInfo] {
-        var result = [OrderStatusInfo]()
-
-        for item in items.enumerated() {
-            if let dealsCollection = item.element.value as? [Any] {
-                for dealItem in dealsCollection {
-                    if let singleDealDictionary = dealItem as? [String : Any] {
-                        if let dealInfo = BTCTradeUAUtils.orderInfo(fromDictionary:singleDealDictionary) {
-                            if let id = singleDealDictionary[BTCTradeUADealsProvider.IDKey] as? UInt32 {
-                                if let date = BTCTradeUAUtils.publishDate(fromDictionary:singleDealDictionary) {
-                                    let itemToInsert = OrderStatusInfo(id:"\(id)",
-                                                                       status:.Completed,
-                                                                       date:date,
-                                                                       currency:.UAH,
-                                                                       initialAmount:dealInfo.cryptoCurrencyAmount,
-                                                                       remainingAmount:0.0,
-                                                                       price:dealInfo.price,
-                                                                       type:dealInfo.isBuy ? OrderType.Buy : OrderType.Sell)
-
-                                    result.append(itemToInsert)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return result
     }
 
     // MARK: Internal fields
@@ -72,7 +39,4 @@ class BTCTradeUADealsProvider : BTCTradeUAProviderBase {
     private static let dateFormatter = DateFormatter()
 
     private static let DealsSuffix = "my_deals"
-
-    private static let IDKey = "id"
-
 }
