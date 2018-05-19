@@ -79,8 +79,40 @@ class BTCTradeUAUtils {
                     OrderInfo(fiatCurrencyAmount:traditionalCurrencyAmountCasted!,
                               cryptoCurrencyAmount:cryptoCurrencyAmountCasted!,
                               price:priceCasted!,
-                              user:user!,
+                              user:user != nil ? user! : "",
                               isBuy:isBuy)
+            }
+        }
+
+        return result
+    }
+
+    public static func ordersStatus(fromResponseItems items:[String : Any],
+                                    withStatus status:OrderStatus) -> [OrderStatusInfo] {
+        var result = [OrderStatusInfo]()
+
+        for item in items.enumerated() {
+            if let dealsCollection = item.element.value as? [Any] {
+                for dealItem in dealsCollection {
+                    if let singleDealDictionary = dealItem as? [String : Any] {
+                        if let dealInfo = BTCTradeUAUtils.orderInfo(fromDictionary:singleDealDictionary) {
+                            if let id = singleDealDictionary[BTCTradeUAUtils.IDKey] as? UInt32 {
+                                if let date = BTCTradeUAUtils.publishDate(fromDictionary:singleDealDictionary) {
+                                    let itemToInsert = OrderStatusInfo(id:"\(id)",
+                                        status:status,
+                                        date:date,
+                                        currency:.UAH,
+                                        initialAmount:dealInfo.cryptoCurrencyAmount,
+                                        remainingAmount:0.0,
+                                        price:dealInfo.price,
+                                        type:dealInfo.isBuy ? OrderType.Buy : OrderType.Sell)
+
+                                    result.append(itemToInsert)
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -90,6 +122,7 @@ class BTCTradeUAUtils {
     // MARK: Internal fields
 
     fileprivate static let DateKey = "pub_date"
+    fileprivate static let IDKey = "id"
     fileprivate static let TraditionalCurrencyAmountKey = "amnt_base"
     fileprivate static let CryptoCurrencyAmountKey = "amnt_trade"
     fileprivate static let PriceKey = "price"
