@@ -28,7 +28,8 @@ typealias CompletedOrdersCompletionCallback = ([OrderInfo], CandleInfo?) -> Void
 typealias PendingOrdersCompletionCallback = ([OrderInfo]) -> Void
 typealias OrderCompletionCallback = (String?) -> Void
 typealias CancelOrderCompletionCallback = () -> Void
-typealias OrderStatusCallback = (OrderStatusInfo?) -> Void
+typealias UserOrderStatusCallback = (OrderStatusInfo?) -> Void
+typealias UserOrdersCallback = ([OrderStatusInfo]?) -> Void
 typealias UserDealsCallback = ([OrderStatusInfo]?) -> Void
 
 protocol TradingPlatform : class {
@@ -65,7 +66,10 @@ protocol TradingPlatform : class {
                                onCompletion:@escaping OrderCompletionCallback)
 
     func retrieveOrderStatusAsync(withID id:String,
-                                  onCompletion:@escaping OrderStatusCallback)
+                                  onCompletion:@escaping UserOrderStatusCallback)
+
+    func retrieveUserOrdersAsync(forPair pair:CurrencyPair,
+                                 onCompletion:@escaping UserOrdersCallback)
 
     func retrieveUserDealsAsync(forPair pair:CurrencyPair,
                                 fromDate:Date,
@@ -74,5 +78,4 @@ protocol TradingPlatform : class {
 
     func cancelOrderAsync(withID id:String,
                           onCompletion:@escaping CancelOrderCompletionCallback)
-    
 }

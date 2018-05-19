@@ -618,7 +618,7 @@ class MainViewController : UIViewController,
 
     // MARK: OrdersViewDataSource implementation
 
-    func ordersFor(ordersView sender:OrdersView) -> [OrderStatusInfo] {
+    func ordersAndCompletedDealsFor(ordersView sender:OrdersView) -> [OrderStatusInfo] {
         var result = [OrderStatusInfo]()
 
         tradingPlatformController!.tradingPlatformData.accessInMainQueue { [weak self] (model) in
