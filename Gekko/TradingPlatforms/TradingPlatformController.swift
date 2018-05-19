@@ -104,15 +104,6 @@ typealias BalanceCompletionHandler = (Currency) -> Void
                                tradingPlatform.performSellOrderAsync
 
         orderPostingMethod(pair, amount, price) { [weak self] (orderID) in
-            self?.coreDataFacade!.makeOrder(withInitializationBlock: { (order) in
-                order.id = orderID!
-                order.isBuy = isBuy
-                order.currency = pair.secondaryCurrency.rawValue as String
-                order.date = Date()
-                order.initialAmount = amount
-                order.price = price
-            })
-
             self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
                 let orderStatus = OrderStatusInfo(id:orderID!,
                                                   status:OrderStatus.Pending,
