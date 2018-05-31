@@ -520,7 +520,7 @@ class MainViewController : UIViewController,
     func createOrderView(sender:CreateOrderView,
                          didSubmitRequestWithAmount amount:Double,
                          price:Double,
-                         mode:OrderMode) {
+                         forMode mode:OrderMode) {
         handleOrderSubmission(withCryptocurrencyAmount:amount, price:price, mode:mode)
     }
 

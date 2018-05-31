@@ -76,11 +76,11 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
             make.centerY.equalTo(topSeparatorView).dividedBy(2)
         }
 
-        dailyPercentageLabel.setContentHuggingPriority(.required, for:.horizontal)
-        dailyPercentageLabel.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(-UIDefaults.Spacing)
-            make.centerY.equalTo(currencyLabel)
-        }
+//        dailyPercentageLabel.setContentHuggingPriority(.required, for:.horizontal)
+//        dailyPercentageLabel.snp.makeConstraints { (make) in
+//            make.right.equalToSuperview().offset(-UIDefaults.Spacing)
+//            make.centerY.equalTo(currencyLabel)
+//        }
 
         priceLabelPlaceholder.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
@@ -158,7 +158,7 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
 
     fileprivate func setupControls() -> Void {
         addSubview(currencyLabel)
-        addSubview(dailyPercentageLabel)
+//        addSubview(dailyPercentageLabel)
         addSubview(topSeparatorView)
         addSubview(priceLabelPlaceholder)
         priceLabelPlaceholder.addSubview(priceLabel)
