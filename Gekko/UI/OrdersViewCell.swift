@@ -111,6 +111,17 @@ class OrdersViewCell : UITableViewCell {
             typeLabel.text = "↑"
         }
 
+        switch orderStatus!.status {
+        case .Publishing:
+            backgroundColor = UIDefaults.GreenColor.withAlphaComponent(0.05)
+
+        case .Cancelling:
+            backgroundColor = UIDefaults.RedColor.withAlphaComponent(0.05)
+
+        default:
+            backgroundColor = UIColor.white
+        }
+
         OrdersViewCell.formatter.dateFormat = "dd.MM.yy"
         dateLabel.text = OrdersViewCell.formatter.string(from:orderStatus!.date)
         let fiatAmount = orderStatus!.initialAmount * orderStatus!.price

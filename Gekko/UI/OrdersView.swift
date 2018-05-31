@@ -53,7 +53,9 @@ class OrdersView : UIView,
         let orders = dataSource?.ordersAndCompletedDealsFor(ordersView:self)
         if orders != nil {
             for orderStatus in orders! {
-                if orderStatus.status == .Pending {
+                if orderStatus.status == .Pending ||
+                   orderStatus.status == .Publishing ||
+                   orderStatus.status == .Cancelling {
                     pendingOrders.append(orderStatus)
                 }
                 else if orderStatus.status == .Completed {
@@ -147,8 +149,7 @@ class OrdersView : UIView,
                     self?.pendingOrders = (self?.pendingOrders.filter({ (currentOrder) -> Bool in
                         currentOrder.id != cell.orderStatus!.id
                     }))!
-                    
-                    self?.ordersTable.deleteRows(at:[indexPath], with:.top)
+
                     self?.delegate?.ordersView?(sender:self!, didRequestCancel:cell.orderStatus!)
                 })
                 

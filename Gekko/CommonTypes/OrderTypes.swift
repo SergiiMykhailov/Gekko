@@ -18,8 +18,10 @@ struct OrderInfo {
 }
 
 @objc enum OrderStatus : Int8 {
+    case Publishing
     case Pending
     case Completed
+    case Cancelling
     case Canceled
 }
 

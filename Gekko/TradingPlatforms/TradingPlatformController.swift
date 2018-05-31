@@ -81,14 +81,27 @@ typealias BalanceCompletionHandler = (Currency) -> Void
         tradingPlatformData.accessInMainQueue { [weak self] (model) in
             for currencyPair in self!.tradingPlatform.supportedCurrencyPairs {
                 var currentPairOrders = model.currencyPairToUserOrdersStatusMap[currencyPair]
-                currentPairOrders = currentPairOrders?.filter({ (currentOrderStatus) -> Bool in
-                    currentOrderStatus.id != orderID
-                })
 
-                model.currencyPairToUserOrdersStatusMap[currencyPair] = currentPairOrders
+                if let orderIndex = currentPairOrders?.index(where: { return $0.id == orderID }) {
+                    currentPairOrders![orderIndex].status = .Cancelling
+
+                    self?.onUserOrdersStatusUpdated?(currencyPair)
+
+                    self!.tradingPlatform.cancelOrderAsync(withID:orderID,
+                                                           onCompletion: { [weak self] in
+                        self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
+                            var updatedOrders = model.currencyPairToUserOrdersStatusMap[currencyPair]
+                            updatedOrders = updatedOrders?.filter({ $0.id != orderID })
+
+                            model.currencyPairToUserOrdersStatusMap[currencyPair] = updatedOrders
+
+                            self?.onUserOrdersStatusUpdated?(currencyPair)
+
+                            onCompletion()
+                        })
+                    })
+                }
             }
-
-            self!.tradingPlatform.cancelOrderAsync(withID:orderID, onCompletion:onCompletion)
         }
     }
 
@@ -103,23 +116,40 @@ typealias BalanceCompletionHandler = (Currency) -> Void
                                tradingPlatform.performBuyOrderAsync :
                                tradingPlatform.performSellOrderAsync
 
-        orderPostingMethod(pair, amount, price) { [weak self] (orderID) in
-            self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
-                let orderStatus = OrderStatusInfo(id:orderID!,
-                                                  status:OrderStatus.Pending,
-                                                  date:Date(),
-                                                  currency:pair.secondaryCurrency,
-                                                  initialAmount:amount,
-                                                  remainingAmount:amount,
-                                                  price:price,
-                                                  type:isBuy ? OrderType.Buy : OrderType.Sell)
+        // Assign some dummy ID in order to be able to find this order later.
+        let dummyID = UUID().uuidString
+        let orderStatus = OrderStatusInfo(id:dummyID,
+                                          status:.Publishing,
+                                          date:Date(),
+                                          currency:pair.secondaryCurrency,
+                                          initialAmount:amount,
+                                          remainingAmount:amount,
+                                          price:price,
+                                          type:isBuy ? OrderType.Buy : OrderType.Sell)
 
-                model.handle(orderStatusInfo:orderStatus, forCurrencyPair:pair)
+        tradingPlatformData.accessInMainQueue(withBlock: { [weak self] (model) in
+            model.handle(orderStatusInfo:orderStatus, forCurrencyPair:pair)
+
+            self?.onUserOrdersStatusUpdated?(pair)
+        })
+
+        orderPostingMethod(pair, amount, price) { [weak self] (orderID) in
+            self?.tradingPlatformData.accessInMainQueue(withBlock: { [weak self] (model) in
+                if orderID != nil {
+                    let currencyPairUserOrders = model.currencyPairToUserOrdersStatusMap[pair]
+
+                    if let publishingOrderIndex = currencyPairUserOrders?.index(where: { return $0.id == dummyID}) {
+                        currencyPairUserOrders![publishingOrderIndex].id = orderID!
+                        currencyPairUserOrders![publishingOrderIndex].status = .Pending
+
+                        self?.onUserOrdersStatusUpdated?(pair)
+                    }
+                }
+
+                self?.handleUserOrdersAndDealsUpdating()
 
                 onCompletion(orderID)
             })
-
-            self?.handleUserOrdersAndDealsUpdating()
         }
     }
 
@@ -248,7 +278,27 @@ typealias BalanceCompletionHandler = (Currency) -> Void
             [weak self] (userOrders) in
             if userOrders != nil {
                 self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
-                    model.currencyPairToUserOrdersStatusMap[currencyPair] = userOrders
+                    var ordersToApply = userOrders
+
+                    if let currentUserOrders = model.currencyPairToUserOrdersStatusMap[currencyPair] {
+                        // There are orders which are stored only on the local device and are not confirmed by server.
+                        // These orders should also be presented to user.
+                        let publishingOrders = currentUserOrders.filter({ return $0.status == .Publishing })
+
+                        ordersToApply?.append(contentsOf:publishingOrders)
+
+                        // There are orders which are present on server but are marked as 'to be removed' locally.
+                        // These orders should not be presented to user.
+                        let cancellingOrders = currentUserOrders.filter({ return $0.status == .Cancelling })
+                        ordersToApply = ordersToApply?.filter({
+                            let remoteOrderID = $0.id
+                            let isOrderMarkedForRemoving = cancellingOrders.contains(where:{ return $0.id == remoteOrderID })
+
+                            return !isOrderMarkedForRemoving
+                        })
+                    }
+
+                    model.currencyPairToUserOrdersStatusMap[currencyPair] = ordersToApply
 
                     onCompletion()
                 })
