@@ -115,6 +115,24 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
     }
 
+    func retrieveUserOrdersAsync(forPair pair:CurrencyPair,
+                                 onCompletion:@escaping UserOrdersCallback) {
+        if !isAuthorized {
+            onCompletion(nil)
+            return
+        }
+
+        if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
+            btcTradeUAUserOrdersProvider.retrieveUserOrdersAsync(forPair:convertedPair,
+                                                                 publicKey:publicKey!,
+                                                                 privateKey:privateKey!,
+                                                                 onCompletion:onCompletion)
+        }
+        else {
+            onCompletion(nil)
+        }
+    }
+
     public func performBuyOrderAsync(forPair pair:CurrencyPair,
                                      amount:Double,
                                      price:Double,
@@ -165,7 +183,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
     }
 
     public func retrieveOrderStatusAsync(withID id:String,
-                                         onCompletion:@escaping OrderStatusCallback) {
+                                         onCompletion:@escaping UserOrderStatusCallback) {
         if !isAuthorized {
             onCompletion(nil)
             return
@@ -182,7 +200,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                        toDate:Date,
                                        onCompletion:@escaping UserDealsCallback) {
         if !isAuthorized {
-            onCompletion([OrderStatusInfo]())
+            onCompletion(nil)
             return
         }
 
@@ -205,7 +223,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
             })
         }
         else {
-            onCompletion([OrderStatusInfo]())
+            onCompletion(nil)
         }
     }
 
@@ -224,6 +242,7 @@ class BTCTradeUATradingPlatform : TradingPlatform {
     fileprivate let btcTradeUAOrderProvider = BTCTradeUAOrderProvider()
     fileprivate let btcTradeUAOrdersStatusProvider = BTCTradeUAOrdersStatusProvider()
     fileprivate let btcTradeUAUserDealsProvider = BTCTradeUADealsProvider()
+    fileprivate let btcTradeUAUserOrdersProvider = BTCTradeUAUserOrdersProvider()
 
     fileprivate var currencyToBalanceMap = [Currency : Double?]()
 

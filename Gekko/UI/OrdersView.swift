@@ -8,7 +8,7 @@ import SnapKit
 
 protocol OrdersViewDataSource : class {
 
-    func ordersFor(ordersView sender:OrdersView) -> [OrderStatusInfo]
+    func ordersAndCompletedDealsFor(ordersView sender:OrdersView) -> [OrderStatusInfo]
     
 }
 
@@ -50,10 +50,12 @@ class OrdersView : UIView,
         pendingOrders.removeAll()
         completedOrders.removeAll()
 
-        let orders = dataSource?.ordersFor(ordersView:self)
+        let orders = dataSource?.ordersAndCompletedDealsFor(ordersView:self)
         if orders != nil {
             for orderStatus in orders! {
-                if orderStatus.status == .Pending {
+                if orderStatus.status == .Pending ||
+                   orderStatus.status == .Publishing ||
+                   orderStatus.status == .Cancelling {
                     pendingOrders.append(orderStatus)
                 }
                 else if orderStatus.status == .Completed {
@@ -147,8 +149,7 @@ class OrdersView : UIView,
                     self?.pendingOrders = (self?.pendingOrders.filter({ (currentOrder) -> Bool in
                         currentOrder.id != cell.orderStatus!.id
                     }))!
-                    
-                    self?.ordersTable.deleteRows(at:[indexPath], with:.top)
+
                     self?.delegate?.ordersView?(sender:self!, didRequestCancel:cell.orderStatus!)
                 })
                 

@@ -54,12 +54,6 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
         }
     }
 
-    public var dailyPercentage:Double? {
-        didSet {
-            updateDailyPercentageText()
-        }
-    }
-
     override func layoutSubviews() {
         super.layoutSubviews()
 
@@ -75,12 +69,6 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
             make.centerX.equalToSuperview()
             make.centerY.equalTo(topSeparatorView).dividedBy(2)
         }
-
-//        dailyPercentageLabel.setContentHuggingPriority(.required, for:.horizontal)
-//        dailyPercentageLabel.snp.makeConstraints { (make) in
-//            make.right.equalToSuperview().offset(-UIDefaults.Spacing)
-//            make.centerY.equalTo(currencyLabel)
-//        }
 
         priceLabelPlaceholder.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
@@ -141,24 +129,8 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
         balanceLabel.text = labelText
     }
 
-    fileprivate func updateDailyPercentageText() {
-        if dailyPercentage != nil {
-            let labelText = String(format:"%+.1f%", dailyPercentage!) + "%"
-
-            dailyPercentageLabel.textColor = dailyPercentage! >= 0.0
-                                             ? UIDefaults.GreenColor
-                                             : UIDefaults.RedColor
-
-            dailyPercentageLabel.text = labelText
-        }
-        else {
-            dailyPercentageLabel.text = ""
-        }
-    }
-
     fileprivate func setupControls() -> Void {
         addSubview(currencyLabel)
-//        addSubview(dailyPercentageLabel)
         addSubview(topSeparatorView)
         addSubview(priceLabelPlaceholder)
         priceLabelPlaceholder.addSubview(priceLabel)
@@ -167,9 +139,6 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
 
         currencyLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelDefaultFontSize)
         currencyLabel.textAlignment = .center
-
-        dailyPercentageLabel.font = UIFont.boldSystemFont(ofSize:UIDefaults.LabelSmallFontSize)
-        dailyPercentageLabel.textAlignment = .center
 
         topSeparatorView.backgroundColor = UIDefaults.SeparatorColor
 
@@ -196,7 +165,6 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
     // MARK: Internal fields
 
     fileprivate var currencyLabel = UILabel()
-    fileprivate var dailyPercentageLabel = UILabel()
     fileprivate var priceLabelPlaceholder = UIView()
     fileprivate var priceLabel = UILabel()
     fileprivate var balanceLabelPlaceholder = UIView()
