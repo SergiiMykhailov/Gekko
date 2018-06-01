@@ -113,10 +113,13 @@ class OrdersViewCell : UITableViewCell {
 
         switch orderStatus!.status {
         case .Publishing:
-            backgroundColor = UIDefaults.GreenColor.withAlphaComponent(0.05)
+            backgroundColor = UIDefaults.GreenColor.withAlphaComponent(OrdersViewCell.DefaultBackgroundAlpha)
 
         case .Cancelling:
-            backgroundColor = UIDefaults.RedColor.withAlphaComponent(0.05)
+            backgroundColor = UIDefaults.RedColor.withAlphaComponent(OrdersViewCell.DefaultBackgroundAlpha)
+
+        case .Rejected:
+            backgroundColor = UIDefaults.YellowColor.withAlphaComponent(OrdersViewCell.DefaultBackgroundAlpha)
 
         default:
             backgroundColor = UIColor.white
@@ -147,4 +150,5 @@ class OrdersViewCell : UITableViewCell {
     // MARK: Internal fields
 
     fileprivate static let formatter = DateFormatter()
+    fileprivate static let DefaultBackgroundAlpha:CGFloat = 0.07
 }

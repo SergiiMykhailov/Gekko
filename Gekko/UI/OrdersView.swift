@@ -55,7 +55,8 @@ class OrdersView : UIView,
             for orderStatus in orders! {
                 if orderStatus.status == .Pending ||
                    orderStatus.status == .Publishing ||
-                   orderStatus.status == .Cancelling {
+                   orderStatus.status == .Cancelling ||
+                   orderStatus.status == .Rejected {
                     pendingOrders.append(orderStatus)
                 }
                 else if orderStatus.status == .Completed {
@@ -140,7 +141,8 @@ class OrdersView : UIView,
     
     internal func tableView(_ tableView:UITableView, editActionsForRowAt indexPath:IndexPath) -> [UITableViewRowAction]? {
         if let cell = tableView.cellForRow(at:indexPath) as? OrdersViewCell {
-            if cell.orderStatus?.status == .Pending {
+            if cell.orderStatus?.status == .Pending ||
+               cell.orderStatus?.status == .Rejected {
                 var actions = [UITableViewRowAction]()
 
                 let cancelAction = UITableViewRowAction(style:.destructive,
