@@ -25,7 +25,7 @@ class BTCTradeUAPostRequestFactory : NSObject {
 
         request.httpMethod = "POST"
 
-        let requestBodySuffix = String(format:"out_order_id=%d&nonce=%d", outOrderId, nonceCount)
+        let requestBodySuffix = String(format:"out_order_id=%d&nonce=%d&MerchantID=iOS_Gekko", outOrderId, nonceCount)
         let requestBody = body.isEmpty ? requestBodySuffix : String(format:"%@&%@", body, requestBodySuffix)
 
         request.setValue(publicKey, forHTTPHeaderField:"public-key")

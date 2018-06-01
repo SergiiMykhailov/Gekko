@@ -9,7 +9,7 @@ class BTCTradeUAProviderBase : NSObject {
     // MARK: Public methods and properties
 
     public func performGetRequestAsync(withSuffix suffix:String, onCompletion:@escaping ServiceResponse) {
-        let requestURL = String(format: "%@%@", BTCTradeUAProviderBase.btcTradeBaseUrl, suffix)
+        let requestURL = String(format: "%@%@?MerchantID=iOS_Gekko", BTCTradeUAProviderBase.btcTradeBaseUrl, suffix)
 
         RestApiRequestsExecutor.performHTTPGetRequest(path:requestURL, onCompletion:onCompletion)
     }
