@@ -83,23 +83,33 @@ typealias BalanceCompletionHandler = (Currency) -> Void
                 var currentPairOrders = model.currencyPairToUserOrdersStatusMap[currencyPair]
 
                 if let orderIndex = currentPairOrders?.index(where: { return $0.id == orderID }) {
+                    let initialStatus = currentPairOrders![orderIndex].status
                     currentPairOrders![orderIndex].status = .Cancelling
 
                     self?.onUserOrdersStatusUpdated?(currencyPair)
 
-                    self!.tradingPlatform.cancelOrderAsync(withID:orderID,
-                                                           onCompletion: { [weak self] in
-                        self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
-                            var updatedOrders = model.currencyPairToUserOrdersStatusMap[currencyPair]
-                            updatedOrders = updatedOrders?.filter({ $0.id != orderID })
+                    let ordersUpdatingBlock = { (model:TradingPlatformModel) in
+                        var updatedOrders = model.currencyPairToUserOrdersStatusMap[currencyPair]
+                        updatedOrders = updatedOrders?.filter({ $0.id != orderID })
 
-                            model.currencyPairToUserOrdersStatusMap[currencyPair] = updatedOrders
+                        model.currencyPairToUserOrdersStatusMap[currencyPair] = updatedOrders
 
-                            self?.onUserOrdersStatusUpdated?(currencyPair)
+                        self?.onUserOrdersStatusUpdated?(currencyPair)
 
-                            onCompletion()
+                        onCompletion()
+                    }
+
+                    if initialStatus == .Pending {
+                        self!.tradingPlatform.cancelOrderAsync(withID:orderID,
+                                                               onCompletion: { [weak self] in
+                                                                self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
+                                                                    ordersUpdatingBlock(model)
+                                                                })
                         })
-                    })
+                    }
+                    else if initialStatus == .Rejected {
+                        ordersUpdatingBlock(model)
+                    }
                 }
             }
         }
@@ -135,15 +145,18 @@ typealias BalanceCompletionHandler = (Currency) -> Void
 
         orderPostingMethod(pair, amount, price) { [weak self] (orderID) in
             self?.tradingPlatformData.accessInMainQueue(withBlock: { [weak self] (model) in
-                if orderID != nil {
-                    let currencyPairUserOrders = model.currencyPairToUserOrdersStatusMap[pair]
+                let currencyPairUserOrders = model.currencyPairToUserOrdersStatusMap[pair]
 
-                    if let publishingOrderIndex = currencyPairUserOrders?.index(where: { return $0.id == dummyID}) {
+                if let publishingOrderIndex = currencyPairUserOrders?.index(where: { return $0.id == dummyID}) {
+                    if orderID != nil {
                         currencyPairUserOrders![publishingOrderIndex].id = orderID!
                         currencyPairUserOrders![publishingOrderIndex].status = .Pending
-
-                        self?.onUserOrdersStatusUpdated?(pair)
                     }
+                    else {
+                        currencyPairUserOrders![publishingOrderIndex].status = .Rejected
+                    }
+
+                    self?.onUserOrdersStatusUpdated?(pair)
                 }
 
                 self?.handleUserOrdersAndDealsUpdating()

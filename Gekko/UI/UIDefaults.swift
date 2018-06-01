@@ -37,6 +37,7 @@ class UIDefaults {
 
     public static let GreenColor = UIColor(red:76 / 255, green:217 / 255, blue:100 / 255, alpha:1)
     public static let RedColor = UIColor(red:1, green:59 / 255, blue:48 / 255, alpha:1)
+    public static let YellowColor = UIColor(red:1, green:204 / 255, blue:0, alpha:1)
 
     public static let DefaultAnimationDuration:TimeInterval = 0.25
     
