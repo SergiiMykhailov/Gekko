@@ -21,6 +21,12 @@ typealias BalanceCompletionHandler = (Currency) -> Void
 
     public let tradingPlatform:TradingPlatform
 
+    public var activeCurrencyPair:CurrencyPair? {
+        didSet {
+            refreshAll()
+        }
+    }
+
     public private(set) var tradingPlatformData =
         MainQueueAccessor<TradingPlatformModel>(element:TradingPlatformModel())
 
@@ -166,16 +172,22 @@ typealias BalanceCompletionHandler = (Currency) -> Void
         }
     }
 
-    fileprivate func handlePropertyUpdating(withBlock block:(CurrencyPair) -> Void) {
-        for currencyPair in self.tradingPlatform.supportedCurrencyPairs {
-            block(currencyPair)
+    fileprivate func handlePropertyUpdating(forAllCurrencies:Bool = false,
+                                            withBlock block:(CurrencyPair) -> Void) {
+        if forAllCurrencies {
+            for currencyPair in self.tradingPlatform.supportedCurrencyPairs {
+                block(currencyPair)
+            }
+        }
+        else if activeCurrencyPair != nil {
+            block(activeCurrencyPair!)
         }
     }
 
     fileprivate func scheduleCandlesUpdating() {
         handleCandlesUpdating()
 
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.PollTimeout) {
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.LongPollTimeout) {
             [weak self] () in
             if (self != nil) {
                 self!.scheduleCandlesUpdating()
@@ -206,7 +218,7 @@ typealias BalanceCompletionHandler = (Currency) -> Void
     fileprivate func scheduleUserBalanceUpdating() {
         handleUserBalanceUpdating()
 
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.PollTimeout) {
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.LongPollTimeout) {
             [weak self] () in
             if (self != nil) {
                 self!.scheduleUserBalanceUpdating()
@@ -268,7 +280,7 @@ typealias BalanceCompletionHandler = (Currency) -> Void
     fileprivate func scheduleOrdersStatusUpdating() {
         handleUserOrdersAndDealsUpdating()
 
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.PollTimeout) {
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.DefaultPollTimeout) {
             [weak self] () in
             if (self != nil) {
                 self!.scheduleOrdersStatusUpdating()
@@ -363,7 +375,7 @@ typealias BalanceCompletionHandler = (Currency) -> Void
     fileprivate func scheduleOrdersUpdating() {
         handleOrdersUpdating()
 
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.PollTimeout) {
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.DefaultPollTimeout) {
             [weak self] () in
             if (self != nil) {
                 self!.scheduleOrdersUpdating()
@@ -409,7 +421,7 @@ typealias BalanceCompletionHandler = (Currency) -> Void
     fileprivate func scheduleDealsUpdating() {
         handleDealsUpdating()
 
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.PollTimeout) {
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + TradingPlatformController.DefaultPollTimeout) {
             [weak self] () in
             if (self != nil) {
                 self!.scheduleDealsUpdating()
@@ -418,7 +430,8 @@ typealias BalanceCompletionHandler = (Currency) -> Void
     }
 
     fileprivate func handleDealsUpdating() {
-        handlePropertyUpdating(withBlock: { (currencyPair) in
+        handlePropertyUpdating(forAllCurrencies:true,
+                               withBlock: { (currencyPair) in
             handleDealsUpdating(forPair:currencyPair,
                                 onCompletion: { [weak self] in
                 self?.onDealsUpdated?(currencyPair)
@@ -458,5 +471,6 @@ typealias BalanceCompletionHandler = (Currency) -> Void
 
     fileprivate let dealsHandler:TradingPlatformUserDealsHandler
 
-    fileprivate static let PollTimeout:TimeInterval = 10
+    fileprivate static let DefaultPollTimeout:TimeInterval = 10
+    fileprivate static let LongPollTimeout:TimeInterval = 600
 }
