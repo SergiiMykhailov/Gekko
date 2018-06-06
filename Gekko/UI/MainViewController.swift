@@ -20,8 +20,6 @@ class MainViewController : UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupTradingPlatform()
-
         stackViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         collectionViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         buttonsPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
