@@ -22,8 +22,6 @@ class MainViewController : UIViewController,
 
         setupTradingPlatform()
 
-        currentPair = makePairForCurrency(forCurrency:.BTC)
-
         stackViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         collectionViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
         buttonsPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
@@ -74,6 +72,7 @@ class MainViewController : UIViewController,
     fileprivate func setupTradingPlatform() {
         let tradingPlatform = TradingPlatformFactory.createTradingPlatform()
         tradingPlatformController = TradingPlatformController(tradingPlatform:tradingPlatform)
+        tradingPlatformController?.activeCurrencyPair = makePairForCurrency(forCurrency:.BTC)
 
         subscribeForTradingPlatformDataUpdates()
 
@@ -97,7 +96,7 @@ class MainViewController : UIViewController,
 
         let executeIfCurrencyPairMatches = { [weak self] (currencyPair:CurrencyPair,
                                                           block:() -> Void) in
-            if self != nil && self!.currentPair! == currencyPair {
+            if self != nil && self!.tradingPlatformController!.activeCurrencyPair! == currencyPair {
                 block()
             }
         }
@@ -432,7 +431,7 @@ class MainViewController : UIViewController,
 
     internal func currenciesViewController(sender:CurrenciesCollectionViewController,
                                            didSelectCurrency currency:Currency) {
-        currentPair = makePairForCurrency(forCurrency:currency)
+        tradingPlatformController?.activeCurrencyPair = makePairForCurrency(forCurrency:currency)
 
         UIUtils.blink(aboveView:ordersStackController.view)
         UIUtils.blink(aboveView:chartController.view)
@@ -574,10 +573,10 @@ class MainViewController : UIViewController,
 
         tradingPlatformController!.tradingPlatformData.accessInMainQueue(withBlock: {
             [weak self] (model) in
-            if let candles = model.currencyPairToCandlesMap[self!.currentPair!] {
+            if let candles = model.currencyPairToCandlesMap[self!.tradingPlatformController!.activeCurrencyPair!] {
                 result = candles
 
-                if let deals = model.currencyPairToDealsMap[self!.currentPair!] {
+                if let deals = model.currencyPairToDealsMap[self!.tradingPlatformController!.activeCurrencyPair!] {
                     if !result.isEmpty {
                         result[result.count - 1].close = deals.close
                     }
@@ -613,7 +612,7 @@ class MainViewController : UIViewController,
     }
 
     fileprivate func orders(fromDictionary dictionary:[CurrencyPair : [OrderInfo]]) -> [OrderInfo] {
-        if let orders = dictionary[currentPair!] {
+        if let orders = dictionary[tradingPlatformController!.activeCurrencyPair!] {
             return orders
         }
 
@@ -626,11 +625,11 @@ class MainViewController : UIViewController,
         var result = [OrderStatusInfo]()
 
         tradingPlatformController!.tradingPlatformData.accessInMainQueue { [weak self] (model) in
-            if let orderStatus = model.currencyPairToUserOrdersStatusMap[self!.currentPair!] {
+            if let orderStatus = model.currencyPairToUserOrdersStatusMap[self!.tradingPlatformController!.activeCurrencyPair!] {
                 result.append(contentsOf:orderStatus)
             }
 
-            if let completedDeals = model.currencyPairToUserDealsMap[self!.currentPair!] {
+            if let completedDeals = model.currencyPairToUserDealsMap[self!.tradingPlatformController!.activeCurrencyPair!] {
                 result.append(contentsOf:completedDeals)
             }
         }
@@ -696,7 +695,6 @@ class MainViewController : UIViewController,
     fileprivate var tradingPlatformController:TradingPlatformController?
 
     fileprivate var currentOrderCurrency:Currency?
-    fileprivate var currentPair:CurrencyPair?
 
     fileprivate let currenciesController = CurrenciesCollectionViewController()
     fileprivate let chartController = ChartViewController()
