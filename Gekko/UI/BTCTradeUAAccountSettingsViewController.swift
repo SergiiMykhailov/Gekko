@@ -62,10 +62,10 @@ class BTCTradeUAAccountSettingsViewController : UIViewController {
     }
     
     fileprivate func setupBackButton() {
-        let button = UIButton(type: .system)
+        let button = UIButton(type:.system)
         
-        button.setImage(#imageLiteral(resourceName: "backArrow"), for: .normal)
-        button.setTitle(NSLocalizedString("Back", comment:"Back navigation button"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "backArrow"), for:.normal)
+        button.setTitle(NSLocalizedString("Back", comment:"Back navigation button"), for:.normal)
         button.sizeToFit()
         button.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
         
@@ -81,8 +81,8 @@ class BTCTradeUAAccountSettingsViewController : UIViewController {
         let privateKey = privateKeyField?.text
 
         if publicKey != nil && privateKey != nil {
-            BTCTradeUALoginSession.loginIfNeeded(withPublicKey: publicKey!,
-                                                 privateKey: privateKey!,
+            BTCTradeUALoginSession.loginIfNeeded(withPublicKey:publicKey!,
+                                                 privateKey:privateKey!,
                                                  completionCallback: { (succeeded) in
                 DispatchQueue.main.async { [weak self] () in
                     if (self != nil && succeeded) {
@@ -96,17 +96,17 @@ class BTCTradeUAAccountSettingsViewController : UIViewController {
                         self!.navigationController?.popViewController(animated:true)
                     }
                     else {
-                        let alert = UIAlertController(title: NSLocalizedString("Authorization failed", comment: "Alert title"),
-                                                      message: NSLocalizedString("Invalid public/private key", comment: "Invalid key"),
+                        let alert = UIAlertController(title: NSLocalizedString("Authorization failed", comment:"Alert title"),
+                                                      message: NSLocalizedString("Invalid public/private key", comment:"Invalid key"),
                                                       preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: "Close alert action"),
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Close alert action"),
                                                       style: .`default`,
                                                       handler: { _ in
                             self!.publicKeyField!.text = String()
                             self!.privateKeyField!.text = String()
                         }))
                         
-                        self!.present(alert, animated: true, completion: nil)
+                        self!.present(alert, animated:true, completion:nil)
                     }
                 }
             })

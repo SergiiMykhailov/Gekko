@@ -17,6 +17,10 @@ class MainViewController : UIViewController,
 
     // MARK: Overriden functions
 
+    deinit {
+        UserDefaults.standard.removeObserver(self, forKeyPath:UIUtils.PrivateKeySettingsKey)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,13 +45,15 @@ class MainViewController : UIViewController,
         serverAccessibility.delegate = self
         serverAccessibility.startMonitoringAccessibility()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action:#selector(settingsButtonPressed))
-    }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image:#imageLiteral(resourceName: "settings"),
+                                                            style:.plain,
+                                                            target:self,
+                                                            action:#selector(settingsButtonPressed))
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        setupTradingPlatform()
+        UserDefaults.standard.addObserver(self,
+                                          forKeyPath:UIUtils.PrivateKeySettingsKey,
+                                          options:NSKeyValueObservingOptions.new,
+                                          context:nil)
     }
     
     override func viewDidAppear(_ animated:Bool) {
@@ -58,6 +64,15 @@ class MainViewController : UIViewController,
         if tradingPlatform.isAuthorized && loginCompletionAction != nil {
             loginCompletionAction!()
             loginCompletionAction = nil
+        }
+    }
+
+    override func observeValue(forKeyPath keyPath:String?,
+                               of object:Any?,
+                               change:[NSKeyValueChangeKey : Any]?,
+                               context:UnsafeMutableRawPointer?) {
+        if keyPath == UIUtils.PrivateKeySettingsKey {
+            setupTradingPlatform()
         }
     }
 
@@ -391,7 +406,7 @@ class MainViewController : UIViewController,
         let currencyPair = makePairForCurrency(forCurrency:currency)
         var result:Double?
 
-        tradingPlatformController!.tradingPlatformData.accessInMainQueue { (model) in
+        tradingPlatformController?.tradingPlatformData.accessInMainQueue { (model) in
             let currencyPairInfo = model.currencyPairToDealsMap[currencyPair]
             result = currencyPairInfo?.low
         }
@@ -404,7 +419,7 @@ class MainViewController : UIViewController,
         let currencyPair = makePairForCurrency(forCurrency:currency)
         var result:Double?
 
-        tradingPlatformController!.tradingPlatformData.accessInMainQueue { (model) in
+        tradingPlatformController?.tradingPlatformData.accessInMainQueue { (model) in
             let currencyPairInfo = model.currencyPairToDealsMap[currencyPair]
             result = currencyPairInfo?.high
         }
@@ -417,7 +432,7 @@ class MainViewController : UIViewController,
         let currencyPair = makePairForCurrency(forCurrency:currency)
         var result:Double?
 
-        tradingPlatformController!.tradingPlatformData.accessInMainQueue { (model) in
+        tradingPlatformController?.tradingPlatformData.accessInMainQueue { (model) in
             if let currencyPairInfo = model.currencyPairToDealsMap[currencyPair] {
                 let percentage = 100 * (currencyPairInfo.close - currencyPairInfo.open) / currencyPairInfo.open
                 result = percentage
@@ -571,7 +586,7 @@ class MainViewController : UIViewController,
     func dataForChartViewController(sender:ChartViewController) -> [CandleInfo] {
         var result = [CandleInfo]()
 
-        tradingPlatformController!.tradingPlatformData.accessInMainQueue(withBlock: {
+        tradingPlatformController?.tradingPlatformData.accessInMainQueue(withBlock: {
             [weak self] (model) in
             if let candles = model.currencyPairToCandlesMap[self!.tradingPlatformController!.activeCurrencyPair!] {
                 result = candles
@@ -592,7 +607,7 @@ class MainViewController : UIViewController,
     func sellOrdersForOrdersViewController(sender:OrdersStackViewController) -> [OrderInfo] {
         var orders = [OrderInfo]()
 
-        tradingPlatformController!.tradingPlatformData.accessInMainQueue(withBlock: {
+        tradingPlatformController?.tradingPlatformData.accessInMainQueue(withBlock: {
             [weak self] (model) in
             orders = self!.orders(fromDictionary:model.currencyPairToSellOrdersMap)
         })
@@ -603,7 +618,7 @@ class MainViewController : UIViewController,
     func buyOrdersForOrdersViewController(sender:OrdersStackViewController) -> [OrderInfo] {
         var orders = [OrderInfo]()
 
-        tradingPlatformController!.tradingPlatformData.accessInMainQueue(withBlock: {
+        tradingPlatformController?.tradingPlatformData.accessInMainQueue(withBlock: {
             [weak self] (model) in
             orders = self!.orders(fromDictionary:model.currencyPairToBuyOrdersMap)
         })
@@ -624,7 +639,7 @@ class MainViewController : UIViewController,
     func ordersAndCompletedDealsFor(ordersView sender:OrdersView) -> [OrderStatusInfo] {
         var result = [OrderStatusInfo]()
 
-        tradingPlatformController!.tradingPlatformData.accessInMainQueue { [weak self] (model) in
+        tradingPlatformController?.tradingPlatformData.accessInMainQueue { [weak self] (model) in
             if let orderStatus = model.currencyPairToUserOrdersStatusMap[self!.tradingPlatformController!.activeCurrencyPair!] {
                 result.append(contentsOf:orderStatus)
             }
