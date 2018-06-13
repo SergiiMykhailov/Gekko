@@ -43,6 +43,8 @@
 		02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */; };
 		02B32B8A200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B89200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift */; };
 		02D7B5B020CFBB1200FA402B /* TradingPlatformAccessibilityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7B5AF20CFBB1100FA402B /* TradingPlatformAccessibilityController.swift */; };
+		02D7B5B420D0683200FA402B /* TradingPlatformModelNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7B5B320D0683200FA402B /* TradingPlatformModelNotifications.swift */; };
+		02D7B5B620D13C8200FA402B /* TradingPlatformReadonlyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7B5B520D13C8200FA402B /* TradingPlatformReadonlyModel.swift */; };
 		02D7D2F21FDB3FC2007C4557 /* CandleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F11FDB3FC2007C4557 /* CandleInfo.swift */; };
 		02D7D2F41FDB4014007C4557 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F31FDB4014007C4557 /* Currency.swift */; };
 		02D7D2F61FDB406D007C4557 /* BalanceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F51FDB406D007C4557 /* BalanceItem.swift */; };
@@ -116,6 +118,8 @@
 		02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
 		02B32B89200D590800CA82D7 /* BTCTradeUAOrdersStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUAOrdersStatusProvider.swift; sourceTree = "<group>"; };
 		02D7B5AF20CFBB1100FA402B /* TradingPlatformAccessibilityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradingPlatformAccessibilityController.swift; sourceTree = "<group>"; };
+		02D7B5B320D0683200FA402B /* TradingPlatformModelNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformModelNotifications.swift; sourceTree = "<group>"; };
+		02D7B5B520D13C8200FA402B /* TradingPlatformReadonlyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformReadonlyModel.swift; sourceTree = "<group>"; };
 		02D7D2F11FDB3FC2007C4557 /* CandleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandleInfo.swift; sourceTree = "<group>"; };
 		02D7D2F31FDB4014007C4557 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		02D7D2F51FDB406D007C4557 /* BalanceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceItem.swift; sourceTree = "<group>"; };
@@ -280,7 +284,9 @@
 				025210B5206D81FB008BE3D5 /* TradingPlatformController.swift */,
 				025210BE206D9350008BE3D5 /* TradingPlatformFactory.swift */,
 				025210B7206D8221008BE3D5 /* TradingPlatformModel.swift */,
+				02D7B5B320D0683200FA402B /* TradingPlatformModelNotifications.swift */,
 				020AACFC208D2A3500F1A3D1 /* TradingPlatformUserDealsHandler.swift */,
+				02D7B5B520D13C8200FA402B /* TradingPlatformReadonlyModel.swift */,
 			);
 			path = TradingPlatforms;
 			sourceTree = "<group>";
@@ -506,6 +512,7 @@
 				0207CD761FC1A6ED0074EADF /* AppDelegate.swift in Sources */,
 				02D7D2F61FDB406D007C4557 /* BalanceItem.swift in Sources */,
 				CA40E2DA205817FF000A3A8C /* AuthenticationViewController.swift in Sources */,
+				02D7B5B420D0683200FA402B /* TradingPlatformModelNotifications.swift in Sources */,
 				0207CDD61FD2E9570074EADF /* CurrenciesCollectionViewController.swift in Sources */,
 				0207CDA01FC234F70074EADF /* RestApiRequestsExecutor.swift in Sources */,
 				0207CDC61FC632E00074EADF /* BTCTradeUAPostRequestFactory.swift in Sources */,
@@ -536,6 +543,7 @@
 				025210CD2072D97B008BE3D5 /* MultiCallbacksWaiter.swift in Sources */,
 				0240BB1E1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift in Sources */,
 				0207CDC81FC632E00074EADF /* BTCTradeUACurrencies.swift in Sources */,
+				02D7B5B620D13C8200FA402B /* TradingPlatformReadonlyModel.swift in Sources */,
 				02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */,
 				02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */,
 				0207CDD41FD2E91F0074EADF /* MainViewController.swift in Sources */,
