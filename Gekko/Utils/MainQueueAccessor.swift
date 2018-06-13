@@ -12,7 +12,23 @@ class MainQueueAccessor<ElementType> : NSObject {
 
     // MARK: Public methods and properties
 
-    public func accessInMainQueue(withBlock block:@escaping (ElementType) -> Void) {
+    public func accessInMainQueueMutable(withBlock block:@escaping (inout ElementType) -> Void,
+                                         completion:@escaping CompletionBlock) {
+        if Thread.isMainThread {
+            block(&element)
+            completion()
+        }
+        else {
+            DispatchQueue.main.async { [weak self] in
+                if self != nil {
+                    block(&self!.element)
+                    completion()
+                }
+            }
+        }
+    }
+
+    public func accessInMainQueueReadonly(withBlock block:@escaping (ElementType) -> Void) {
         if Thread.isMainThread {
             block(element)
         }
@@ -27,5 +43,5 @@ class MainQueueAccessor<ElementType> : NSObject {
 
     // MARK: Internal fields
 
-    fileprivate let element:ElementType
+    fileprivate var element:ElementType
 }
