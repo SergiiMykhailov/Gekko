@@ -175,5 +175,6 @@ class CurrenciesCollectionViewController : UICollectionViewController {
                                                      5 : Currency.DASH,
                                                      6 : Currency.ZEC,
                                                      7 : Currency.BCH,
-                                                     8 : Currency.ETC]
+                                                     8 : Currency.ETC,
+                                                     9 : Currency.KRB]
 }
