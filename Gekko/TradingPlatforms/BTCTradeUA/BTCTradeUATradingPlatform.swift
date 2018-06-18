@@ -255,7 +255,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                                   Currency.ZEC,
                                                   Currency.BCH,
                                                   Currency.ETC,
-                                                  Currency.KRB]
+                                                  Currency.KRB,
+                                                  Currency.USDT]
 
     fileprivate static let SupportedCurrencyPairs:[CurrencyPair] =
         [CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.BTC),
@@ -267,7 +268,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.ZEC),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.BCH),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.ETC),
-         CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.KRB)]
+         CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.KRB),
+         CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.USDT)]
 
     fileprivate static let CurrencyToCurrencyPairMap = [Currency.BTC : BTCTradeUACurrencyPair.BtcUah,
                                                         Currency.ETH : BTCTradeUACurrencyPair.EthUah,
@@ -280,5 +282,6 @@ class BTCTradeUATradingPlatform : TradingPlatform {
                                                         Currency.ZEC : BTCTradeUACurrencyPair.ZecUah,
                                                         Currency.BCH : BTCTradeUACurrencyPair.BchUah,
                                                         Currency.ETC : BTCTradeUACurrencyPair.EtcUah,
-                                                        Currency.NVC : BTCTradeUACurrencyPair.NvcUah]
+                                                        Currency.NVC : BTCTradeUACurrencyPair.NvcUah,
+                                                        Currency.USDT : BTCTradeUACurrencyPair.UsdtUah]
 }

@@ -176,5 +176,6 @@ class CurrenciesCollectionViewController : UICollectionViewController {
                                                      6 : Currency.ZEC,
                                                      7 : Currency.BCH,
                                                      8 : Currency.ETC,
-                                                     9 : Currency.KRB]
+                                                     9 : Currency.KRB,
+                                                     10 : Currency.USDT]
 }

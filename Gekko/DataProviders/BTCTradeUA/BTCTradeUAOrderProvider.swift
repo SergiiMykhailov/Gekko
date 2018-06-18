@@ -182,6 +182,8 @@ typealias CancelOrderCompletionCallback = () -> Void
             currencyPair = .EtcUah
         case .NVC:
             currencyPair = .NvcUah
+        case .USDT:
+            currencyPair = .UsdtUah
         case .UAH:
             currencyPair = nil
         }
