@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class BTCTradeUAAccountSettingsViewController : UIViewController {
+class BTCTradeUAAccountSettingsViewController : NavigatableViewController {
 
     // MARK: Overriden methods
 
@@ -28,8 +28,6 @@ class BTCTradeUAAccountSettingsViewController : UIViewController {
                                                                  style:.done,
                                                                  target:self,
                                                                  action:#selector(applyButtonPressed))
-        
-        setupBackButton()
     }
 
     override func prepare(for segue:UIStoryboardSegue, sender:Any?) {
@@ -59,19 +57,6 @@ class BTCTradeUAAccountSettingsViewController : UIViewController {
         })
 
         controller.delegate = qrCodeCaptureHandler
-    }
-    
-    fileprivate func setupBackButton() {
-        let button = UIButton(type:.system)
-        
-        button.setImage(#imageLiteral(resourceName: "backArrow"), for:.normal)
-        button.setTitle(NSLocalizedString("Back", comment:"Back navigation button"), for:.normal)
-        button.sizeToFit()
-        button.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
-        
-        let backButtonItem = UIBarButtonItem(customView:button)
-        
-        self.navigationItem.leftBarButtonItem = backButtonItem
     }
 
     // MARK: Events handling
@@ -123,12 +108,6 @@ class BTCTradeUAAccountSettingsViewController : UIViewController {
     @IBOutlet weak var privateKeyLabel:UILabel?
     @IBOutlet weak var privateKeyField:UITextField?
     
-    // MARK: Actions
-    
-    @IBAction func backButtonPressed(_ sender: UISwipeGestureRecognizer) {
-        self.navigationController?.popViewController(animated:true)
-    }
-
     // MARK: Internal fields
 
     fileprivate var qrCodeCaptureHandler:QRCodeCaptureHandler?

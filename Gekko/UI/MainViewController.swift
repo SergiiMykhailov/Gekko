@@ -13,7 +13,8 @@ class MainViewController : UIViewController,
                            OrdersStackViewControllerDataSource,
                            OrdersViewDelegate,
                            OrdersViewDataSource,
-                           TradingPlatformAccessibilityControllerDelegate {
+                           TradingPlatformAccessibilityControllerDelegate,
+                           AssetsViewControllerDataSource {
 
     // MARK: Overriden functions
 
@@ -45,10 +46,19 @@ class MainViewController : UIViewController,
         serverAccessibility.delegate = self
         serverAccessibility.startMonitoringAccessibility()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image:#imageLiteral(resourceName: "settings"),
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image:#imageLiteral(resourceName: "user"),
                                                             style:.plain,
                                                             target:self,
-                                                            action:#selector(settingsButtonPressed))
+                                                            action:#selector(accountSettingsButtonPressed))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+
+        if (tradingPlatform.assetProvider != nil) {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image:#imageLiteral(resourceName: "currencies"),
+                                                               style:.plain,
+                                                               target:self,
+                                                               action:#selector(balanceSettingsButtonPressed))
+            navigationItem.leftBarButtonItem?.tintColor = UIColor.black
+        }
 
         UserDefaults.standard.addObserver(self,
                                           forKeyPath:UIUtils.PrivateKeySettingsKey,
@@ -76,7 +86,26 @@ class MainViewController : UIViewController,
         }
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let assetsViewController = segue.destination as? AssetsViewController {
+            assetsViewController.dataSource = self
+        }
+    }
+
     // MARK: Internal methods and properties
+
+    fileprivate var supportedAssets:[Currency] {
+        get {
+            let supportedPairs = tradingPlatform.supportedCurrencyPairs
+            var result = [Currency]()
+
+            for currencyPair in supportedPairs {
+                result.append(currencyPair.secondaryCurrency)
+            }
+
+            return result
+        }
+    }
 
     fileprivate var tradingPlatform:TradingPlatform {
         get {
@@ -384,6 +413,10 @@ class MainViewController : UIViewController,
 
     // MARK: CurrenciesCollectionViewControllerDataSource implementation
 
+    internal func supportedCurrencies(forCurrenciesCollectionViewController sender:CurrenciesCollectionViewController) -> [Currency] {
+        return supportedAssets
+    }
+
     internal func currenciesViewController(sender:CurrenciesCollectionViewController,
                                            balanceForCurrency currency:Currency) -> Double? {
         var result:Double? = nil
@@ -675,6 +708,11 @@ class MainViewController : UIViewController,
     func ordersView(sender:OrdersView, didRequestCancel order:OrderStatusInfo) {
         tradingPlatformController!.cancelOrderAsync(withID:order.id) { }
     }
+
+    // MARK: CryptoAssetsViewControllerDelegate implementation
+    func supportedCryptoAssets(forCryptoAssetsViewController sender:AssetsViewController) -> [Currency] {
+        return supportedAssets
+    }
     
     // MARK: Events handling
 
@@ -703,8 +741,12 @@ class MainViewController : UIViewController,
         }
     }
     
-    @objc fileprivate func settingsButtonPressed(button:UIButton) {
+    @objc fileprivate func accountSettingsButtonPressed(button:UIButton) {
         performSegue(withIdentifier:MainViewController.ShowAccountSettingsSegueName, sender:self)
+    }
+
+    @objc fileprivate func balanceSettingsButtonPressed(button:UIButton) {
+        performSegue(withIdentifier:MainViewController.ShowAssetsSegueName, sender:self)
     }
 
     // MARK: Outlets
@@ -745,6 +787,7 @@ typealias LoginCompletionAction = () -> Void
     fileprivate static let PullDownRefreshingTimeout:TimeInterval = 5
 
     fileprivate static let ShowAccountSettingsSegueName = "Show Account Settings"
+    fileprivate static let ShowAssetsSegueName = "Show Assets"
 
     fileprivate static let MainTabIndex = 0
     fileprivate static let SettingsTabIndex = 1

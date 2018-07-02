@@ -4,7 +4,8 @@
 
 import Foundation
 
-class BTCTradeUATradingPlatform : TradingPlatform {
+class BTCTradeUATradingPlatform : TradingPlatform,
+                                  AssetProvider {
 
     // MARK: Public methods and properties
 
@@ -29,11 +30,15 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         return BTCTradeUATradingPlatform.SupportedCurrencyPairs
     }
 
+    public var assetProvider: AssetProvider? {
+        return self
+    }
+
     public func retrieveCandlesAsync(forPair pair:CurrencyPair,
                                      onCompletion:@escaping CandlesCompletionCallback) {
         if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
-            btcTradeUACandlesProvider.retrieveCandlesAsync(forPair:convertedPair,
-                                                           withCompletionHandler:onCompletion)
+            candlesProvider.retrieveCandlesAsync(forPair:convertedPair,
+                                                 withCompletionHandler:onCompletion)
         }
         else {
             onCompletion([CandleInfo]())
@@ -68,8 +73,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
             // There is no balance item in cache.
             // We should request all balances from server
             // and mark the specified one as 'dirty'
-            btcTradeUABalanceProvider.retriveBalanceAsync(withPublicKey:publicKey!,
-                                                          privateKey:privateKey!) {
+            balanceProvider.retriveBalanceAsync(withPublicKey:publicKey!,
+                                                privateKey:privateKey!) {
                 [weak self] (balanceItems) in
                 for balanceItem in balanceItems {
                     self?.currencyToBalanceMap[balanceItem.currency] = balanceItem.amount
@@ -83,8 +88,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
     public func retrieveDealsAsync(forPair pair:CurrencyPair,
                                    onCompletion:@escaping CompletedOrdersCompletionCallback) {
         if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
-            btcTradeUAOrderProvider.retrieveDealsAsync(forPair:convertedPair,
-                                                       withCompletionHandler: { (orders, candle) in
+            orderProvider.retrieveDealsAsync(forPair:convertedPair,
+                                             withCompletionHandler: { (orders, candle) in
                 onCompletion(orders, candle)
             })
         }
@@ -96,8 +101,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
     public func retrieveBuyOrdersAsync(forPair pair:CurrencyPair,
                                        onCompletion:@escaping PendingOrdersCompletionCallback) {
         if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
-            btcTradeUAOrderProvider.retrieveBuyOrdersAsync(forPair:convertedPair,
-                                                           withCompletionHandler:onCompletion)
+            orderProvider.retrieveBuyOrdersAsync(forPair:convertedPair,
+                                                 withCompletionHandler:onCompletion)
         }
         else {
             onCompletion([OrderInfo]())
@@ -107,8 +112,8 @@ class BTCTradeUATradingPlatform : TradingPlatform {
     public func retrieveSellOrdersAsync(forPair pair:CurrencyPair,
                                         onCompletion:@escaping PendingOrdersCompletionCallback) {
         if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
-            btcTradeUAOrderProvider.retrieveSellOrdersAsync(forPair:convertedPair,
-                                                            withCompletionHandler:onCompletion)
+            orderProvider.retrieveSellOrdersAsync(forPair:convertedPair,
+                                                  withCompletionHandler:onCompletion)
         }
         else {
             onCompletion([OrderInfo]())
@@ -123,10 +128,10 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
 
         if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
-            btcTradeUAUserOrdersProvider.retrieveUserOrdersAsync(forPair:convertedPair,
-                                                                 publicKey:publicKey!,
-                                                                 privateKey:privateKey!,
-                                                                 onCompletion:onCompletion)
+            userOrdersProvider.retrieveUserOrdersAsync(forPair:convertedPair,
+                                                       publicKey:publicKey!,
+                                                       privateKey:privateKey!,
+                                                       onCompletion:onCompletion)
         }
         else {
             onCompletion(nil)
@@ -143,12 +148,12 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
 
         let currency = pair.primaryCurrency == mainCurrency ? pair.secondaryCurrency : pair.primaryCurrency
-        btcTradeUAOrderProvider.performBuyOrderAsync(forCurrency:currency,
-                                                     amount:amount,
-                                                     price:price,
-                                                     publicKey:publicKey!,
-                                                     privateKey:privateKey!,
-                                                     onCompletion:onCompletion)
+        orderProvider.performBuyOrderAsync(forCurrency:currency,
+                                           amount:amount,
+                                           price:price,
+                                           publicKey:publicKey!,
+                                           privateKey:privateKey!,
+                                           onCompletion:onCompletion)
     }
 
     public func performSellOrderAsync(forPair pair:CurrencyPair,
@@ -161,12 +166,12 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
 
         let currency = pair.primaryCurrency == mainCurrency ? pair.secondaryCurrency : pair.primaryCurrency
-        btcTradeUAOrderProvider.performSellOrderAsync(forCurrency:currency,
-                                                      amount:amount,
-                                                      price:price,
-                                                      publicKey:publicKey!,
-                                                      privateKey:privateKey!,
-                                                      onCompletion:onCompletion)
+        orderProvider.performSellOrderAsync(forCurrency:currency,
+                                            amount:amount,
+                                            price:price,
+                                            publicKey:publicKey!,
+                                            privateKey:privateKey!,
+                                            onCompletion:onCompletion)
     }
 
     public func cancelOrderAsync(withID id:String,
@@ -176,10 +181,10 @@ class BTCTradeUATradingPlatform : TradingPlatform {
             return
         }
 
-        btcTradeUAOrderProvider.cancelOrderAsync(withID:id,
-                                                 publicKey:publicKey!,
-                                                 privateKey:privateKey!,
-                                                 onCompletion:onCompletion)
+        orderProvider.cancelOrderAsync(withID:id,
+                                       publicKey:publicKey!,
+                                       privateKey:privateKey!,
+                                       onCompletion:onCompletion)
     }
 
     public func retrieveOrderStatusAsync(withID id:String,
@@ -189,10 +194,10 @@ class BTCTradeUATradingPlatform : TradingPlatform {
             return
         }
 
-        btcTradeUAOrdersStatusProvider.retrieveStatusAsync(forOrderWithID:id,
-                                                           publicKey:publicKey!,
-                                                           privateKey:privateKey!,
-                                                           onCompletion:onCompletion)
+        ordersStatusProvider.retrieveStatusAsync(forOrderWithID:id,
+                                                 publicKey:publicKey!,
+                                                 privateKey:privateKey!,
+                                                 onCompletion:onCompletion)
     }
 
     public func retrieveUserDealsAsync(forPair pair:CurrencyPair,
@@ -205,12 +210,12 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
 
         if let convertedPair = platformCurrencyPair(forGenericCurrencyPair:pair) {
-            btcTradeUAUserDealsProvider.retrieveCompletedDealsAsync(forCurrencyPair:convertedPair,
-                                                                    startDate:fromDate,
-                                                                    finishDate:toDate,
-                                                                    publicKey:publicKey!,
-                                                                    privateKey:privateKey!,
-                                                                    onCompletion: {
+            userDealsProvider.retrieveCompletedDealsAsync(forCurrencyPair:convertedPair,
+                                                          startDate:fromDate,
+                                                          finishDate:toDate,
+                                                          publicKey:publicKey!,
+                                                          privateKey:privateKey!,
+                                                          onCompletion: {
                 (deals) in
 
                 // Deals provider returns data with invalid cryptocurrency.
@@ -227,6 +232,19 @@ class BTCTradeUATradingPlatform : TradingPlatform {
         }
     }
 
+    // MARK: AssetProvider implementation
+
+    func retriveAssetAddressAsync(currency: Currency, onCompletion: @escaping AssetAddressCompletionCallback) {
+        if !isAuthorized {
+            onCompletion(nil)
+        }
+
+        assetKeysProvider.retriveAssetAddressAsync(withPublicKey:publicKey!,
+                                                   privateKey:privateKey!,
+                                                   currency:currency,
+                                                   onCompletion:onCompletion)
+    }
+
     // MARK: Internal methods
 
     func platformCurrencyPair(forGenericCurrencyPair pair:CurrencyPair) -> BTCTradeUACurrencyPair? {
@@ -237,12 +255,13 @@ class BTCTradeUATradingPlatform : TradingPlatform {
 
     // MARK: Internal fields
 
-    fileprivate let btcTradeUABalanceProvider = BTCTradeUABalanceProvider()
-    fileprivate let btcTradeUACandlesProvider = BTCTradeUACandlesProvider()
-    fileprivate let btcTradeUAOrderProvider = BTCTradeUAOrderProvider()
-    fileprivate let btcTradeUAOrdersStatusProvider = BTCTradeUAOrdersStatusProvider()
-    fileprivate let btcTradeUAUserDealsProvider = BTCTradeUADealsProvider()
-    fileprivate let btcTradeUAUserOrdersProvider = BTCTradeUAUserOrdersProvider()
+    fileprivate let balanceProvider = BTCTradeUABalanceProvider()
+    fileprivate let candlesProvider = BTCTradeUACandlesProvider()
+    fileprivate let orderProvider = BTCTradeUAOrderProvider()
+    fileprivate let ordersStatusProvider = BTCTradeUAOrdersStatusProvider()
+    fileprivate let userDealsProvider = BTCTradeUADealsProvider()
+    fileprivate let userOrdersProvider = BTCTradeUAUserOrdersProvider()
+    fileprivate let assetKeysProvider = BTCTradeUAAssetsProvider()
 
     fileprivate var currencyToBalanceMap = [Currency : Double?]()
 

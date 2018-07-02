@@ -40,6 +40,8 @@ protocol TradingPlatform : class {
 
     var isAuthorized:Bool { get }
 
+    var assetProvider:AssetProvider? { get }
+
     func retrieveCandlesAsync(forPair pair:CurrencyPair,
                               onCompletion:@escaping CandlesCompletionCallback)
 
@@ -78,4 +80,13 @@ protocol TradingPlatform : class {
 
     func cancelOrderAsync(withID id:String,
                           onCompletion:@escaping CancelOrderCompletionCallback)
+}
+
+typealias AssetAddressCompletionCallback = ([String]?) -> Void
+
+protocol AssetProvider : class {
+
+    func retriveAssetAddressAsync(currency:Currency,
+                                  onCompletion:@escaping AssetAddressCompletionCallback)
+
 }

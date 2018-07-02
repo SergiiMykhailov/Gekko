@@ -9,7 +9,7 @@ class BTCTradeUAProviderBase : NSObject {
     // MARK: Public methods and properties
 
     public func performGetRequestAsync(withSuffix suffix:String, onCompletion:@escaping ServiceResponse) {
-        let requestURL = String(format: "%@%@?MerchantID=iOS_Gekko", BTCTradeUAProviderBase.btcTradeBaseUrl, suffix)
+        let requestURL = String(format: "%@%@?MerchantID=iOS_Gekko", BTCTradeUAProviderBase.BaseUrl, suffix)
 
         RestApiRequestsExecutor.performHTTPGetRequest(path:requestURL, onCompletion:onCompletion)
     }
@@ -18,10 +18,11 @@ class BTCTradeUAProviderBase : NSObject {
                                         publicKey:String,
                                         privateKey:String,
                                         body:String = "",
+                                        prefixUrl:String = BTCTradeUAProviderBase.BaseUrl,
                                         onCompletion:@escaping ServiceResponse) {
         BTCTradeUALoginSession.loginIfNeeded(withPublicKey:publicKey, privateKey:privateKey) {[weak self] (succeeded) in
             if (self != nil && succeeded) {
-                let requestURL = String(format: "%@%@", BTCTradeUAProviderBase.btcTradeBaseUrl, suffix)
+                let requestURL = String(format: "%@%@", prefixUrl, suffix)
 
                 let request = BTCTradeUAPostRequestFactory.makePostRequest(forURL:requestURL,
                                                                            withPublicKey:publicKey,
@@ -35,5 +36,5 @@ class BTCTradeUAProviderBase : NSObject {
 
     // MARK: Internal fields
 
-    private static let btcTradeBaseUrl = "https://btc-trade.com.ua/api/"
+    private static let BaseUrl = "https://btc-trade.com.ua/api/"
 }

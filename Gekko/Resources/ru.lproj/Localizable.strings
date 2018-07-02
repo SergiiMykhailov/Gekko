@@ -98,3 +98,6 @@
 
 /* Scan label */
 "Scan" = "Сканировать";
+
+/* Assets view controller title */
+"Assets" = "Активы";

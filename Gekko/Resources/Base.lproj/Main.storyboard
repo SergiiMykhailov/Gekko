@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2L0-Tl-Rdw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2L0-Tl-Rdw">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -160,11 +160,12 @@
                         <outlet property="sellButton" destination="P98-sh-Ph3" id="jX0-6j-Ciq"/>
                         <outlet property="stackViewPlaceholder" destination="PWD-ii-ZcC" id="oze-X9-BG5"/>
                         <segue destination="oRG-7B-kZq" kind="show" identifier="Show Account Settings" id="iB2-A6-Vww"/>
+                        <segue destination="teS-3A-VPh" kind="show" identifier="Show Assets" id="GCP-cI-F2Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1740" y="-188.02816901408451"/>
+            <point key="canvasLocation" x="-1652" y="-188"/>
         </scene>
         <!--Account Settings-->
         <scene sceneID="hwZ-75-ooA">
@@ -371,6 +372,36 @@ Account -&gt; Profile -&gt; API and mobile app</string>
             </objects>
             <point key="canvasLocation" x="-677" y="-188"/>
         </scene>
+        <!--Assets-->
+        <scene sceneID="HAo-VS-tlg">
+            <objects>
+                <viewController title="Assets" id="teS-3A-VPh" customClass="AssetsViewController" customModule="Gekko" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LgX-cV-2HA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="u08-3Q-DQP">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="u08-3Q-DQP" firstAttribute="leading" secondItem="EUy-uC-wCn" secondAttribute="leading" id="7j6-k6-VpP"/>
+                            <constraint firstItem="u08-3Q-DQP" firstAttribute="top" secondItem="EUy-uC-wCn" secondAttribute="top" id="7mH-5I-XFy"/>
+                            <constraint firstItem="EUy-uC-wCn" firstAttribute="bottom" secondItem="u08-3Q-DQP" secondAttribute="bottom" id="V0W-nP-vZW"/>
+                            <constraint firstItem="EUy-uC-wCn" firstAttribute="trailing" secondItem="u08-3Q-DQP" secondAttribute="trailing" id="uTj-sI-5d4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EUy-uC-wCn"/>
+                    </view>
+                    <connections>
+                        <outlet property="assetsTable" destination="u08-3Q-DQP" id="URE-fc-zmG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YBo-z5-OAw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-679" y="605"/>
+        </scene>
         <!--Code Picker View Controller-->
         <scene sceneID="zAv-5V-EWf">
             <objects>
@@ -391,6 +422,6 @@ Account -&gt; Profile -&gt; API and mobile app</string>
         <image name="camera" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ra9-d4-4UX"/>
+        <segue reference="odH-IV-hbF"/>
     </inferredMetricsTieBreakers>
 </document>

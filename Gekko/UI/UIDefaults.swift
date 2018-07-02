@@ -14,9 +14,9 @@ class UIDefaults {
 
     public static let LabelDefaultFontColor = UIColor.black
     public static let LabelDefaultLightColor = UIColor(white:142 / 255, alpha:1)
-    public static let CellDefaultSelectedColor = UIColor(red:247 / 255,
-                                                         green:247 / 255,
-                                                         blue:247 / 255,
+    public static let CellDefaultSelectedColor = UIColor(red:244 / 255,
+                                                         green:244 / 255,
+                                                         blue:244 / 255,
                                                          alpha:1)
 
     public static let ButtonDefaultFontSize:CGFloat = 12

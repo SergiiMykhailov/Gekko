@@ -25,6 +25,7 @@
 		0207CDD81FD2F2140074EADF /* CurrencyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207CDD71FD2F2140074EADF /* CurrencyCollectionViewCell.swift */; };
 		020AACFD208D2A3500F1A3D1 /* TradingPlatformUserDealsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AACFC208D2A3500F1A3D1 /* TradingPlatformUserDealsHandler.swift */; };
 		020AACFF208E8FF000F1A3D1 /* BTCTradeUAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AACFE208E8FF000F1A3D1 /* BTCTradeUAUtils.swift */; };
+		0218E3DA20E651780055E22B /* BTCTradeUAAssetsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0218E3D920E651780055E22B /* BTCTradeUAAssetsProvider.swift */; };
 		022E3DB11FD3048B00D778D2 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 022E3DB21FD3048B00D778D2 /* SnapKit.framework */; };
 		022E3DB41FD747E300D778D2 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3DB31FD747E300D778D2 /* ChartViewController.swift */; };
 		0240BB1C1FE85DA6000EEAE0 /* OrdersStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB1B1FE85DA6000EEAE0 /* OrdersStackViewController.swift */; };
@@ -45,6 +46,9 @@
 		02D7B5B020CFBB1200FA402B /* TradingPlatformAccessibilityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7B5AF20CFBB1100FA402B /* TradingPlatformAccessibilityController.swift */; };
 		02D7B5B420D0683200FA402B /* TradingPlatformModelNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7B5B320D0683200FA402B /* TradingPlatformModelNotifications.swift */; };
 		02D7B5B620D13C8200FA402B /* TradingPlatformReadonlyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7B5B520D13C8200FA402B /* TradingPlatformReadonlyModel.swift */; };
+		02D7B5D620DB03D600FA402B /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7B5D520DB03D600FA402B /* AssetsViewController.swift */; };
+		02D7B5D820E5794F00FA402B /* NavigatableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7B5D720E5794F00FA402B /* NavigatableViewController.swift */; };
+		02D7B5DA20E5873800FA402B /* AssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7B5D920E5873800FA402B /* AssetCell.swift */; };
 		02D7D2F21FDB3FC2007C4557 /* CandleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F11FDB3FC2007C4557 /* CandleInfo.swift */; };
 		02D7D2F41FDB4014007C4557 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F31FDB4014007C4557 /* Currency.swift */; };
 		02D7D2F61FDB406D007C4557 /* BalanceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D7D2F51FDB406D007C4557 /* BalanceItem.swift */; };
@@ -99,6 +103,7 @@
 		0207CDD71FD2F2140074EADF /* CurrencyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCollectionViewCell.swift; sourceTree = "<group>"; };
 		020AACFC208D2A3500F1A3D1 /* TradingPlatformUserDealsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformUserDealsHandler.swift; sourceTree = "<group>"; };
 		020AACFE208E8FF000F1A3D1 /* BTCTradeUAUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUAUtils.swift; sourceTree = "<group>"; };
+		0218E3D920E651780055E22B /* BTCTradeUAAssetsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUAAssetsProvider.swift; sourceTree = "<group>"; };
 		022E3DB21FD3048B00D778D2 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		022E3DB31FD747E300D778D2 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		0240BB1B1FE85DA6000EEAE0 /* OrdersStackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersStackViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +125,9 @@
 		02D7B5AF20CFBB1100FA402B /* TradingPlatformAccessibilityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradingPlatformAccessibilityController.swift; sourceTree = "<group>"; };
 		02D7B5B320D0683200FA402B /* TradingPlatformModelNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformModelNotifications.swift; sourceTree = "<group>"; };
 		02D7B5B520D13C8200FA402B /* TradingPlatformReadonlyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformReadonlyModel.swift; sourceTree = "<group>"; };
+		02D7B5D520DB03D600FA402B /* AssetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewController.swift; sourceTree = "<group>"; };
+		02D7B5D720E5794F00FA402B /* NavigatableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatableViewController.swift; sourceTree = "<group>"; };
+		02D7B5D920E5873800FA402B /* AssetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCell.swift; sourceTree = "<group>"; };
 		02D7D2F11FDB3FC2007C4557 /* CandleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandleInfo.swift; sourceTree = "<group>"; };
 		02D7D2F31FDB4014007C4557 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		02D7D2F51FDB406D007C4557 /* BalanceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceItem.swift; sourceTree = "<group>"; };
@@ -238,6 +246,7 @@
 		0207CDBE1FC632BC0074EADF /* BTCTradeUA */ = {
 			isa = PBXGroup;
 			children = (
+				0218E3D920E651780055E22B /* BTCTradeUAAssetsProvider.swift */,
 				0207CDC11FC632DF0074EADF /* BTCTradeUABalanceProvider.swift */,
 				02D7D2F91FDB415D007C4557 /* BTCTradeUACandlesProvider.swift */,
 				0207CDC21FC632E00074EADF /* BTCTradeUACurrencies.swift */,
@@ -256,6 +265,8 @@
 		0207CDD21FD2E8D70074EADF /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				02D7B5D920E5873800FA402B /* AssetCell.swift */,
+				02D7B5D520DB03D600FA402B /* AssetsViewController.swift */,
 				CA40E2D9205817FE000A3A8C /* AuthenticationViewController.swift */,
 				02D7D3011FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift */,
 				022E3DB31FD747E300D778D2 /* ChartViewController.swift */,
@@ -263,6 +274,7 @@
 				0207CDD51FD2E9570074EADF /* CurrenciesCollectionViewController.swift */,
 				0207CDD71FD2F2140074EADF /* CurrencyCollectionViewCell.swift */,
 				0207CDD31FD2E91F0074EADF /* MainViewController.swift */,
+				02D7B5D720E5794F00FA402B /* NavigatableViewController.swift */,
 				0240BB1B1FE85DA6000EEAE0 /* OrdersStackViewController.swift */,
 				0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */,
 				02B32B802008122900CA82D7 /* OrdersView.swift */,
@@ -532,6 +544,7 @@
 				020AACFD208D2A3500F1A3D1 /* TradingPlatformUserDealsHandler.swift in Sources */,
 				02D7D3041FE1E519007C4557 /* QRCodePickerViewController.swift in Sources */,
 				025210D3207582D4008BE3D5 /* MainQueueAccessor.swift in Sources */,
+				02D7B5D620DB03D600FA402B /* AssetsViewController.swift in Sources */,
 				025210B6206D81FB008BE3D5 /* TradingPlatformController.swift in Sources */,
 				02D7D2FC1FDDDECA007C4557 /* CreateOrderView.swift in Sources */,
 				02D7D2F21FDB3FC2007C4557 /* CandleInfo.swift in Sources */,
@@ -546,10 +559,13 @@
 				02D7B5B620D13C8200FA402B /* TradingPlatformReadonlyModel.swift in Sources */,
 				02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */,
 				02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */,
+				02D7B5D820E5794F00FA402B /* NavigatableViewController.swift in Sources */,
 				0207CDD41FD2E91F0074EADF /* MainViewController.swift in Sources */,
 				02DE83712089380B00F7D949 /* BTCTradeUADealsProvider.swift in Sources */,
 				025210B4206D817C008BE3D5 /* TradingPlatform.swift in Sources */,
+				02D7B5DA20E5873800FA402B /* AssetCell.swift in Sources */,
 				020AACFF208E8FF000F1A3D1 /* BTCTradeUAUtils.swift in Sources */,
+				0218E3DA20E651780055E22B /* BTCTradeUAAssetsProvider.swift in Sources */,
 				025210B8206D8221008BE3D5 /* TradingPlatformModel.swift in Sources */,
 				0248532F1FFBD91000290BA1 /* UIUtils.swift in Sources */,
 				025210BD206D843D008BE3D5 /* BTCTradeUATradingPlatform.swift in Sources */,

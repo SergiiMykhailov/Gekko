@@ -7,6 +7,8 @@ import UIKit
 
 protocol CurrenciesCollectionViewControllerDataSource : class {
 
+    func supportedCurrencies(forCurrenciesCollectionViewController sender:CurrenciesCollectionViewController) -> [Currency]
+
     func currenciesViewController(sender:CurrenciesCollectionViewController,
                                   balanceForCurrency:Currency) -> Double?
 
@@ -70,7 +72,12 @@ class CurrenciesCollectionViewController : UICollectionViewController {
 
     internal override func collectionView(_ collectionView:UICollectionView,
                                           numberOfItemsInSection section:Int) -> Int {
-        return CurrenciesCollectionViewController.ItemIndexToCurrencyMap.count
+        if dataSource != nil {
+            supportedCurrencies = dataSource!.supportedCurrencies(forCurrenciesCollectionViewController:self)
+            return supportedCurrencies!.count
+        }
+
+        return 0
     }
 
     internal override func collectionView(_ collectionView:UICollectionView,
@@ -80,24 +87,18 @@ class CurrenciesCollectionViewController : UICollectionViewController {
                                                for:indexPath) as! CurrencyCollectionViewCell
 
         if dataSource != nil {
-            let requestedCurrency = CurrenciesCollectionViewController.ItemIndexToCurrencyMap[indexPath.row]
-            if requestedCurrency != nil {
-                let balance = dataSource!.currenciesViewController(sender:self,
-                                                                   balanceForCurrency:requestedCurrency!)
-                let minPrice = dataSource!.currenciesViewController(sender:self,
-                                                                    minPriceForCurrency:requestedCurrency!)
-                let maxPrice = dataSource!.currenciesViewController(sender:self,
-                                                                    maxPriceForCurrency:requestedCurrency!)
+            let requestedCurrency = supportedCurrencies![indexPath.row]
+            let balance = dataSource!.currenciesViewController(sender:self,
+                                                               balanceForCurrency:requestedCurrency)
+            let minPrice = dataSource!.currenciesViewController(sender:self,
+                                                                minPriceForCurrency:requestedCurrency)
+            let maxPrice = dataSource!.currenciesViewController(sender:self,
+                                                                maxPriceForCurrency:requestedCurrency)
 
-                cell.balance = balance
-                cell.minPrice = minPrice
-                cell.maxPrice = maxPrice
-                cell.currencyText = requestedCurrency!.rawValue as String
-
-                if requestedCurrency! == .UAH {
-                    cell.balancePrecission = 2
-                }
-            }
+            cell.balance = balance
+            cell.minPrice = minPrice
+            cell.maxPrice = maxPrice
+            cell.currencyText = requestedCurrency.rawValue as String
         }
 
         if currentSelectedItem == nil && cell.isSelected {
@@ -162,18 +163,10 @@ class CurrenciesCollectionViewController : UICollectionViewController {
 
     // MARK: Internal fields
 
+    fileprivate var supportedCurrencies:[Currency]?
+
     fileprivate let layout = UICollectionViewFlowLayout()
     fileprivate var currentSelectedItem:IndexPath?
 
     fileprivate static let CellIdentifier = "Currency Cell"
-
-    fileprivate static let ItemIndexToCurrencyMap = [0 : Currency.BTC,
-                                                     1 : Currency.ETH,
-                                                     2 : Currency.LTC,
-                                                     3 : Currency.XMR,
-                                                     4 : Currency.DOGE,
-                                                     5 : Currency.DASH,
-                                                     6 : Currency.ZEC,
-                                                     7 : Currency.BCH,
-                                                     8 : Currency.ETC]
 }
