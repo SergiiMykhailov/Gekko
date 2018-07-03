@@ -59,6 +59,9 @@ typealias BalanceCompletionCallback = ([BalanceItem]) -> Void
                                      forCurrency:.KRB,
                                      andStoreInCollection:&result)
                 retrieveBalanceValue(fromJSONItems:accountsDictionary,
+                                     forCurrency:.USDT,
+                                     andStoreInCollection:&result)
+                retrieveBalanceValue(fromJSONItems:accountsDictionary,
                                      forCurrency:.ZEC,
                                      andStoreInCollection:&result)
                 retrieveBalanceValue(fromJSONItems:accountsDictionary,

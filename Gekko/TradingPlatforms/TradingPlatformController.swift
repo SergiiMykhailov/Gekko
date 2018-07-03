@@ -21,11 +21,7 @@ typealias BalanceCompletionHandler = (Currency) -> Void
 
     public let tradingPlatform:TradingPlatform
 
-    public var activeCurrencyPair:CurrencyPair? {
-        didSet {
-            refreshAll()
-        }
-    }
+    public var activeCurrencyPair:CurrencyPair? 
 
     public private(set) var tradingPlatformData =
         MainQueueAccessor<TradingPlatformModel>(element:TradingPlatformModel())
@@ -46,10 +42,6 @@ typealias BalanceCompletionHandler = (Currency) -> Void
 
     public func start() {
         scheduleOrdersUpdating()
-        scheduleDealsUpdating()
-        scheduleCandlesUpdating()
-        scheduleUserBalanceUpdating()
-        scheduleOrdersStatusUpdating()
     }
 
     public func refreshAll() {
@@ -386,25 +378,18 @@ typealias BalanceCompletionHandler = (Currency) -> Void
     fileprivate func handleOrdersUpdating() {
         handlePropertyUpdating(withBlock: { (currencyPair) in
             handleOrdersUpdating(forPair:currencyPair,
-                                 onCompletion: { [weak self] in
-                self?.onBuyOrdersUpdated?(currencyPair)
-                self?.onSellOrdersUpdated?(currencyPair)
-            })
+                                 onCompletion: { })
         })
     }
 
     fileprivate func handleOrdersUpdating(forPair pair:CurrencyPair,
                                           onCompletion:@escaping () -> Void) {
-        let RequiredOperationsCount = UInt32(2)
-        let callbacksWaiter = MultiCallbacksWaiter(withNumberOfInvokations:RequiredOperationsCount,
-                                                   onCompletion:onCompletion)
-
         tradingPlatform.retrieveBuyOrdersAsync(forPair:pair,
                                                onCompletion: { [weak self] (orders) in
             self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
                 model.currencyPairToBuyOrdersMap[pair] = orders
 
-                callbacksWaiter.handleCompletion()
+                self?.onBuyOrdersUpdated?(pair)
             })
         })
 
@@ -413,7 +398,7 @@ typealias BalanceCompletionHandler = (Currency) -> Void
             self?.tradingPlatformData.accessInMainQueue(withBlock: { (model) in
                 model.currencyPairToSellOrdersMap[pair] = orders
 
-                callbacksWaiter.handleCompletion()
+                self?.onSellOrdersUpdated?(pair)
             })
         })
     }
@@ -471,6 +456,6 @@ typealias BalanceCompletionHandler = (Currency) -> Void
 
     fileprivate let dealsHandler:TradingPlatformUserDealsHandler
 
-    fileprivate static let DefaultPollTimeout:TimeInterval = 10
+    fileprivate static let DefaultPollTimeout:TimeInterval = 20
     fileprivate static let LongPollTimeout:TimeInterval = 600
 }

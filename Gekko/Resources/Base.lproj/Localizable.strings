@@ -98,3 +98,9 @@
 
 /* Scan label */
 "Scan" = "Scan";
+
+/* Try again alert action */
+"Try again" = "Try again";
+
+/* Save anyway alert action */
+"Save keys anyway" = "Save keys anyway";
