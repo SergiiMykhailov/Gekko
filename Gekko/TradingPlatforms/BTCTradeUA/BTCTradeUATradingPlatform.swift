@@ -73,14 +73,28 @@ class BTCTradeUATradingPlatform : TradingPlatform,
             // There is no balance item in cache.
             // We should request all balances from server
             // and mark the specified one as 'dirty'
-            balanceProvider.retriveBalanceAsync(withPublicKey:publicKey!,
-                                                privateKey:privateKey!) {
-                [weak self] (balanceItems) in
-                for balanceItem in balanceItems {
-                    self?.currencyToBalanceMap[balanceItem.currency] = balanceItem.amount
-                }
 
-                _ = handleBalanceRetrieving()
+            if !isRetrievingBalance {
+                isRetrievingBalance = true
+                balanceProvider.retriveBalanceAsync(withPublicKey:publicKey!,
+                                                    privateKey:privateKey!) {
+                    [weak self] (balanceItems) in
+                    for balanceItem in balanceItems {
+                        self?.currencyToBalanceMap[balanceItem.currency] = balanceItem.amount
+
+                        if let storedCompletionCallback = self!.currencyToBalanceRetrievingCompletionCallbackMap[balanceItem.currency] {
+                            storedCompletionCallback(balanceItem)
+                        }
+                    }
+
+                    _ = handleBalanceRetrieving()
+
+                    self?.isRetrievingBalance = false
+                    self?.currencyToBalanceRetrievingCompletionCallbackMap.removeAll()
+                }
+            }
+            else {
+                currencyToBalanceRetrievingCompletionCallbackMap[currency] = onCompletion
             }
         }
     }
@@ -265,6 +279,9 @@ class BTCTradeUATradingPlatform : TradingPlatform,
 
     fileprivate var currencyToBalanceMap = [Currency : Double?]()
 
+    fileprivate var isRetrievingBalance = false
+    fileprivate var currencyToBalanceRetrievingCompletionCallbackMap = [Currency : BalanceCompletionCallback]()
+
     fileprivate static let SupportedCurrencies = [Currency.BTC,
                                                   Currency.ETH,
                                                   Currency.LTC,
@@ -273,10 +290,12 @@ class BTCTradeUATradingPlatform : TradingPlatform,
                                                   Currency.DASH,
                                                   Currency.ZEC,
                                                   Currency.BCH,
-                                                  Currency.ETC]
+                                                  Currency.ETC,
+                                                  Currency.KRB,
+                                                  Currency.USDT]
 
-    fileprivate static let SupportedCurrencyPairs:[CurrencyPair] =
-        [CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.BTC),
+    fileprivate static let SupportedCurrencyPairs:[CurrencyPair] = [
+         CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.BTC),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.ETH),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.LTC),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.XMR),
@@ -284,7 +303,9 @@ class BTCTradeUATradingPlatform : TradingPlatform,
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.DASH),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.ZEC),
          CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.BCH),
-         CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.ETC)]
+         CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.ETC),
+         CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.KRB),
+         CurrencyPair(primaryCurrency:Currency.UAH, secondaryCurrency:Currency.USDT)]
 
     fileprivate static let CurrencyToCurrencyPairMap = [Currency.BTC : BTCTradeUACurrencyPair.BtcUah,
                                                         Currency.ETH : BTCTradeUACurrencyPair.EthUah,
@@ -297,5 +318,6 @@ class BTCTradeUATradingPlatform : TradingPlatform,
                                                         Currency.ZEC : BTCTradeUACurrencyPair.ZecUah,
                                                         Currency.BCH : BTCTradeUACurrencyPair.BchUah,
                                                         Currency.ETC : BTCTradeUACurrencyPair.EtcUah,
-                                                        Currency.NVC : BTCTradeUACurrencyPair.NvcUah]
+                                                        Currency.NVC : BTCTradeUACurrencyPair.NvcUah,
+                                                        Currency.USDT : BTCTradeUACurrencyPair.UsdtUah]
 }

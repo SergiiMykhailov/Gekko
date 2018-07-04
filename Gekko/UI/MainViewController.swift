@@ -120,7 +120,8 @@ class MainViewController : UIViewController,
 
         subscribeForTradingPlatformDataUpdates()
 
-        tradingPlatformController!.start()
+        tradingPlatformController?.start()
+        tradingPlatformController?.refreshAll()
     }
 
     fileprivate func subscribeForTradingPlatformDataUpdates() {
@@ -482,6 +483,7 @@ class MainViewController : UIViewController,
     internal func currenciesViewController(sender:CurrenciesCollectionViewController,
                                            didSelectCurrency currency:Currency) {
         tradingPlatformController?.activeCurrencyPair = makePairForCurrency(forCurrency:currency)
+        tradingPlatformController?.refreshAll()
 
         UIUtils.blink(aboveView:ordersStackController.view)
         UIUtils.blink(aboveView:chartController.view)

@@ -20,18 +20,14 @@ class BTCTradeUAProviderBase : NSObject {
                                         body:String = "",
                                         prefixUrl:String = BTCTradeUAProviderBase.BaseUrl,
                                         onCompletion:@escaping ServiceResponse) {
-        BTCTradeUALoginSession.loginIfNeeded(withPublicKey:publicKey, privateKey:privateKey) {[weak self] (succeeded) in
-            if (self != nil && succeeded) {
-                let requestURL = String(format: "%@%@", prefixUrl, suffix)
+        let requestURL = String(format: "%@%@", prefixUrl, suffix)
 
-                let request = BTCTradeUAPostRequestFactory.makePostRequest(forURL:requestURL,
-                                                                           withPublicKey:publicKey,
-                                                                           privateKey:privateKey,
-                                                                           body:body)
+        let request = BTCTradeUAPostRequestFactory.makePostRequest(forURL:requestURL,
+                                                                   withPublicKey:publicKey,
+                                                                   privateKey:privateKey,
+                                                                   body:body)
 
-                RestApiRequestsExecutor.performHTTPRequest(request:request, onCompletion:onCompletion)
-            }
-        }
+        RestApiRequestsExecutor.performHTTPRequest(request:request, onCompletion:onCompletion)
     }
 
     // MARK: Internal fields

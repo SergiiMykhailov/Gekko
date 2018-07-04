@@ -101,3 +101,9 @@
 
 /* Assets view controller title */
 "Assets" = "Активы";
+
+/* Try again alert action */
+"Try again" = "Попробовать снова";
+
+/* Save anyway alert action */
+"Save keys anyway" = "Все равно сохранить ключи";

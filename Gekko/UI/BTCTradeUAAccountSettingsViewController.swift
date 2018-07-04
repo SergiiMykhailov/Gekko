@@ -59,11 +59,20 @@ class BTCTradeUAAccountSettingsViewController : NavigatableViewController {
         controller.delegate = qrCodeCaptureHandler
     }
 
-    // MARK: Events handling
-
-    @objc func applyButtonPressed() {
+    fileprivate func login() {
         let publicKey = publicKeyField?.text
         let privateKey = privateKeyField?.text
+
+        let saveKeysAndReturn = {
+            let userDefaults = UserDefaults.standard
+
+            userDefaults.set(publicKey!,
+                             forKey:UIUtils.PublicKeySettingsKey)
+            userDefaults.set(privateKey,
+                             forKey:UIUtils.PrivateKeySettingsKey)
+
+            self.navigationController?.popViewController(animated:true)
+        }
 
         if publicKey != nil && privateKey != nil {
             BTCTradeUALoginSession.loginIfNeeded(withPublicKey:publicKey!,
@@ -71,31 +80,39 @@ class BTCTradeUAAccountSettingsViewController : NavigatableViewController {
                                                  completionCallback: { (succeeded) in
                 DispatchQueue.main.async { [weak self] () in
                     if (self != nil && succeeded) {
-                        let userDefaults = UserDefaults.standard
-                        
-                        userDefaults.set(publicKey!,
-                                         forKey:UIUtils.PublicKeySettingsKey)
-                        userDefaults.set(privateKey,
-                                         forKey:UIUtils.PrivateKeySettingsKey)
-                        
-                        self!.navigationController?.popViewController(animated:true)
+                        saveKeysAndReturn()
                     }
                     else {
-                        let alert = UIAlertController(title: NSLocalizedString("Authorization failed", comment:"Alert title"),
-                                                      message: NSLocalizedString("Invalid public/private key", comment:"Invalid key"),
-                                                      preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Close alert action"),
-                                                      style: .`default`,
-                                                      handler: { _ in
-                            self!.publicKeyField!.text = String()
-                            self!.privateKeyField!.text = String()
+                        let alert = UIAlertController(title:NSLocalizedString("Authorization failed", comment:"Alert title"),
+                                                                              message:NSLocalizedString("Invalid public/private key", comment:"Invalid key"),
+                                                                              preferredStyle:.alert)
+                        alert.addAction(UIAlertAction(title:NSLocalizedString("Close", comment:"Close alert action"),
+                                                                              style:.`default`,
+                                                                              handler:{ [weak self] (_) in
+                            self?.navigationController?.popViewController(animated:true)
                         }))
-                        
+                        alert.addAction(UIAlertAction(title:NSLocalizedString("Try again", comment:"Try again alert action"),
+                                                                              style:.`default`,
+                                                                              handler: { [weak self] (_) in
+                            self?.login()
+                        }))
+                        alert.addAction(UIAlertAction(title:NSLocalizedString("Save keys anyway", comment:"Save anyway alert action"),
+                                                                              style:.`default`,
+                                                                              handler: { (_) in
+                            saveKeysAndReturn()
+                        }))
+
                         self!.present(alert, animated:true, completion:nil)
                     }
                 }
             })
         }
+    }
+
+    // MARK: Events handling
+
+    @objc func applyButtonPressed() {
+        login()
     }
 
     // MARK: Outlets

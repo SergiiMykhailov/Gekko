@@ -101,3 +101,9 @@
 
 /* Assets view controller title */
 "Assets" = "Assets";
+
+/* Try again alert action */
+"Try again" = "Try again";
+
+/* Save anyway alert action */
+"Save keys anyway" = "Save keys anyway";
