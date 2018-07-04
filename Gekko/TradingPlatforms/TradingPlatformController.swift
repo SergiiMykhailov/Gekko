@@ -8,6 +8,8 @@ class TradingPlatformController : NSObject {
 
     public let tradingPlatform:TradingPlatform
 
+    public var activeCurrencyPair:CurrencyPair? 
+    
     public var readonlyModel:TradingPlatformReadonlyThreadsafeModel {
         get {
             return model
@@ -40,9 +42,6 @@ class TradingPlatformController : NSObject {
 
     public func start() {
         scheduleOrdersUpdating()
-        scheduleDealsUpdating()
-        scheduleCandlesUpdating()
-        scheduleUserBalanceUpdating()
         scheduleOrdersStatusUpdating()
     }
 
@@ -179,9 +178,14 @@ class TradingPlatformController : NSObject {
     fileprivate func handleCandlesUpdatingFor(pair:CurrencyPair,
                                               onCompletion:@escaping () -> Void) {
         tradingPlatform.retrieveCandlesAsync(forPair:pair) { [weak self] (candles) in
+            if !candles.isEmpty {
             self?.model.assign(candles:candles,
                                forCurrencyPair:pair,
                                completion:onCompletion)
+            }
+            else {
+                onCompletion()
+            }
         }
     }
 
@@ -310,16 +314,12 @@ class TradingPlatformController : NSObject {
 
     fileprivate func handleOrdersUpdating(forPair pair:CurrencyPair,
                                           onCompletion:@escaping () -> Void) {
-        let RequiredOperationsCount = UInt32(2)
-        let callbacksWaiter = MultiCallbacksWaiter(withNumberOfInvokations:RequiredOperationsCount,
-                                                   onCompletion:onCompletion)
-
         tradingPlatform.retrieveBuyOrdersAsync(forPair:pair,
                                                onCompletion: { [weak self] (orders) in
             self?.model.assign(allBuyOrders:orders,
                                forCurrencyPair:pair,
                                completion: {
-                callbacksWaiter.handleCompletion()
+                self?.onBuyOrdersUpdated?(pair)
             })
         })
 
@@ -328,7 +328,7 @@ class TradingPlatformController : NSObject {
             self?.model.assign(allSellOrders:orders,
                                forCurrencyPair:pair,
                                completion: {
-                callbacksWaiter.handleCompletion()
+                self?.onSellOrdersUpdated?(pair)
             })
         })
     }
@@ -379,6 +379,6 @@ class TradingPlatformController : NSObject {
 
     fileprivate let dealsHandler:TradingPlatformUserDealsHandler
 
-    fileprivate static let DefaultPollTimeout:TimeInterval = 10
+    fileprivate static let DefaultPollTimeout:TimeInterval = 20
     fileprivate static let LongPollTimeout:TimeInterval = 600
 }

@@ -17,4 +17,5 @@ enum BTCTradeUACurrencyPair : String {
     case BchUah = "bch_uah"
     case EtcUah = "etc_uah"
     case NvcUah = "nvc_uah"
+    case UsdtUah = "usdt_uah"
 }

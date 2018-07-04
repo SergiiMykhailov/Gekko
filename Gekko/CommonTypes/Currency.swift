@@ -19,6 +19,7 @@ import Foundation
     case BCH
     case ETC
     case NVC
+    case USDT
 
     typealias RawValue = NSString
 
@@ -50,6 +51,8 @@ import Foundation
             return "ETC"
         case .NVC:
             return "NVC"
+        case .USDT:
+            return "USDT"
         }
     }
 
@@ -81,6 +84,8 @@ import Foundation
             self = .ETC
         case "NVC":
             self = .NVC
+        case "USDT":
+            self = .USDT
         default:
             self = .UAH
         }

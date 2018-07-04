@@ -19,8 +19,9 @@ class ChartViewController : UIViewController {
     public weak var dataSource:ChartViewControllerDataSource?
 
     public func reloadData() {
+        chart?.clearView()
+
         if (dataSource == nil) {
-            chart?.clearView()
             return
         }
 
