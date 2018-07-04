@@ -30,12 +30,6 @@ class TradingPlatformController : NSObject {
         })
     }
 
-    public var activeCurrencyPair:CurrencyPair? {
-        didSet {
-            refreshAll()
-        }
-    }
-
     public var notifications:TradingPlatformModelNotifications {
         return TradingPlatformModelNotifications(model:model)
     }
@@ -318,18 +312,14 @@ class TradingPlatformController : NSObject {
                                                onCompletion: { [weak self] (orders) in
             self?.model.assign(allBuyOrders:orders,
                                forCurrencyPair:pair,
-                               completion: {
-                self?.onBuyOrdersUpdated?(pair)
-            })
+                               completion:onCompletion)
         })
 
         tradingPlatform.retrieveSellOrdersAsync(forPair:pair,
                                                 onCompletion: { [weak self] (orders) in
             self?.model.assign(allSellOrders:orders,
                                forCurrencyPair:pair,
-                               completion: {
-                self?.onSellOrdersUpdated?(pair)
-            })
+                               completion:onCompletion)
         })
     }
 
