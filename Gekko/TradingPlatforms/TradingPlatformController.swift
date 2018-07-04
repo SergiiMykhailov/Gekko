@@ -42,6 +42,7 @@ typealias BalanceCompletionHandler = (Currency) -> Void
 
     public func start() {
         scheduleOrdersUpdating()
+        scheduleOrdersStatusUpdating()
     }
 
     public func refreshAll() {
@@ -200,7 +201,9 @@ typealias BalanceCompletionHandler = (Currency) -> Void
                                               onCompletion:@escaping () -> Void) {
         tradingPlatform.retrieveCandlesAsync(forPair:pair) { [weak self] (candles) in
             self?.tradingPlatformData.accessInMainQueue { (model) in
-                model.currencyPairToCandlesMap[pair] = candles
+                if !candles.isEmpty {
+                    model.currencyPairToCandlesMap[pair] = candles
+                }
 
                 onCompletion()
             }
