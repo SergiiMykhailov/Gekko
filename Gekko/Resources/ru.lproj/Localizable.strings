@@ -107,3 +107,6 @@
 
 /* Save anyway alert action */
 "Save keys anyway" = "Все равно сохранить ключи";
+
+/* Key copying message */
+"Key was copied to clipboard" = "Ключ скопирован";

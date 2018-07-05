@@ -107,3 +107,6 @@
 
 /* Save anyway alert action */
 "Save keys anyway" = "Save keys anyway";
+
+/* Key copying message */
+"Key was copied to clipboard" = "Key was copied to clipboard";
