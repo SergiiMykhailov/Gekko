@@ -122,6 +122,11 @@ class MainViewController : UIViewController,
 
         tradingPlatformController?.start()
         tradingPlatformController?.refreshAll()
+
+        if let assetsProvider = tradingPlatform.assetProvider {
+            tradingPlatformAssetsManager = TradingPlatformAssetsManager(withAssetProvider:assetsProvider,
+                                                                        assets:supportedAssets)
+        }
     }
 
     fileprivate func subscribeForTradingPlatformDataUpdates() {
@@ -711,9 +716,15 @@ class MainViewController : UIViewController,
         tradingPlatformController!.cancelOrderAsync(withID:order.id) { }
     }
 
-    // MARK: CryptoAssetsViewControllerDelegate implementation
-    func supportedCryptoAssets(forCryptoAssetsViewController sender:AssetsViewController) -> [Currency] {
+    // MARK: CryptoAssetsViewControllerDataSource implementation
+
+    func supportedAssets(forCryptoAssetsViewController sender:AssetsViewController) -> [Currency] {
         return supportedAssets
+    }
+
+    func keys(forAsset asset:Currency,
+              forCryptoAssetsViewController sender:AssetsViewController) -> [String] {
+        return tradingPlatformAssetsManager != nil ? tradingPlatformAssetsManager!.keys(forAsset:asset) : [String]()
     }
     
     // MARK: Events handling
@@ -770,6 +781,7 @@ class MainViewController : UIViewController,
     }
 
     fileprivate var tradingPlatformController:TradingPlatformController?
+    fileprivate var tradingPlatformAssetsManager:TradingPlatformAssetsManager?
 
     fileprivate var currentOrderCurrency:Currency?
 

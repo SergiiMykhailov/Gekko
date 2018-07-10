@@ -248,9 +248,10 @@ class BTCTradeUATradingPlatform : TradingPlatform,
 
     // MARK: AssetProvider implementation
 
-    func retriveAssetAddressAsync(currency: Currency, onCompletion: @escaping AssetAddressCompletionCallback) {
+    func retriveAssetAddressAsync(currency:Currency, onCompletion:@escaping AssetAddressCompletionCallback) {
         if !isAuthorized {
             onCompletion(nil)
+            return
         }
 
         assetKeysProvider.retriveAssetAddressAsync(withPublicKey:publicKey!,

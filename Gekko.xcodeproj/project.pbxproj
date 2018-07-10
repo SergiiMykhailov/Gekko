@@ -39,6 +39,7 @@
 		025210BF206D9350008BE3D5 /* TradingPlatformFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210BE206D9350008BE3D5 /* TradingPlatformFactory.swift */; };
 		025210CD2072D97B008BE3D5 /* MultiCallbacksWaiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210CC2072D97B008BE3D5 /* MultiCallbacksWaiter.swift */; };
 		025210D3207582D4008BE3D5 /* MainQueueAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210D2207582D4008BE3D5 /* MainQueueAccessor.swift */; };
+		026D250E20F2BA4200971C73 /* TradingPlatformAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D250D20F2BA4200971C73 /* TradingPlatformAssetsManager.swift */; };
 		02B32B812008122A00CA82D7 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B802008122900CA82D7 /* OrdersView.swift */; };
 		02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */; };
 		02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */; };
@@ -118,6 +119,7 @@
 		025210BE206D9350008BE3D5 /* TradingPlatformFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformFactory.swift; sourceTree = "<group>"; };
 		025210CC2072D97B008BE3D5 /* MultiCallbacksWaiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiCallbacksWaiter.swift; sourceTree = "<group>"; };
 		025210D2207582D4008BE3D5 /* MainQueueAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueAccessor.swift; sourceTree = "<group>"; };
+		026D250D20F2BA4200971C73 /* TradingPlatformAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformAssetsManager.swift; sourceTree = "<group>"; };
 		02B32B802008122900CA82D7 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewCell.swift; sourceTree = "<group>"; };
 		02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
@@ -293,12 +295,13 @@
 				025210BB206D841C008BE3D5 /* BTCTradeUA */,
 				025210B3206D817C008BE3D5 /* TradingPlatform.swift */,
 				02D7B5AF20CFBB1100FA402B /* TradingPlatformAccessibilityController.swift */,
+				026D250D20F2BA4200971C73 /* TradingPlatformAssetsManager.swift */,
 				025210B5206D81FB008BE3D5 /* TradingPlatformController.swift */,
 				025210BE206D9350008BE3D5 /* TradingPlatformFactory.swift */,
 				025210B7206D8221008BE3D5 /* TradingPlatformModel.swift */,
 				02D7B5B320D0683200FA402B /* TradingPlatformModelNotifications.swift */,
-				020AACFC208D2A3500F1A3D1 /* TradingPlatformUserDealsHandler.swift */,
 				02D7B5B520D13C8200FA402B /* TradingPlatformReadonlyModel.swift */,
+				020AACFC208D2A3500F1A3D1 /* TradingPlatformUserDealsHandler.swift */,
 			);
 			path = TradingPlatforms;
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 				02D7B5D820E5794F00FA402B /* NavigatableViewController.swift in Sources */,
 				0207CDD41FD2E91F0074EADF /* MainViewController.swift in Sources */,
 				02DE83712089380B00F7D949 /* BTCTradeUADealsProvider.swift in Sources */,
+				026D250E20F2BA4200971C73 /* TradingPlatformAssetsManager.swift in Sources */,
 				025210B4206D817C008BE3D5 /* TradingPlatform.swift in Sources */,
 				02D7B5DA20E5873800FA402B /* AssetCell.swift in Sources */,
 				020AACFF208E8FF000F1A3D1 /* BTCTradeUAUtils.swift in Sources */,

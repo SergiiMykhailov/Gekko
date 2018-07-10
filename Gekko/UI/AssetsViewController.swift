@@ -8,8 +8,9 @@ import SnapKit
 
 protocol AssetsViewControllerDataSource : class {
 
-    func supportedCryptoAssets(forCryptoAssetsViewController sender:AssetsViewController) -> [Currency]
+    func supportedAssets(forCryptoAssetsViewController sender:AssetsViewController) -> [Currency]
 
+    func keys(forAsset asset:Currency, forCryptoAssetsViewController sender:AssetsViewController) -> [String]
 }
 
 class AssetsViewController : NavigatableViewController,
@@ -46,7 +47,7 @@ class AssetsViewController : NavigatableViewController,
 
     internal func tableView(_ tableView:UITableView, numberOfRowsInSection section:Int) -> Int {
         if dataSource != nil {
-            supportedAssets = dataSource?.supportedCryptoAssets(forCryptoAssetsViewController:self)
+            supportedAssets = dataSource?.supportedAssets(forCryptoAssetsViewController:self)
             return supportedAssets!.count
         }
 
@@ -59,8 +60,12 @@ class AssetsViewController : NavigatableViewController,
         let result = tableView.dequeueReusableCell(withIdentifier:AssetsViewController.CellIdentifier) as! AssetCell
 
         result.delegate = self
-        result.keys = ["key1"]
-        result.assetIcon = #imageLiteral(resourceName: "currencies")
+
+        if dataSource != nil && supportedAssets != nil {
+            let currency = supportedAssets![indexPath.row]
+            result.keys = dataSource?.keys(forAsset:currency, forCryptoAssetsViewController:self)
+            result.assetIcon = #imageLiteral(resourceName: "currencies")
+        }
 
         return result
     }
