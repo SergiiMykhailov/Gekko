@@ -8,38 +8,39 @@ typealias ServiceResponse = ([String : Any], Error?) -> Void
 
 class RestApiRequestsExecutor : NSObject {
 
-    static func performHTTPGetRequest(path:String, onCompletion:@escaping ServiceResponse) {
+    public static func performHTTPGetRequest(path:String, onCompletion:@escaping ServiceResponse) {
         let request = URLRequest(url: URL(string: path)!)
 
         performHTTPRequest(request:request, onCompletion:onCompletion)
     }
 
-    static func performHTTPRequest(request:URLRequest, onCompletion:@escaping ServiceResponse) {
-        let session = URLSession.shared
+    public static func performHTTPRequest(request:URLRequest, onCompletion:@escaping ServiceResponse) {
+        SerialBackgroundTasksExecutor.shared.enqueue { (completionHandler) in
+            let session = URLSession.shared
 
-        let task = session.dataTask(with:request, completionHandler:{data, response, error -> Void in
-            let replyAsJSON = data != nil ?
-                              try? JSONSerialization.jsonObject(with:data!, options: []) :
-                              nil
+            let task = session.dataTask(with:request, completionHandler:{data, response, error -> Void in
+                let replyAsJSON = data != nil ?
+                    try? JSONSerialization.jsonObject(with:data!, options: []) :
+                nil
 
-            if replyAsJSON != nil {
-                if let replyItems = replyAsJSON! as? [String : Any] {
-                    onCompletion(replyItems, error)
+                let dataAsString = data != nil ? String(data:data!, encoding:.utf8) : ""
+                var items:[String : Any] = ["" : dataAsString as Any]
 
-                    return
+                if replyAsJSON != nil {
+                    if let replyItems = replyAsJSON! as? [String : Any] {
+                        items = replyItems
+                    }
+                    else if let replyItems = replyAsJSON! as? [Any] {
+                        items = ["" : replyItems]
+                    }
                 }
 
-                if let replyItems = replyAsJSON! as? [Any] {
-                    onCompletion(["" : replyItems], error)
+                onCompletion(items, error)
+                completionHandler()
+            })
 
-                    return
-                }
-            }
+            task.resume()
+        }
 
-            let dataAsString = data != nil ? String(data:data!, encoding:.utf8) : ""
-
-            onCompletion(["" : dataAsString as Any], error)
-        })
-        task.resume()
     }
 }

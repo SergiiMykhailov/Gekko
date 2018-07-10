@@ -40,6 +40,7 @@
 		025210CD2072D97B008BE3D5 /* MultiCallbacksWaiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210CC2072D97B008BE3D5 /* MultiCallbacksWaiter.swift */; };
 		025210D3207582D4008BE3D5 /* MainQueueAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210D2207582D4008BE3D5 /* MainQueueAccessor.swift */; };
 		026D250E20F2BA4200971C73 /* TradingPlatformAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D250D20F2BA4200971C73 /* TradingPlatformAssetsManager.swift */; };
+		026D251020F4A60D00971C73 /* SerialBackgroundTasksExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D250F20F4A60D00971C73 /* SerialBackgroundTasksExecutor.swift */; };
 		02B32B812008122A00CA82D7 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B802008122900CA82D7 /* OrdersView.swift */; };
 		02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */; };
 		02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */; };
@@ -120,6 +121,7 @@
 		025210CC2072D97B008BE3D5 /* MultiCallbacksWaiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiCallbacksWaiter.swift; sourceTree = "<group>"; };
 		025210D2207582D4008BE3D5 /* MainQueueAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueAccessor.swift; sourceTree = "<group>"; };
 		026D250D20F2BA4200971C73 /* TradingPlatformAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformAssetsManager.swift; sourceTree = "<group>"; };
+		026D250F20F4A60D00971C73 /* SerialBackgroundTasksExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialBackgroundTasksExecutor.swift; sourceTree = "<group>"; };
 		02B32B802008122900CA82D7 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewCell.swift; sourceTree = "<group>"; };
 		02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 			children = (
 				025210CC2072D97B008BE3D5 /* MultiCallbacksWaiter.swift */,
 				025210D2207582D4008BE3D5 /* MainQueueAccessor.swift */,
+				026D250F20F4A60D00971C73 /* SerialBackgroundTasksExecutor.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				02D7D3001FDF2544007C4557 /* BTCTradeUAOrderProvider.swift in Sources */,
 				025210BF206D9350008BE3D5 /* TradingPlatformFactory.swift in Sources */,
 				0240BB1C1FE85DA6000EEAE0 /* OrdersStackViewController.swift in Sources */,
+				026D251020F4A60D00971C73 /* SerialBackgroundTasksExecutor.swift in Sources */,
 				02D7D3021FE0A374007C4557 /* BTCTradeUAAccountSettingsViewController.swift in Sources */,
 				0207CDC71FC632E00074EADF /* BTCTradeUABalanceProvider.swift in Sources */,
 				02D7D2F41FDB4014007C4557 /* Currency.swift in Sources */,
