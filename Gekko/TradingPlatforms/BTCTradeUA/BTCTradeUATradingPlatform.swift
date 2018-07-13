@@ -5,7 +5,8 @@
 import Foundation
 
 class BTCTradeUATradingPlatform : TradingPlatform,
-                                  AssetProvider {
+                                  AssetProvider,
+                                  AccountManager {
 
     // MARK: Public methods and properties
 
@@ -30,7 +31,11 @@ class BTCTradeUATradingPlatform : TradingPlatform,
         return BTCTradeUATradingPlatform.SupportedCurrencyPairs
     }
 
-    public var assetProvider: AssetProvider? {
+    public var assetProvider:AssetProvider? {
+        return self
+    }
+
+    public var accountManager:AccountManager? {
         return self
     }
 
@@ -258,6 +263,11 @@ class BTCTradeUATradingPlatform : TradingPlatform,
                                                    privateKey:privateKey!,
                                                    currency:currency,
                                                    onCompletion:onCompletion)
+    }
+
+    func registerAccount(withEmail email:String,
+                         onCompletion:@escaping AccountRegistrationCompletionCallback) {
+        
     }
 
     // MARK: Internal methods

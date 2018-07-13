@@ -114,7 +114,7 @@ class MainViewController : UIViewController,
     }
 
     fileprivate func setupTradingPlatform() {
-        let tradingPlatform = TradingPlatformFactory.createTradingPlatform()
+        let tradingPlatform = TradingPlatformManager.shared.tradingPlatform
         tradingPlatformController = TradingPlatformController(tradingPlatform:tradingPlatform)
         tradingPlatformController?.activeCurrencyPair = makePairForCurrency(forCurrency:.BTC)
 

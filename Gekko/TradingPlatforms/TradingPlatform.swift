@@ -42,6 +42,8 @@ protocol TradingPlatform : class {
 
     var assetProvider:AssetProvider? { get }
 
+    var accountManager:AccountManager? { get }
+
     func retrieveCandlesAsync(forPair pair:CurrencyPair,
                               onCompletion:@escaping CandlesCompletionCallback)
 
@@ -88,5 +90,20 @@ protocol AssetProvider : class {
 
     func retriveAssetAddressAsync(currency:Currency,
                                   onCompletion:@escaping AssetAddressCompletionCallback)
+
+}
+
+enum AccountRegistrationStatus {
+    case Succeeded
+    case AccountAlreadyExists
+    case UnknownError
+}
+
+typealias AccountRegistrationCompletionCallback = (AccountRegistrationStatus) -> Void
+
+protocol AccountManager : class {
+
+    func registerAccount(withEmail email:String,
+                         onCompletion:@escaping AccountRegistrationCompletionCallback)
 
 }

@@ -13,7 +13,7 @@ protocol AssetsViewControllerDataSource : class {
     func keys(forAsset asset:Currency, forCryptoAssetsViewController sender:AssetsViewController) -> [String]
 }
 
-class AssetsViewController : NavigatableViewController,
+class AssetsViewController : UIViewController,
                              UITableViewDataSource,
                              UITableViewDelegate,
                              AssetCellDelegate {

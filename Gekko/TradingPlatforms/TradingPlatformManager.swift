@@ -4,15 +4,23 @@
 
 import Foundation
 
-class TradingPlatformFactory : NSObject {
+class TradingPlatformManager : NSObject {
 
     // MARK: Public methods and properties
 
-    public static func createTradingPlatform() -> TradingPlatform {
-        return createBTCTradeUATradingPlatform()
-    }
+    public static let shared = TradingPlatformManager()
+
+    public private(set) lazy var tradingPlatform = TradingPlatformManager.createTradingPlatform()
 
     // MARK: Internal methods
+
+    fileprivate override init() {
+        super.init()
+    }
+
+    fileprivate static func createTradingPlatform() -> TradingPlatform {
+        return createBTCTradeUATradingPlatform()
+    }
 
     fileprivate static func createBTCTradeUATradingPlatform() -> TradingPlatform {
         let result = BTCTradeUATradingPlatform()

@@ -110,3 +110,6 @@
 
 /* Key copying message */
 "Key was copied to clipboard" = "Key was copied to clipboard";
+
+/* Sign Up button title */
+"Sign Up" = "Sign Up";

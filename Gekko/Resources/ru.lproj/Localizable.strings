@@ -110,3 +110,6 @@
 
 /* Key copying message */
 "Key was copied to clipboard" = "Ключ скопирован";
+
+/* Sign Up button title */
+"Sign Up" = "Зарегистрироваться";
