@@ -42,6 +42,8 @@
 		026D251420F5570E00971C73 /* BTCTradeUAAccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D251320F5570E00971C73 /* BTCTradeUAAccountSettingsViewController.swift */; };
 		026D251620F5577600971C73 /* AccountRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D251520F5577600971C73 /* AccountRegistrationViewController.swift */; };
 		026D251820F7593B00971C73 /* TradingPlatformManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D251720F7593A00971C73 /* TradingPlatformManager.swift */; };
+		026D251A20F8DCC000971C73 /* BTCTradeUAAccountRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D251920F8DCC000971C73 /* BTCTradeUAAccountRegistrator.swift */; };
+		026D251C20FA37B900971C73 /* HTTPRequestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D251B20FA37B900971C73 /* HTTPRequestUtils.swift */; };
 		02B32B812008122A00CA82D7 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B802008122900CA82D7 /* OrdersView.swift */; };
 		02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */; };
 		02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */; };
@@ -122,6 +124,8 @@
 		026D251320F5570E00971C73 /* BTCTradeUAAccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTCTradeUAAccountSettingsViewController.swift; sourceTree = "<group>"; };
 		026D251520F5577600971C73 /* AccountRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRegistrationViewController.swift; sourceTree = "<group>"; };
 		026D251720F7593A00971C73 /* TradingPlatformManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradingPlatformManager.swift; sourceTree = "<group>"; };
+		026D251920F8DCC000971C73 /* BTCTradeUAAccountRegistrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUAAccountRegistrator.swift; sourceTree = "<group>"; };
+		026D251B20FA37B900971C73 /* HTTPRequestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestUtils.swift; sourceTree = "<group>"; };
 		02B32B802008122900CA82D7 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewCell.swift; sourceTree = "<group>"; };
 		02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
@@ -220,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				0207CD9F1FC234F70074EADF /* RestApiRequestsExecutor.swift */,
+				026D251B20FA37B900971C73 /* HTTPRequestUtils.swift */,
 			);
 			path = RESTAPI;
 			sourceTree = "<group>";
@@ -248,6 +253,7 @@
 		0207CDBE1FC632BC0074EADF /* BTCTradeUA */ = {
 			isa = PBXGroup;
 			children = (
+				026D251920F8DCC000971C73 /* BTCTradeUAAccountRegistrator.swift */,
 				0218E3D920E651780055E22B /* BTCTradeUAAssetsProvider.swift */,
 				0207CDC11FC632DF0074EADF /* BTCTradeUABalanceProvider.swift */,
 				02D7D2F91FDB415D007C4557 /* BTCTradeUACandlesProvider.swift */,
@@ -560,6 +566,7 @@
 				02D7D2F21FDB3FC2007C4557 /* CandleInfo.swift in Sources */,
 				02D7D2FA1FDB415D007C4557 /* BTCTradeUACandlesProvider.swift in Sources */,
 				022E3DB41FD747E300D778D2 /* ChartViewController.swift in Sources */,
+				026D251A20F8DCC000971C73 /* BTCTradeUAAccountRegistrator.swift in Sources */,
 				0240BB261FEC801B000EEAE0 /* TableViewInputCell.swift in Sources */,
 				02B32B812008122A00CA82D7 /* OrdersView.swift in Sources */,
 				02D7B5B020CFBB1200FA402B /* TradingPlatformAccessibilityController.swift in Sources */,
@@ -578,6 +585,7 @@
 				02D7B5DA20E5873800FA402B /* AssetCell.swift in Sources */,
 				020AACFF208E8FF000F1A3D1 /* BTCTradeUAUtils.swift in Sources */,
 				0218E3DA20E651780055E22B /* BTCTradeUAAssetsProvider.swift in Sources */,
+				026D251C20FA37B900971C73 /* HTTPRequestUtils.swift in Sources */,
 				025210B8206D8221008BE3D5 /* TradingPlatformModel.swift in Sources */,
 				0248532F1FFBD91000290BA1 /* UIUtils.swift in Sources */,
 				025210BD206D843D008BE3D5 /* BTCTradeUATradingPlatform.swift in Sources */,

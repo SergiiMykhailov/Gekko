@@ -99,11 +99,12 @@ enum AccountRegistrationStatus {
     case UnknownError
 }
 
-typealias AccountRegistrationCompletionCallback = (AccountRegistrationStatus) -> Void
+typealias AccountRegistrationCompletionCallback = (AccountRegistrationStatus?, [String : Any]) -> Void
 
 protocol AccountManager : class {
 
     func registerAccount(withEmail email:String,
+                         phoneNumber:String,
+                         password:String,
                          onCompletion:@escaping AccountRegistrationCompletionCallback)
-
 }

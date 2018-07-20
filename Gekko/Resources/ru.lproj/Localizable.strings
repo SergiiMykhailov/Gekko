@@ -88,7 +88,7 @@
 "Close" = "Закрыть";
 
 /* Back button navigation bar */
-"Back" = " Назад";
+"Back" = "Назад";
 
 /* Authenticetion reason string */
 "To access the application" = "Для доступа к приложению";
@@ -113,3 +113,15 @@
 
 /* Sign Up button title */
 "Sign Up" = "Зарегистрироваться";
+
+/* Phone number label title */
+"phone:" = "телефон:";
+
+/* User already exists alert title */
+"User with such credentials already exists" = "Пользователь с такими параметрами уже существует";
+
+/* Registration server error alert title */
+"Unknown server error:" = "Ошибка сервера:";
+
+/* Registration failed alert title */
+"Registration failed" = "Ошибка регистрации";

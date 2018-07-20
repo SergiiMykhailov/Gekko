@@ -113,3 +113,15 @@
 
 /* Sign Up button title */
 "Sign Up" = "Sign Up";
+
+/* Phone number label title */
+"phone:" = "phone:";
+
+/* User already exists alert title */
+"User with such credentials already exists" = "User with such credentials already exists";
+
+/* Registration server error alert title */
+"Unknown server error:" = "Unknown server error:";
+
+/* Registration failed alert title */
+"Registration failed" = "Registration failed";

@@ -10,22 +10,24 @@ class BTCTradeUAPostRequestFactory : NSObject {
 
     }
 
-    static func makePostRequest(forURL url:String,
-                                withPublicKey publicKey:String,
-                                privateKey:String,
-                                body:String = "") -> URLRequest {
+    // MARK: Public methods
+
+    public static func makePostRequest(forURL url:String,
+                                       withPublicKey publicKey:String,
+                                       privateKey:String,
+                                       body:String = "") -> URLRequest {
         syncQueue.sync {
             nonceCount += 1
         }
 
-        let millisecondsFrom1970 = Int(Date.timeIntervalBetween1970AndReferenceDate) * 1000
+        let millisecondsFrom1970 = Int64(Date.timeIntervalBetween1970AndReferenceDate) * 1000
         let outOrderId = millisecondsFrom1970
 
         let request = NSMutableURLRequest(url: NSURL(string:url)! as URL)
 
         request.httpMethod = "POST"
 
-        let requestBodySuffix = String(format:"out_order_id=%d&nonce=%d&MerchantID=iOS_Gekko", outOrderId, nonceCount)
+        let requestBodySuffix = "out_order_id=\(outOrderId)&nonce=\(nonceCount)&MerchantID=iOS_Gekko"
         let requestBody = body.isEmpty ? requestBodySuffix : String(format:"%@&%@", body, requestBodySuffix)
 
         request.setValue(publicKey, forHTTPHeaderField:"public-key")
@@ -40,7 +42,9 @@ class BTCTradeUAPostRequestFactory : NSObject {
         return request as URLRequest;
     }
 
-    private static func hashString(fromString sourceString:String) -> String {
+    // MARK: Internal methods
+
+    fileprivate static func hashString(fromString sourceString:String) -> String {
         var hash = [UInt8](repeating:0, count:Int(CC_SHA256_DIGEST_LENGTH))
         let sourceData = sourceString.data(using:.utf8)! as NSData
         CC_SHA256(sourceData.bytes,

@@ -265,9 +265,16 @@ class BTCTradeUATradingPlatform : TradingPlatform,
                                                    onCompletion:onCompletion)
     }
 
+    // MARK: AccountManager implementation
+
     func registerAccount(withEmail email:String,
+                         phoneNumber:String,
+                         password:String,
                          onCompletion:@escaping AccountRegistrationCompletionCallback) {
-        
+        accountRegistrator.registerAccount(withEmail:email,
+                                           phoneNumber:phoneNumber,
+                                           password:password,
+                                           onCompletion:onCompletion)
     }
 
     // MARK: Internal methods
@@ -287,6 +294,7 @@ class BTCTradeUATradingPlatform : TradingPlatform,
     fileprivate let userDealsProvider = BTCTradeUADealsProvider()
     fileprivate let userOrdersProvider = BTCTradeUAUserOrdersProvider()
     fileprivate let assetKeysProvider = BTCTradeUAAssetsProvider()
+    fileprivate let accountRegistrator = BTCTradeUAAccountRegistrator()
 
     fileprivate var currencyToBalanceMap = [Currency : Double?]()
 
