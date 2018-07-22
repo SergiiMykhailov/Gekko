@@ -40,6 +40,7 @@ class AssetsViewController : NavigatableViewController,
                                                    left:UIDefaults.LineHeight,
                                                    bottom:0,
                                                    right:0)
+        assetsTable?.tableFooterView = UIView(frame: .zero)
         assetsTable?.allowsSelection = false
     }
 
