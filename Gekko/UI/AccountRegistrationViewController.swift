@@ -19,11 +19,9 @@ class AccountRegistrationViewController : UIViewController,
         signUpButton?.setTitle(NSLocalizedString("Sign Up", comment:"Sign Up button title"), for:.normal)
 
         emailTextField?.delegate = self
-        emailTextField?.addTarget(self, action:#selector(textFieldDidChange(_:)), for:.editingChanged)
         emailTextField?.becomeFirstResponder()
 
         phoneTextField?.delegate = self
-        phoneTextField?.addTarget(self, action:#selector(textFieldDidChange(_:)), for:.editingChanged)
     }
 
     override func resignFirstResponder() -> Bool {
@@ -49,6 +47,15 @@ class AccountRegistrationViewController : UIViewController,
 
         return true
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == phoneTextField {
+            return validationPhoneNumber(textField, shouldChangeCharactersIn:range, replacementString:string)
+        }
+        
+        return true
+    }
+
 
     // MARK: Internal methods
 
@@ -95,19 +102,63 @@ class AccountRegistrationViewController : UIViewController,
 
         present(alert, animated:true, completion:nil)
     }
-
-    fileprivate func isValidEmail(_ inputString:String) -> Bool {
-        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", AccountRegistrationViewController.EmailRegEx)
-        let result = emailPredicate.evaluate(with:inputString)
-
-        return result
-    }
-
-    fileprivate func isValidPhoneNumber(_ inputString:String) -> Bool {
-        let phonePredicate = NSPredicate(format:"SELF MATCHES %@", AccountRegistrationViewController.PhoneNumberRegEx)
-        let result = phonePredicate.evaluate(with:inputString)
-
-        return result
+    
+    func validationPhoneNumber(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let validationSet = CharacterSet.decimalDigits.inverted
+        let components = string.components(separatedBy:validationSet)
+        
+        if components.count > 1 {
+            return false
+        }
+        
+        var newString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
+        
+        let validComponents = newString!.components(separatedBy: validationSet)
+        
+        newString = validComponents.joined(separator:"")
+        
+        let localNumberMaxLength = 7
+        let areaCodeMaxLength = 3
+        let countryCodeMaxLength = 2
+        
+        if newString!.count > localNumberMaxLength + areaCodeMaxLength + countryCodeMaxLength {
+            return false
+        }
+        
+        var resultString = ""
+        
+        let localNumberLength = min(localNumberMaxLength, newString!.count)
+        
+        if localNumberLength > 0 {
+            let index = newString!.index(newString!.startIndex, offsetBy: newString!.count - localNumberLength)
+            let number = String(newString![index...])
+            resultString.append(number)
+            if resultString.count > 3 {
+                resultString.insert("-", at: resultString.index(resultString.startIndex, offsetBy: 3))
+            }
+        }
+        
+        if newString!.count > localNumberMaxLength {
+            let areaCodeLength = min(newString!.count - localNumberMaxLength, areaCodeMaxLength)
+            let firstIndex = newString!.index(newString!.startIndex, offsetBy: newString!.count - localNumberMaxLength - areaCodeLength)
+            let secondIndex = newString!.index(firstIndex, offsetBy: areaCodeLength)
+            var area = String(newString![firstIndex..<secondIndex])
+            area = "(\(area))"
+            resultString.insert(contentsOf: area, at: resultString.startIndex)
+        }
+        
+        if newString!.count > localNumberMaxLength + areaCodeMaxLength {
+            let countryCodeLength = min(newString!.count - localNumberMaxLength - areaCodeMaxLength, countryCodeMaxLength)
+            let firstIndex = newString!.startIndex
+            let secondIndex = newString!.index(firstIndex, offsetBy: countryCodeLength)
+            var countryCode = String(newString![firstIndex..<secondIndex])
+            countryCode = "+\(countryCode)"
+            resultString.insert(contentsOf: countryCode, at: resultString.startIndex)
+        }
+        
+        textField.text = resultString
+        
+        return false
     }
 
     // MARK: Actions handling
@@ -116,33 +167,10 @@ class AccountRegistrationViewController : UIViewController,
         register()
     }
 
-    @objc func textFieldDidChange(_ textField:UITextField) {
-        var isButtonEnabled = false
-
-        if var text = emailTextField!.text {
-            text = text.trimmingCharacters(in:.whitespaces)
-
-            if isValidEmail(text) {
-                if phoneTextField!.text != nil {
-                    text = phoneTextField!.text!
-
-                    isButtonEnabled = isValidPhoneNumber(text.trimmingCharacters(in:.whitespaces))
-                }
-            }
-        }
-
-        signUpButton?.isEnabled = isButtonEnabled
-    }
-
     // MARK: Outlets
 
     @IBOutlet weak var emailTextField:UITextField?
     @IBOutlet weak var phoneTextField:UITextField?
     @IBOutlet weak var phoneLabel:UILabel?
     @IBOutlet weak var signUpButton:UIButton?
-
-    // MARK: Internal fields
-
-    fileprivate static let EmailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,10}"
-    fileprivate static let PhoneNumberRegEx = "\\d{10}"
 }
