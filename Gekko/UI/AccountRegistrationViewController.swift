@@ -51,6 +51,8 @@ class AccountRegistrationViewController : UIViewController,
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == phoneTextField {
             return validationPhoneNumber(textField, shouldChangeCharactersIn:range, replacementString:string)
+        } else if textField == emailTextField {
+            return validationEmail(textField, shouldChangeCharactersIn:range, replacementString:string)
         }
         
         return true
@@ -62,7 +64,7 @@ class AccountRegistrationViewController : UIViewController,
     fileprivate func register() {
         if let accountManager = TradingPlatformManager.shared.tradingPlatform.accountManager {
             let email = emailTextField!.text!.trimmingCharacters(in:.whitespaces)
-            let phoneNumber = phoneTextField!.text!.trimmingCharacters(in:.whitespaces)
+            let phoneNumber = formatedStringToDecimalString(phoneTextField!.text!)
             let password = UUID().uuidString
             accountManager.registerAccount(withEmail:email,
                                            phoneNumber:phoneNumber,
@@ -159,6 +161,30 @@ class AccountRegistrationViewController : UIViewController,
         textField.text = resultString
         
         return false
+    }
+    
+     func validationEmail(_ textField:UITextField, shouldChangeCharactersIn range:NSRange, replacementString string:String) -> Bool {
+        var validationSet = CharacterSet.alphanumerics
+        validationSet.insert(charactersIn:"@!#$%&'*+-/=?^_`{|}~.")
+        validationSet = validationSet.inverted
+        
+        let components = string.components(separatedBy:validationSet)
+        
+        let newString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
+        
+        if components.count > 1 || newString!.count > 255 {
+            return false
+        }
+        
+        return true
+    }
+    
+    func formatedStringToDecimalString(_ string: String) -> String {
+        let validationSet = CharacterSet.decimalDigits.inverted
+        let validComponents = string.components(separatedBy: validationSet)
+        
+        let newString = validComponents.joined(separator:"")
+        return newString
     }
 
     // MARK: Actions handling
