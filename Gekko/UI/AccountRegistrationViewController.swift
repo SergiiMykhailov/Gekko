@@ -64,7 +64,9 @@ class AccountRegistrationViewController : UIViewController,
                     if registrationResult != nil {
                         switch registrationResult! {
                         case .Succeeded:
-                            TradingPlatformManager.shared.handleRegistration(withServerResponse:serverResponse)
+                            TradingPlatformManager.shared.handleRegistration(withUserID:email,
+                                                                             password:password,
+                                                                             serverResponse:serverResponse)
                             self?.navigationController?.popToRootViewController(animated:true)
 
                         case .AccountAlreadyExists:

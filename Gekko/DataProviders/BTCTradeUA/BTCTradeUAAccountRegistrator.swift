@@ -20,7 +20,8 @@ class BTCTradeUAAccountRegistrator : BTCTradeUAProviderBase {
         super.performUserRequestAsync(withSuffix:BTCTradeUAAccountRegistrator.RegistrationSuffix,
                                       publicKey:BTCTradeUAAccountRegistrator.RegistrationPublicKey,
                                       privateKey:BTCTradeUAAccountRegistrator.RegistrationPrivateKey,
-                                      body:body)
+                                      body:body,
+                                      prefixUrl:BTCTradeUAAccountRegistrator.RegistrationPrefix)
         { [weak self] (items, error) in
             let result = self?.registrationResult(fromItems:items)
 
@@ -28,9 +29,30 @@ class BTCTradeUAAccountRegistrator : BTCTradeUAProviderBase {
         }
     }
 
+    public static func publicKey(fromItems items:[String : Any]) -> String? {
+        return items[BTCTradeUAAccountRegistrator.PublicKeyResponseKey] as? String
+    }
+
+    public static func privateKey(fromItems items:[String : Any]) -> String? {
+        return items[BTCTradeUAAccountRegistrator.PrivateKeyResponseKey] as? String
+    }
+
+    public static func securityKey(fromItems items:[String : Any]) -> String? {
+        return items[BTCTradeUAAccountRegistrator.SecurityKeyResponseKey] as? String
+    }
+
     // MARK: Internal methods
 
     fileprivate func registrationResult(fromItems items:[String : Any]) -> AccountRegistrationStatus? {
+        let publicKey = BTCTradeUAAccountRegistrator.publicKey(fromItems:items)
+        let privateKey = BTCTradeUAAccountRegistrator.privateKey(fromItems:items)
+        let username = items[BTCTradeUAAccountRegistrator.UserNameResponseKey] as? String
+        let securityKey = BTCTradeUAAccountRegistrator.securityKey(fromItems:items)
+
+        if publicKey != nil && privateKey != nil && username != nil && securityKey != nil {
+            return AccountRegistrationStatus.Succeeded
+        }
+
         return AccountRegistrationStatus.UnknownError
     }
 
@@ -42,7 +64,15 @@ class BTCTradeUAAccountRegistrator : BTCTradeUAProviderBase {
     fileprivate static let PasswordKey = "password"
     fileprivate static let PhoneKey = "phone"
 
+    fileprivate static let PublicKeyResponseKey = "public_key"
+    fileprivate static let PrivateKeyResponseKey = "private_key"
+    fileprivate static let UserNameResponseKey = "username"
+    fileprivate static let SecurityKeyResponseKey = "private_key_2fa"
+
     // ATTENTION: These keys should be specified manually before release
+#if DEBUG
     fileprivate static let RegistrationPublicKey = ""
     fileprivate static let RegistrationPrivateKey = ""
+    fileprivate static let RegistrationPrefix = "http://hidden.btc-trade.com.ua:8013/api/"
+#endif
 }

@@ -31,5 +31,5 @@ class BTCTradeUAAssetsProvider : BTCTradeUAProviderBase {
 
     // MARK: Internal fields
 
-    fileprivate static let PrefixUrl = "https://btc-trade.com.ua/finance/crypto_currency"
+    fileprivate static let PrefixUrl = "https://btc-trade.com.ua/finance/crypto_currency/"
 }

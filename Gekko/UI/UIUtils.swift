@@ -38,5 +38,8 @@ class UIUtils {
     
     public static let PublicKeySettingsKey = "Public Key"
     public static let PrivateKeySettingsKey = "Private Key"
-
+    public static let UserNameSettingsKey = "User Name"
+    public static let SecurityKeySettingsKey = "Security Key"
+    public static let UserIDSettingsKey = "User ID"
+    public static let UserPasswordSettingsKey = "User Password"
 }
