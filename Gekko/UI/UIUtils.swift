@@ -5,6 +5,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import LocalAuthentication
 
 class UIUtils {
 
@@ -33,6 +34,72 @@ class UIUtils {
             })
         }
     }
+
+    public static func presentNotification(withMessage message:String,
+                                           onView containerView:UIView,
+                                           onCompletion:CompletionBlock) {
+        let label = UILabel()
+        label.text = message
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
+
+        let labelContainerView = UIView()
+        labelContainerView.backgroundColor = UIColor(white:0, alpha:0.1)
+        labelContainerView.alpha = 0
+        labelContainerView.layer.cornerRadius = UIDefaults.CornerRadius
+
+        containerView.addSubview(labelContainerView)
+        labelContainerView.addSubview(label)
+
+        labelContainerView.setContentHuggingPriority(.required, for:.vertical)
+        labelContainerView.setContentHuggingPriority(.required, for:.horizontal)
+        labelContainerView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.left.equalToSuperview().offset(UIDefaults.Spacing)
+            make.right.equalToSuperview().offset(-UIDefaults.Spacing)
+        }
+
+        label.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(UIDefaults.Spacing)
+            make.bottom.equalToSuperview().offset(-UIDefaults.Spacing)
+            make.left.equalToSuperview().offset(UIDefaults.Spacing)
+            make.right.equalToSuperview().offset(-UIDefaults.Spacing)
+        }
+
+        UIView.animateKeyframes(withDuration:NotificationAnimationDuration,
+                                delay:0,
+                                options:.calculationModeLinear,
+                                animations: {
+                                    UIView.addKeyframe(withRelativeStartTime:0,
+                                                       relativeDuration:1.0 / 8.0,
+                                                       animations: {
+                                                        labelContainerView.alpha = 1
+                                                        label.alpha = 1
+                                    })
+
+                                    UIView.addKeyframe(withRelativeStartTime: 1.0 / 4.0 * NotificationAnimationDuration,
+                                                       relativeDuration:1.0 / 4.0,
+                                                       animations: {
+                                                        labelContainerView.alpha = 0
+                                                        label.alpha = 0
+                                    })
+        }) { (_) in
+            labelContainerView.removeFromSuperview()
+        }
+    }
+
+    typealias AuthenticationCompletionCallback = (Bool, Error?) -> Void
+
+    public static func authenticate(onCompletion:@escaping AuthenticationCompletionCallback) {
+        let localAuthenticationContext = LAContext()
+        localAuthenticationContext.localizedFallbackTitle = NSLocalizedString("Use Passcode", comment:"Fallback title")
+
+        let reasonString = NSLocalizedString("To access the application", comment: "Authentication reason string")
+
+        localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication,
+                                                  localizedReason:reasonString,
+                                                  reply:onCompletion)
+    }
     
     // MARK: Properties
     
@@ -42,4 +109,6 @@ class UIUtils {
     public static let SecurityKeySettingsKey = "Security Key"
     public static let UserIDSettingsKey = "User ID"
     public static let UserPasswordSettingsKey = "User Password"
+
+    fileprivate static let NotificationAnimationDuration:TimeInterval = 2.0
 }

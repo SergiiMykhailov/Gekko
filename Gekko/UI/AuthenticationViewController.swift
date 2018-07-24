@@ -4,7 +4,6 @@
 
 import Foundation
 import UIKit
-import LocalAuthentication
 
 class AuthenticationViewController : UIViewController {
     
@@ -56,12 +55,7 @@ class AuthenticationViewController : UIViewController {
     }
     
     func authenticate() {
-        let localAuthenticationContext = LAContext()
-        localAuthenticationContext.localizedFallbackTitle = NSLocalizedString("Use Passcode", comment: "Fallback title")
-        
-        let reasonString = NSLocalizedString("To access the application", comment: "Authentication reason string")
-        
-        localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString) { (success, _) in
+        UIUtils.authenticate { (success, _) in
             if success {
                 DispatchQueue.main.async { [weak self] in
                     if self != nil {

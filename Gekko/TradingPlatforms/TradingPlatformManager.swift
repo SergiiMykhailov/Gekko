@@ -12,6 +12,24 @@ class TradingPlatformManager : NSObject {
 
     public private(set) lazy var tradingPlatform = TradingPlatformManager.createTradingPlatform()
 
+    public var userID:String? {
+        get {
+            return UserDefaults.standard.value(forKey:UIUtils.UserIDSettingsKey) as? String
+        }
+    }
+
+    public var password:String? {
+        get {
+            return UserDefaults.standard.value(forKey:UIUtils.UserPasswordSettingsKey) as? String
+        }
+    }
+
+    public var securityKey:String? {
+        get {
+            return UserDefaults.standard.value(forKey:UIUtils.SecurityKeySettingsKey) as? String
+        }
+    }
+
     public func handleRegistration(withUserID userID:String,
                                    password:String,
                                    serverResponse:[String : Any]) {

@@ -125,3 +125,6 @@
 
 /* Registration failed alert title */
 "Registration failed" = "Ошибка регистрации";
+
+/* Value copying message */
+"Value was copied to clipboard" = "Значение скопировано";

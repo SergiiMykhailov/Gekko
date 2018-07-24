@@ -755,7 +755,18 @@ class MainViewController : UIViewController,
     }
     
     @objc fileprivate func accountSettingsButtonPressed(button:UIButton) {
-        performSegue(withIdentifier:MainViewController.ShowAccountSettingsSegueName, sender:self)
+        if !tradingPlatform.isAuthorized {
+            performSegue(withIdentifier:MainViewController.ShowAccountSettingsSegueName, sender:self)
+        }
+        else {
+            UIUtils.authenticate { (succeeded, _) in
+                if succeeded {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.performSegue(withIdentifier:MainViewController.ShowAccountDetailsSegueName, sender:self!)
+                    }
+                }
+            }
+        }
     }
 
     @objc fileprivate func balanceSettingsButtonPressed(button:UIButton) {
@@ -801,6 +812,7 @@ typealias LoginCompletionAction = () -> Void
     fileprivate static let PullDownRefreshingTimeout:TimeInterval = 5
 
     fileprivate static let ShowAccountSettingsSegueName = "Show Account Settings"
+    fileprivate static let ShowAccountDetailsSegueName = "Show Account Details"
     fileprivate static let ShowAssetsSegueName = "Show Assets"
 
     fileprivate static let MainTabIndex = 0

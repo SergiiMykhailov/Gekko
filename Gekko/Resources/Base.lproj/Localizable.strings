@@ -125,3 +125,6 @@
 
 /* Registration failed alert title */
 "Registration failed" = "Registration failed";
+
+/* Value copying message */
+"Value was copied to clipboard" = "Value was copied to clipboard";
