@@ -593,7 +593,7 @@ Account -&gt; Profile -&gt; API and mobile app</string>
                                                     <constraint firstAttribute="height" constant="1" id="o68-VB-kIl"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="login:" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sq8-On-QHh">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="login:" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sq8-On-QHh">
                                                 <rect key="frame" x="15" y="13" width="37.5" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
@@ -620,38 +620,47 @@ Account -&gt; Profile -&gt; API and mobile app</string>
                                                     <constraint firstAttribute="height" constant="1" id="ybI-6K-xgw"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="password:" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OAw-WQ-Sox" userLabel="Password Label">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="password:" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OAw-WQ-Sox" userLabel="Password Label">
                                                 <rect key="frame" x="15" y="57" width="70" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rI-VY-wk6">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rI-VY-wk6">
                                                 <rect key="frame" x="92.5" y="7" width="219.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="63e-su-BAx"/>
                                                 </constraints>
-                                                <state key="normal" title="e-mail"/>
+                                                <state key="normal" title="e-mail12412341232342134234231423142341234"/>
+                                                <connections>
+                                                    <action selector="loginButtonPressed" destination="bpC-Cn-MdK" eventType="touchUpInside" id="PB7-oH-NZA"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LpH-bA-52w">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LpH-bA-52w">
                                                 <rect key="frame" x="92.5" y="51" width="219.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="6W6-k4-AA4"/>
                                                 </constraints>
-                                                <state key="normal" title="password"/>
+                                                <state key="normal" title="password213412341234123421341234123412341234"/>
+                                                <connections>
+                                                    <action selector="passwordButtonPressed" destination="bpC-Cn-MdK" eventType="touchUpInside" id="f7a-Gy-aeb"/>
+                                                </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="PIN:" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8K-02-4hJ" userLabel="Password Label">
-                                                <rect key="frame" x="15" y="102" width="70" height="18"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="PIN:" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8K-02-4hJ" userLabel="PIN Label">
+                                                <rect key="frame" x="15" y="102" width="28.5" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vUc-SJ-OrM">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vUc-SJ-OrM">
                                                 <rect key="frame" x="92.5" y="96" width="219.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="xoo-R3-nwB"/>
                                                 </constraints>
-                                                <state key="normal" title="PIN"/>
+                                                <state key="normal" title="PIN231234123421342134123423141234123412341234"/>
+                                                <connections>
+                                                    <action selector="pinButtonPressed" destination="bpC-Cn-MdK" eventType="touchUpInside" id="MvC-h7-pem"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -659,7 +668,7 @@ Account -&gt; Profile -&gt; API and mobile app</string>
                                             <constraint firstAttribute="trailing" secondItem="7rI-VY-wk6" secondAttribute="trailing" constant="8" id="3bd-7D-eQh"/>
                                             <constraint firstItem="Sq8-On-QHh" firstAttribute="leading" secondItem="EQn-JQ-GzY" secondAttribute="leading" id="3dI-EK-Vla"/>
                                             <constraint firstItem="o8K-02-4hJ" firstAttribute="top" secondItem="J1H-kV-M7k" secondAttribute="bottom" constant="12" id="3nV-jg-xcu"/>
-                                            <constraint firstItem="LpH-bA-52w" firstAttribute="leading" secondItem="OAw-WQ-Sox" secondAttribute="trailing" constant="8" id="3r2-47-Zl2"/>
+                                            <constraint firstItem="LpH-bA-52w" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OAw-WQ-Sox" secondAttribute="trailing" constant="8" id="3r2-47-Zl2"/>
                                             <constraint firstAttribute="height" constant="132" id="47e-Td-cD2"/>
                                             <constraint firstAttribute="trailing" secondItem="sNa-5z-Wyz" secondAttribute="trailing" id="4ZK-Rz-oXi"/>
                                             <constraint firstItem="FRT-Zw-xBA" firstAttribute="leading" secondItem="een-0q-YPo" secondAttribute="leading" id="5XZ-Bp-gEX"/>
@@ -675,19 +684,17 @@ Account -&gt; Profile -&gt; API and mobile app</string>
                                             <constraint firstItem="J1H-kV-M7k" firstAttribute="top" secondItem="EQn-JQ-GzY" secondAttribute="bottom" constant="44" id="NRZ-0S-3jH"/>
                                             <constraint firstItem="Sq8-On-QHh" firstAttribute="top" secondItem="sNa-5z-Wyz" secondAttribute="bottom" constant="12" id="Ny6-YR-wrm"/>
                                             <constraint firstAttribute="trailing" secondItem="LpH-bA-52w" secondAttribute="trailing" constant="8" id="Tpg-NV-nS1"/>
-                                            <constraint firstItem="o8K-02-4hJ" firstAttribute="width" relation="greaterThanOrEqual" secondItem="OAw-WQ-Sox" secondAttribute="width" id="Trc-EL-B7y"/>
                                             <constraint firstItem="J1H-kV-M7k" firstAttribute="leading" secondItem="EQn-JQ-GzY" secondAttribute="leading" id="Tsh-j0-wya"/>
                                             <constraint firstItem="EQn-JQ-GzY" firstAttribute="top" secondItem="een-0q-YPo" secondAttribute="top" constant="44" id="WTa-Bk-IeY"/>
                                             <constraint firstItem="7rI-VY-wk6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sq8-On-QHh" secondAttribute="trailing" priority="750" constant="8" id="XZJ-y0-k8e"/>
+                                            <constraint firstItem="LpH-bA-52w" firstAttribute="leading" secondItem="7rI-VY-wk6" secondAttribute="leading" id="e5x-RB-HGV"/>
                                             <constraint firstItem="LpH-bA-52w" firstAttribute="top" secondItem="EQn-JQ-GzY" secondAttribute="bottom" constant="6" id="eHO-Sn-Jje"/>
                                             <constraint firstItem="sNa-5z-Wyz" firstAttribute="top" secondItem="een-0q-YPo" secondAttribute="top" id="iNk-Bv-BTm"/>
                                             <constraint firstItem="EQn-JQ-GzY" firstAttribute="leading" secondItem="een-0q-YPo" secondAttribute="leading" constant="15" id="ogP-aV-3bN"/>
                                             <constraint firstItem="OAw-WQ-Sox" firstAttribute="top" secondItem="EQn-JQ-GzY" secondAttribute="bottom" constant="12" id="pXp-OF-6Nz"/>
                                             <constraint firstItem="LpH-bA-52w" firstAttribute="trailing" secondItem="7rI-VY-wk6" secondAttribute="trailing" id="rBg-ux-9f6"/>
-                                            <constraint firstItem="LpH-bA-52w" firstAttribute="leading" secondItem="7rI-VY-wk6" secondAttribute="leading" id="rfQ-km-T6L"/>
                                             <constraint firstItem="7rI-VY-wk6" firstAttribute="centerY" secondItem="Sq8-On-QHh" secondAttribute="centerY" id="xvp-y5-Kh7"/>
                                             <constraint firstAttribute="trailing" secondItem="EQn-JQ-GzY" secondAttribute="trailing" id="yC9-Ep-CBs"/>
-                                            <constraint firstItem="OAw-WQ-Sox" firstAttribute="width" relation="greaterThanOrEqual" secondItem="Sq8-On-QHh" secondAttribute="width" id="zns-7U-qBE"/>
                                         </constraints>
                                     </view>
                                 </subviews>
