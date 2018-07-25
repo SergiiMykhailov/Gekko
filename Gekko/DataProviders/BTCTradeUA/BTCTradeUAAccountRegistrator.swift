@@ -9,12 +9,10 @@ class BTCTradeUAAccountRegistrator : BTCTradeUAProviderBase {
     // MARK: Public methods and properties
 
     func registerAccount(withEmail email:String,
-                         phoneNumber:String,
                          password:String,
                          onCompletion:@escaping AccountRegistrationCompletionCallback) {
         let body = HTTPRequestUtils.makePostRequestBody(fromDictionary:
             [BTCTradeUAAccountRegistrator.EmailKey : email,
-             BTCTradeUAAccountRegistrator.PhoneKey : phoneNumber,
              BTCTradeUAAccountRegistrator.PasswordKey : password])
 
         super.performUserRequestAsync(withSuffix:BTCTradeUAAccountRegistrator.RegistrationSuffix,

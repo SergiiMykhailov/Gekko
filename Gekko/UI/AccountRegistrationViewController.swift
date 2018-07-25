@@ -13,25 +13,17 @@ class AccountRegistrationViewController : UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        phoneLabel?.text = NSLocalizedString("phone:", comment:"Phone number label title")
-
         signUpButton?.isEnabled = false
         signUpButton?.setTitle(NSLocalizedString("Sign Up", comment:"Sign Up button title"), for:.normal)
 
         emailTextField?.delegate = self
         emailTextField?.addTarget(self, action:#selector(textFieldDidChange(_:)), for:.editingChanged)
         emailTextField?.becomeFirstResponder()
-
-        phoneTextField?.delegate = self
-        phoneTextField?.addTarget(self, action:#selector(textFieldDidChange(_:)), for:.editingChanged)
     }
 
     override func resignFirstResponder() -> Bool {
         if emailTextField!.isFirstResponder {
             return emailTextField!.resignFirstResponder()
-        }
-        else if phoneTextField!.isFirstResponder {
-            return phoneTextField!.resignFirstResponder()
         }
 
         return true
@@ -41,9 +33,6 @@ class AccountRegistrationViewController : UIViewController,
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTextField {
-            phoneTextField?.becomeFirstResponder()
-        }
-        else if textField == phoneTextField {
             register()
         }
 
@@ -55,10 +44,8 @@ class AccountRegistrationViewController : UIViewController,
     fileprivate func register() {
         if let accountManager = TradingPlatformManager.shared.tradingPlatform.accountManager {
             let email = emailTextField!.text!.trimmingCharacters(in:.whitespaces)
-            let phoneNumber = phoneTextField!.text!.trimmingCharacters(in:.whitespaces)
             let password = UUID().uuidString
             accountManager.registerAccount(withEmail:email,
-                                           phoneNumber:phoneNumber,
                                            password:password) { (registrationResult, serverResponse) in
                 DispatchQueue.main.async { [weak self] in
                     if registrationResult != nil {
@@ -105,13 +92,6 @@ class AccountRegistrationViewController : UIViewController,
         return result
     }
 
-    fileprivate func isValidPhoneNumber(_ inputString:String) -> Bool {
-        let phonePredicate = NSPredicate(format:"SELF MATCHES %@", AccountRegistrationViewController.PhoneNumberRegEx)
-        let result = phonePredicate.evaluate(with:inputString)
-
-        return result
-    }
-
     // MARK: Actions handling
 
     @IBAction func signUpButtonPressed() {
@@ -124,13 +104,7 @@ class AccountRegistrationViewController : UIViewController,
         if var text = emailTextField!.text {
             text = text.trimmingCharacters(in:.whitespaces)
 
-            if isValidEmail(text) {
-                if phoneTextField!.text != nil {
-                    text = phoneTextField!.text!
-
-                    isButtonEnabled = isValidPhoneNumber(text.trimmingCharacters(in:.whitespaces))
-                }
-            }
+            isButtonEnabled = isValidEmail(text)
         }
 
         signUpButton?.isEnabled = isButtonEnabled
@@ -139,8 +113,6 @@ class AccountRegistrationViewController : UIViewController,
     // MARK: Outlets
 
     @IBOutlet weak var emailTextField:UITextField?
-    @IBOutlet weak var phoneTextField:UITextField?
-    @IBOutlet weak var phoneLabel:UILabel?
     @IBOutlet weak var signUpButton:UIButton?
 
     // MARK: Internal fields

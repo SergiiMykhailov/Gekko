@@ -180,7 +180,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FfZ-9t-ioD">
-                                        <rect key="frame" x="0.0" y="44" width="320" height="132"/>
+                                        <rect key="frame" x="0.0" y="44" width="320" height="88"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bet-0q-kTx" userLabel="Light Separator View">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
@@ -209,7 +209,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Plh-85-evt">
-                                                <rect key="frame" x="0.0" y="88" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="44" width="320" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="FdM-1m-r6f"/>
                                                 </constraints>
@@ -218,32 +218,13 @@
                                                     <action selector="signUpButtonPressed" destination="IGa-QE-ogG" eventType="touchUpInside" id="KNs-n2-dTo"/>
                                                 </connections>
                                             </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gft-uT-fVd" userLabel="Light Separator View">
-                                                <rect key="frame" x="15" y="89" width="305" height="1"/>
-                                                <color key="backgroundColor" red="0.78039215689999997" green="0.7843137255" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="1" id="gZo-tB-g7L"/>
-                                                </constraints>
-                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2m1-J7-Md8" userLabel="Light Separator View">
-                                                <rect key="frame" x="0.0" y="131" width="320" height="1"/>
+                                                <rect key="frame" x="0.0" y="87" width="320" height="1"/>
                                                 <color key="backgroundColor" red="0.78039215689999997" green="0.7843137255" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="z49-5X-8fE"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="phone:" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yed-uu-wBD">
-                                                <rect key="frame" x="15" y="57" width="47.5" height="18"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1234567890" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iAR-OE-lAU">
-                                                <rect key="frame" x="69.5" y="58" width="242" height="17"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done" smartDashesType="yes" textContentType="tel"/>
-                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -251,29 +232,20 @@
                                             <constraint firstItem="Edq-uv-iPk" firstAttribute="leading" secondItem="FfZ-9t-ioD" secondAttribute="leading" constant="15" id="2xX-fY-XTr"/>
                                             <constraint firstItem="Plh-85-evt" firstAttribute="leading" secondItem="FfZ-9t-ioD" secondAttribute="leading" id="2z4-G7-Rfn"/>
                                             <constraint firstAttribute="trailing" secondItem="Bet-0q-kTx" secondAttribute="trailing" id="5NV-dX-e15"/>
-                                            <constraint firstItem="iAR-OE-lAU" firstAttribute="centerY" secondItem="Yed-uu-wBD" secondAttribute="centerY" id="9h7-Oh-hMJ"/>
-                                            <constraint firstItem="gft-uT-fVd" firstAttribute="leading" secondItem="Edq-uv-iPk" secondAttribute="leading" id="9mb-GW-zkn"/>
                                             <constraint firstItem="m4u-I3-klZ" firstAttribute="centerY" secondItem="xMD-X0-gVA" secondAttribute="centerY" id="B0n-0F-SiN"/>
-                                            <constraint firstItem="iAR-OE-lAU" firstAttribute="trailing" secondItem="m4u-I3-klZ" secondAttribute="trailing" id="B2f-jN-3dF"/>
                                             <constraint firstItem="Edq-uv-iPk" firstAttribute="top" secondItem="FfZ-9t-ioD" secondAttribute="top" constant="44" id="Ccs-M6-ubf"/>
                                             <constraint firstItem="Bet-0q-kTx" firstAttribute="leading" secondItem="FfZ-9t-ioD" secondAttribute="leading" id="Fur-Ys-nyi"/>
                                             <constraint firstItem="2m1-J7-Md8" firstAttribute="leading" secondItem="FfZ-9t-ioD" secondAttribute="leading" id="HJ2-uX-Cqx"/>
-                                            <constraint firstItem="iAR-OE-lAU" firstAttribute="leading" secondItem="m4u-I3-klZ" secondAttribute="leading" id="SDo-Zv-w4G"/>
-                                            <constraint firstItem="gft-uT-fVd" firstAttribute="top" secondItem="Edq-uv-iPk" secondAttribute="bottom" constant="44" id="Sxl-kp-zRP"/>
                                             <constraint firstAttribute="bottom" secondItem="2m1-J7-Md8" secondAttribute="bottom" id="UfH-aU-o7D"/>
                                             <constraint firstAttribute="trailing" secondItem="m4u-I3-klZ" secondAttribute="trailing" constant="8" id="Xwk-b2-uQH"/>
-                                            <constraint firstAttribute="trailing" secondItem="gft-uT-fVd" secondAttribute="trailing" id="a2W-ah-9NB"/>
                                             <constraint firstItem="Bet-0q-kTx" firstAttribute="top" secondItem="FfZ-9t-ioD" secondAttribute="top" id="aOq-lC-XOi"/>
                                             <constraint firstAttribute="bottom" secondItem="Plh-85-evt" secondAttribute="bottom" id="btO-cj-3K6"/>
                                             <constraint firstAttribute="trailing" secondItem="Edq-uv-iPk" secondAttribute="trailing" id="dUe-jk-6F8"/>
-                                            <constraint firstAttribute="height" constant="132" id="ggh-Oy-Bsv"/>
-                                            <constraint firstItem="Yed-uu-wBD" firstAttribute="top" secondItem="Edq-uv-iPk" secondAttribute="bottom" constant="12" id="gh4-GN-tnm"/>
+                                            <constraint firstAttribute="height" constant="88" id="ggh-Oy-Bsv"/>
                                             <constraint firstItem="xMD-X0-gVA" firstAttribute="top" secondItem="Bet-0q-kTx" secondAttribute="bottom" constant="12" id="hJ6-h8-NMG"/>
                                             <constraint firstItem="xMD-X0-gVA" firstAttribute="leading" secondItem="Edq-uv-iPk" secondAttribute="leading" id="jOh-ER-sDQ"/>
-                                            <constraint firstItem="Yed-uu-wBD" firstAttribute="leading" secondItem="xMD-X0-gVA" secondAttribute="leading" id="lHR-aj-7oh"/>
                                             <constraint firstAttribute="trailing" secondItem="Plh-85-evt" secondAttribute="trailing" id="sTH-DK-WJ2"/>
                                             <constraint firstItem="m4u-I3-klZ" firstAttribute="leading" secondItem="xMD-X0-gVA" secondAttribute="trailing" constant="8" id="wYV-6Q-eyZ"/>
-                                            <constraint firstItem="Yed-uu-wBD" firstAttribute="trailing" secondItem="xMD-X0-gVA" secondAttribute="trailing" id="zTo-Ez-cER"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -298,8 +270,6 @@
                     <navigationItem key="navigationItem" id="uc1-K6-Fyb"/>
                     <connections>
                         <outlet property="emailTextField" destination="m4u-I3-klZ" id="Z8U-ug-4U1"/>
-                        <outlet property="phoneLabel" destination="Yed-uu-wBD" id="Du8-DH-NPV"/>
-                        <outlet property="phoneTextField" destination="iAR-OE-lAU" id="p0c-GW-l1W"/>
                         <outlet property="signUpButton" destination="Plh-85-evt" id="Ls4-Kw-9ax"/>
                     </connections>
                 </viewController>

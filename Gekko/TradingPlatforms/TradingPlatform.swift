@@ -104,7 +104,6 @@ typealias AccountRegistrationCompletionCallback = (AccountRegistrationStatus?, [
 protocol AccountManager : class {
 
     func registerAccount(withEmail email:String,
-                         phoneNumber:String,
                          password:String,
                          onCompletion:@escaping AccountRegistrationCompletionCallback)
 }

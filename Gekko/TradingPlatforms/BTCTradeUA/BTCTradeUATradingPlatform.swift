@@ -268,11 +268,9 @@ class BTCTradeUATradingPlatform : TradingPlatform,
     // MARK: AccountManager implementation
 
     func registerAccount(withEmail email:String,
-                         phoneNumber:String,
                          password:String,
                          onCompletion:@escaping AccountRegistrationCompletionCallback) {
         accountRegistrator.registerAccount(withEmail:email,
-                                           phoneNumber:phoneNumber,
                                            password:password,
                                            onCompletion:onCompletion)
     }
