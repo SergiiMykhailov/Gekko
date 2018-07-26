@@ -765,7 +765,8 @@ class MainViewController : UIViewController,
         else {
             UIUtils.authenticate { (succeeded, _) in
                 if succeeded {
-                    DispatchQueue.main.async { [weak self] in
+                    DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 2 * UIDefaults.DefaultAnimationDuration) {
+                        [weak self] in
                         self?.performSegue(withIdentifier:MainViewController.ShowAccountDetailsSegueName, sender:self!)
                     }
                 }
