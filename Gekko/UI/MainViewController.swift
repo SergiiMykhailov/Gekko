@@ -14,7 +14,8 @@ class MainViewController : UIViewController,
                            OrdersViewDelegate,
                            OrdersViewDataSource,
                            TradingPlatformAccessibilityControllerDelegate,
-                           AssetsViewControllerDataSource {
+                           AssetsViewControllerDataSource,
+                           TradingPlatformManagerDelegate {
 
     // MARK: Overriden functions
 
@@ -60,10 +61,7 @@ class MainViewController : UIViewController,
             navigationItem.leftBarButtonItem?.tintColor = UIColor.black
         }
 
-        UserDefaults.standard.addObserver(self,
-                                          forKeyPath:UIUtils.PrivateKeySettingsKey,
-                                          options:NSKeyValueObservingOptions.new,
-                                          context:nil)
+        TradingPlatformManager.shared.delegate = self
     }
     
     override func viewDidAppear(_ animated:Bool) {
@@ -725,6 +723,12 @@ class MainViewController : UIViewController,
     func keys(forAsset asset:Currency,
               forCryptoAssetsViewController sender:AssetsViewController) -> [String] {
         return tradingPlatformAssetsManager != nil ? tradingPlatformAssetsManager!.keys(forAsset:asset) : [String]()
+    }
+
+    // MARK: TradingPlatformManagerDelegate implementation
+
+    func tradingPlatformManager(sender: TradingPlatformManager, didCreateTradingPlatform tradingPlatform: TradingPlatform) {
+        setupTradingPlatform()
     }
     
     // MARK: Events handling

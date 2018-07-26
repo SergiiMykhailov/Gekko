@@ -4,6 +4,13 @@
 
 import Foundation
 
+protocol TradingPlatformManagerDelegate : class {
+
+    func tradingPlatformManager(sender:TradingPlatformManager,
+                                didCreateTradingPlatform tradingPlatform:TradingPlatform)
+
+}
+
 class TradingPlatformManager : NSObject {
 
     // MARK: Public methods and properties
@@ -11,6 +18,7 @@ class TradingPlatformManager : NSObject {
     public static let shared = TradingPlatformManager()
 
     public private(set) lazy var tradingPlatform = TradingPlatformManager.createTradingPlatform()
+    public weak var delegate:TradingPlatformManagerDelegate?
 
     public var userID:String? {
         get {
@@ -52,6 +60,11 @@ class TradingPlatformManager : NSObject {
 
     fileprivate override init() {
         super.init()
+
+        UserDefaults.standard.addObserver(self,
+                                          forKeyPath:UIUtils.PrivateKeySettingsKey,
+                                          options:NSKeyValueObservingOptions.new,
+                                          context:nil)
     }
 
     fileprivate static func createTradingPlatform() -> TradingPlatform {
@@ -82,5 +95,17 @@ class TradingPlatformManager : NSObject {
     fileprivate static func securityKey(fromServerResponse serverResponse:[String : Any]) -> String? {
         let result = BTCTradeUAAccountRegistrator.securityKey(fromItems:serverResponse)
         return result
+    }
+
+    // MARK: KVO
+
+    override func observeValue(forKeyPath keyPath:String?,
+                               of object:Any?,
+                               change:[NSKeyValueChangeKey : Any]?,
+                               context:UnsafeMutableRawPointer?) {
+        if keyPath == UIUtils.PrivateKeySettingsKey {
+            tradingPlatform = TradingPlatformManager.createTradingPlatform()
+            delegate?.tradingPlatformManager(sender:self, didCreateTradingPlatform:tradingPlatform)
+        }
     }
 }
