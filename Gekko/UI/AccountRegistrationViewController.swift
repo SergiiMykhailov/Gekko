@@ -4,6 +4,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class AccountRegistrationViewController : UIViewController,
                                           UITextFieldDelegate {
@@ -43,11 +44,25 @@ class AccountRegistrationViewController : UIViewController,
 
     fileprivate func register() {
         if let accountManager = TradingPlatformManager.shared.tradingPlatform.accountManager {
+            signUpButton?.isEnabled = false
+            view.isUserInteractionEnabled = false
+
+            let spinner = UIActivityIndicatorView(activityIndicatorStyle:.gray)
+            view.addSubview(spinner)
+            spinner.snp.makeConstraints { (make) in
+                make.center.equalToSuperview()
+            }
+            spinner.startAnimating()
+
             let email = emailTextField!.text!.trimmingCharacters(in:.whitespaces)
             let password = UUID().uuidString
             accountManager.registerAccount(withEmail:email,
                                            password:password) { (registrationResult, serverResponse) in
                 DispatchQueue.main.async { [weak self] in
+
+                    spinner.stopAnimating()
+                    spinner.removeFromSuperview()
+
                     if registrationResult != nil {
                         switch registrationResult! {
                         case .Succeeded:
