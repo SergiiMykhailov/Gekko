@@ -39,21 +39,25 @@ class AssetCell : UITableViewCell {
         super.init(style:style, reuseIdentifier:reuseIdentifier)
 
         let setupKeyButton = { (button:UIButton) in
-            button.backgroundColor = UIDefaults.CellDefaultSelectedColor
-            button.setTitleColor(UIDefaults.LabelDefaultFontColor, for:.normal)
             button.contentHorizontalAlignment = .left
             button.contentEdgeInsets = UIEdgeInsets(top:0, left:UIDefaults.Spacing, bottom:0, right:0)
             button.titleLabel?.font = UIFont.systemFont(ofSize:UIDefaults.LabelVerySmallFontSize)
             button.titleLabel?.lineBreakMode = .byTruncatingTail
+            button.contentEdgeInsets = UIEdgeInsets(top:0,
+                                                    left:UIDefaults.Spacing,
+                                                    bottom:0,
+                                                    right:UIDefaults.Spacing)
+            button.layer.cornerRadius = UIDefaults.CornerRadius
+            button.layer.borderColor = button.tintColor.cgColor
+            button.layer.borderWidth = 1 / UIScreen.main.nativeScale
+
             button.addTarget(self, action:#selector(self.keyButtonPressed(sender:)), for:.touchUpInside)
         }
 
         setupKeyButton(fillPrimaryKeyButton)
         setupKeyButton(fillSecondaryKeyButton)
-
-        withdrawButton.backgroundColor = UIDefaults.CellDefaultSelectedColor
-        withdrawButton.setTitleColor(UIDefaults.LabelDefaultFontColor, for:.normal)
-        withdrawButton.titleLabel?.font = UIFont.systemFont(ofSize:UIDefaults.LabelVerySmallFontSize)
+        setupKeyButton(withdrawButton)
+        withdrawButton.contentHorizontalAlignment = .center
 
         addSubview(fillPrimaryKeyButton)
         addSubview(fillSecondaryKeyButton)

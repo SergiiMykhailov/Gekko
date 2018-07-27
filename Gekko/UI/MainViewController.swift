@@ -59,6 +59,7 @@ class MainViewController : UIViewController,
                                                                target:self,
                                                                action:#selector(balanceSettingsButtonPressed))
             navigationItem.leftBarButtonItem?.tintColor = UIColor.black
+            navigationItem.leftBarButtonItem?.isEnabled = tradingPlatform.isAuthorized
         }
 
         TradingPlatformManager.shared.delegate = self
