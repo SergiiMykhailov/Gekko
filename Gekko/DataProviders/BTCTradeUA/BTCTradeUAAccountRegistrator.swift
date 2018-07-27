@@ -51,6 +51,14 @@ class BTCTradeUAAccountRegistrator : BTCTradeUAProviderBase {
             return AccountRegistrationStatus.Succeeded
         }
 
+        let responseMessages = items[BTCTradeUAAccountRegistrator.UserAlreadyRegisteredKey] as? [Any]
+        if responseMessages != nil && !responseMessages!.isEmpty {
+            let firstResponseMessage = responseMessages?.first as? String
+            if firstResponseMessage != nil && firstResponseMessage == BTCTradeUAAccountRegistrator.UserAlreadyRegisteredMessage {
+                return AccountRegistrationStatus.AccountAlreadyExists
+            }
+        }
+
         return AccountRegistrationStatus.UnknownError
     }
 
@@ -66,6 +74,8 @@ class BTCTradeUAAccountRegistrator : BTCTradeUAProviderBase {
     fileprivate static let PrivateKeyResponseKey = "private_key"
     fileprivate static let UserNameResponseKey = "username"
     fileprivate static let SecurityKeyResponseKey = "private_key_2fa"
+    fileprivate static let UserAlreadyRegisteredKey = "__all__"
+    fileprivate static let UserAlreadyRegisteredMessage = "user with such email is already registered:("
 
     // ATTENTION: These keys should be specified manually before release
 #if DEBUG

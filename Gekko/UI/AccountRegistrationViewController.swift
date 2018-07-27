@@ -62,6 +62,8 @@ class AccountRegistrationViewController : UIViewController,
 
                     spinner.stopAnimating()
                     spinner.removeFromSuperview()
+                    self?.signUpButton?.isEnabled = true
+                    self?.view.isUserInteractionEnabled = true
 
                     if registrationResult != nil {
                         switch registrationResult! {
