@@ -26,10 +26,16 @@ class BTCTradeUAAssetsProvider : BTCTradeUAProviderBase {
     // MARK: Internal methods
 
     fileprivate func assetKeys(fromResponseItems items:[String : Any]) -> [String]? {
+        if let account = items[BTCTradeUAAssetsProvider.AccountKey] as? String {
+            return [account]
+        }
+
         return nil
     }
 
     // MARK: Internal fields
 
     fileprivate static let PrefixUrl = "https://btc-trade.com.ua/finance/crypto_currency/"
+
+    fileprivate static let AccountKey = "account"
 }
