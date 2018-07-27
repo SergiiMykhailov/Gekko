@@ -5,7 +5,8 @@
 import Foundation
 
 class BTCTradeUATradingPlatform : TradingPlatform,
-                                  AssetProvider {
+                                  AssetProvider,
+                                  AccountManager {
 
     // MARK: Public methods and properties
 
@@ -30,7 +31,11 @@ class BTCTradeUATradingPlatform : TradingPlatform,
         return BTCTradeUATradingPlatform.SupportedCurrencyPairs
     }
 
-    public var assetProvider: AssetProvider? {
+    public var assetProvider:AssetProvider? {
+        return self
+    }
+
+    public var accountManager:AccountManager? {
         return self
     }
 
@@ -260,6 +265,16 @@ class BTCTradeUATradingPlatform : TradingPlatform,
                                                    onCompletion:onCompletion)
     }
 
+    // MARK: AccountManager implementation
+
+    func registerAccount(withEmail email:String,
+                         password:String,
+                         onCompletion:@escaping AccountRegistrationCompletionCallback) {
+        accountRegistrator.registerAccount(withEmail:email,
+                                           password:password,
+                                           onCompletion:onCompletion)
+    }
+
     // MARK: Internal methods
 
     func platformCurrencyPair(forGenericCurrencyPair pair:CurrencyPair) -> BTCTradeUACurrencyPair? {
@@ -277,6 +292,7 @@ class BTCTradeUATradingPlatform : TradingPlatform,
     fileprivate let userDealsProvider = BTCTradeUADealsProvider()
     fileprivate let userOrdersProvider = BTCTradeUAUserOrdersProvider()
     fileprivate let assetKeysProvider = BTCTradeUAAssetsProvider()
+    fileprivate let accountRegistrator = BTCTradeUAAccountRegistrator()
 
     fileprivate var currencyToBalanceMap = [Currency : Double?]()
 

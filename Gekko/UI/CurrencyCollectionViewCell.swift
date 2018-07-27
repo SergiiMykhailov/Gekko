@@ -102,7 +102,7 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
             priceLabel.text = NSLocalizedString(CurrencyCollectionViewCell.BalanceDefaultString,
                                                 comment:"Unavailable balance placeholder")
         }
-        else if isAnyValueInfinite(firstValue: minPrice!, secondValue: maxPrice!) {
+        else if isAnyValueInfinite(firstValue:minPrice!, secondValue:maxPrice!) {
             priceLabel.text = NSLocalizedString(CurrencyCollectionViewCell.BalanceDefaultString,
                                                 comment:"Unavailable balance placeholder")
         }

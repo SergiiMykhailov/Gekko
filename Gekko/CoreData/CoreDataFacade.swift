@@ -33,8 +33,7 @@ class CoreDataFacade : NSObject {
             self!.managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
             self!.managedObjectContext!.persistentStoreCoordinator = persistentStoreCoordinator
 
-            let queue = DispatchQueue.global(qos:DispatchQoS.QoSClass.background)
-            queue.async {
+            self!.coreDataInitializationQueue.async {
                 guard let docURL = FileManager.default.urls(for:.documentDirectory,
                                                             in:.userDomainMask).last else {
                     fatalError("Unable to resolve document directory")
@@ -153,6 +152,8 @@ class CoreDataFacade : NSObject {
     }
 
     // MARK: Internal fields
+
+    fileprivate let coreDataInitializationQueue = DispatchQueue(label:"com.Gekko.CoreDataInitializationQueue")
 
     fileprivate var persistentContainer:NSPersistentContainer = NSPersistentContainer(name:CoreDataFacade.ModelName)
     fileprivate var managedObjectContext:NSManagedObjectContext?
