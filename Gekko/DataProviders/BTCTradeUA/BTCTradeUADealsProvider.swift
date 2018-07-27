@@ -21,7 +21,8 @@ class BTCTradeUADealsProvider : BTCTradeUAProviderBase {
         let finishDateString = BTCTradeUADealsProvider.dateFormatter.string(from:finishDate)
 
         let suffix = "\(BTCTradeUADealsProvider.DealsSuffix)/\(currencyPair.rawValue)"
-        let body = "ts=\(startDateString)&ts1=\(finishDateString)"
+        let body = HTTPRequestUtils.makePostRequestBody(fromDictionary:["ts" : startDateString,
+                                                                        "ts1" : finishDateString])
 
         super.performUserRequestAsync(withSuffix:suffix,
                                       publicKey:publicKey,

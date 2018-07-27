@@ -14,7 +14,8 @@ class MainViewController : UIViewController,
                            OrdersViewDelegate,
                            OrdersViewDataSource,
                            TradingPlatformAccessibilityControllerDelegate,
-                           AssetsViewControllerDataSource {
+                           AssetsViewControllerDataSource,
+                           TradingPlatformManagerDelegate {
 
     // MARK: Overriden functions
 
@@ -60,10 +61,7 @@ class MainViewController : UIViewController,
             navigationItem.leftBarButtonItem?.tintColor = UIColor.black
         }
 
-        UserDefaults.standard.addObserver(self,
-                                          forKeyPath:UIUtils.PrivateKeySettingsKey,
-                                          options:NSKeyValueObservingOptions.new,
-                                          context:nil)
+        TradingPlatformManager.shared.delegate = self
     }
     
     override func viewDidAppear(_ animated:Bool) {
@@ -114,7 +112,7 @@ class MainViewController : UIViewController,
     }
 
     fileprivate func setupTradingPlatform() {
-        let tradingPlatform = TradingPlatformFactory.createTradingPlatform()
+        let tradingPlatform = TradingPlatformManager.shared.tradingPlatform
         tradingPlatformController = TradingPlatformController(tradingPlatform:tradingPlatform)
         tradingPlatformController?.activeCurrencyPair = makePairForCurrency(forCurrency:.BTC)
 
@@ -726,6 +724,12 @@ class MainViewController : UIViewController,
               forCryptoAssetsViewController sender:AssetsViewController) -> [String] {
         return tradingPlatformAssetsManager != nil ? tradingPlatformAssetsManager!.keys(forAsset:asset) : [String]()
     }
+
+    // MARK: TradingPlatformManagerDelegate implementation
+
+    func tradingPlatformManager(sender: TradingPlatformManager, didCreateTradingPlatform tradingPlatform: TradingPlatform) {
+        setupTradingPlatform()
+    }
     
     // MARK: Events handling
 
@@ -755,7 +759,19 @@ class MainViewController : UIViewController,
     }
     
     @objc fileprivate func accountSettingsButtonPressed(button:UIButton) {
-        performSegue(withIdentifier:MainViewController.ShowAccountSettingsSegueName, sender:self)
+        if !tradingPlatform.isAuthorized {
+            performSegue(withIdentifier:MainViewController.ShowAccountSettingsSegueName, sender:self)
+        }
+        else {
+            UIUtils.authenticate { (succeeded, _) in
+                if succeeded {
+                    DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 2 * UIDefaults.DefaultAnimationDuration) {
+                        [weak self] in
+                        self?.performSegue(withIdentifier:MainViewController.ShowAccountDetailsSegueName, sender:self!)
+                    }
+                }
+            }
+        }
     }
 
     @objc fileprivate func balanceSettingsButtonPressed(button:UIButton) {
@@ -801,6 +817,7 @@ typealias LoginCompletionAction = () -> Void
     fileprivate static let PullDownRefreshingTimeout:TimeInterval = 5
 
     fileprivate static let ShowAccountSettingsSegueName = "Show Account Settings"
+    fileprivate static let ShowAccountDetailsSegueName = "Show Account Details"
     fileprivate static let ShowAssetsSegueName = "Show Assets"
 
     fileprivate static let MainTabIndex = 0

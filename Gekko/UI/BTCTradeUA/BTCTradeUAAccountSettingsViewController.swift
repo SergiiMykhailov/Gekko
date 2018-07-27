@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class BTCTradeUAAccountSettingsViewController : NavigatableViewController {
+class BTCTradeUAAccountSettingsViewController : UIViewController {
 
     // MARK: Overriden methods
 
@@ -24,10 +24,16 @@ class BTCTradeUAAccountSettingsViewController : NavigatableViewController {
         privateKeyLabel?.text = NSLocalizedString("Private Key", comment:"Private key label")
         privateKeyField?.placeholder = NSLocalizedString("Private Key", comment:"Private key label")
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title:NSLocalizedString("Done", comment:"Done button title"),
-                                                                 style:.done,
-                                                                 target:self,
-                                                                 action:#selector(applyButtonPressed))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title:NSLocalizedString("Done", comment:"Done button title"),
+                                                            style:.done,
+                                                            target:self,
+                                                            action:#selector(applyButtonPressed))
+
+        signUpButton?.setTitle(NSLocalizedString("Sign Up", comment:"Sign Up button title"), for:.normal)
+
+        if TradingPlatformManager.shared.tradingPlatform.accountManager == nil {
+            signUpContainerView?.removeFromSuperview()
+        }
     }
 
     override func prepare(for segue:UIStoryboardSegue, sender:Any?) {
@@ -124,7 +130,10 @@ class BTCTradeUAAccountSettingsViewController : NavigatableViewController {
 
     @IBOutlet weak var privateKeyLabel:UILabel?
     @IBOutlet weak var privateKeyField:UITextField?
-    
+
+    @IBOutlet weak var signUpContainerView:UIView?
+    @IBOutlet weak var signUpButton:UIButton?
+
     // MARK: Internal fields
 
     fileprivate var qrCodeCaptureHandler:QRCodeCaptureHandler?
