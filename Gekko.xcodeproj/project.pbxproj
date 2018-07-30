@@ -45,6 +45,7 @@
 		026D251A20F8DCC000971C73 /* BTCTradeUAAccountRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D251920F8DCC000971C73 /* BTCTradeUAAccountRegistrator.swift */; };
 		026D251C20FA37B900971C73 /* HTTPRequestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D251B20FA37B900971C73 /* HTTPRequestUtils.swift */; };
 		026D251E2105ED3600971C73 /* AccountDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D251D2105ED3600971C73 /* AccountDetailsViewController.swift */; };
+		02A374DA210F3C6400C4F2C4 /* AssetIconsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A374D9210F3C6400C4F2C4 /* AssetIconsProvider.swift */; };
 		02B32B812008122A00CA82D7 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B802008122900CA82D7 /* OrdersView.swift */; };
 		02B32B8320095D6E00CA82D7 /* OrdersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */; };
 		02B32B86200AB80300CA82D7 /* CoreDataFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */; };
@@ -128,6 +129,7 @@
 		026D251920F8DCC000971C73 /* BTCTradeUAAccountRegistrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCTradeUAAccountRegistrator.swift; sourceTree = "<group>"; };
 		026D251B20FA37B900971C73 /* HTTPRequestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestUtils.swift; sourceTree = "<group>"; };
 		026D251D2105ED3600971C73 /* AccountDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsViewController.swift; sourceTree = "<group>"; };
+		02A374D9210F3C6400C4F2C4 /* AssetIconsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetIconsProvider.swift; sourceTree = "<group>"; };
 		02B32B802008122900CA82D7 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		02B32B8220095D6E00CA82D7 /* OrdersViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewCell.swift; sourceTree = "<group>"; };
 		02B32B85200AB80300CA82D7 /* CoreDataFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFacade.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				02D7D2FD1FDDEA4B007C4557 /* UIDefaults.swift */,
 				0248532E1FFBD91000290BA1 /* UIUtils.swift */,
 				026D251D2105ED3600971C73 /* AccountDetailsViewController.swift */,
+				02A374D9210F3C6400C4F2C4 /* AssetIconsProvider.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				02D7B5B020CFBB1200FA402B /* TradingPlatformAccessibilityController.swift in Sources */,
 				025210CD2072D97B008BE3D5 /* MultiCallbacksWaiter.swift in Sources */,
 				026D251E2105ED3600971C73 /* AccountDetailsViewController.swift in Sources */,
+				02A374DA210F3C6400C4F2C4 /* AssetIconsProvider.swift in Sources */,
 				0240BB1E1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift in Sources */,
 				0207CDC81FC632E00074EADF /* BTCTradeUACurrencies.swift in Sources */,
 				026D251420F5570E00971C73 /* BTCTradeUAAccountSettingsViewController.swift in Sources */,

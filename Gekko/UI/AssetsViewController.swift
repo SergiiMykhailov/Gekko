@@ -65,7 +65,11 @@ class AssetsViewController : UIViewController,
         if dataSource != nil && supportedAssets != nil {
             let currency = supportedAssets![indexPath.row]
             result.keys = dataSource?.keys(forAsset:currency, forCryptoAssetsViewController:self)
-            result.assetIcon = #imageLiteral(resourceName: "currencies")
+
+            var iconToAssign = AssetIconsProvider.icon(forAsset:currency)
+            iconToAssign = iconToAssign ?? AssetIconsProvider.defaultAssetIcon
+
+            result.assetIcon = iconToAssign!
         }
 
         return result
