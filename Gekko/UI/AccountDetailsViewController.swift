@@ -16,6 +16,18 @@ class AccountDetailsViewController : UIViewController {
         userIDButton?.setTitle(TradingPlatformManager.shared.userID, for:.normal)
         passwordButton?.setTitle(TradingPlatformManager.shared.password, for:.normal)
         pinButton?.setTitle(TradingPlatformManager.shared.securityKey, for:.normal)
+
+        let setupButtonBorder = { (button:UIButton) in
+            if !button.title(for:.normal)!.isEmpty {
+                button.layer.cornerRadius = UIDefaults.CornerRadius
+                button.layer.borderColor = button.tintColor.cgColor
+                button.layer.borderWidth = 1 / UIScreen.main.nativeScale
+            }
+        }
+
+        setupButtonBorder(userIDButton!)
+        setupButtonBorder(passwordButton!)
+        setupButtonBorder(pinButton!)
     }
 
     // MARK: Internal methods
