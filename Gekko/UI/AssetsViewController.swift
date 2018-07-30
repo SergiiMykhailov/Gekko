@@ -70,6 +70,8 @@ class AssetsViewController : UIViewController,
             iconToAssign = iconToAssign ?? AssetIconsProvider.defaultAssetIcon
 
             result.assetIcon = iconToAssign!
+
+            result.title = currency.rawValue as String
         }
 
         return result

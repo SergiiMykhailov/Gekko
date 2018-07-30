@@ -27,6 +27,15 @@ class AssetCell : UITableViewCell {
         }
     }
 
+    public var title:String? {
+        set {
+            titleLabel.text = newValue
+        }
+        get {
+            return titleLabel.text
+        }
+    }
+
     public var keys:[String]? {
         didSet {
             setupKeysButtons()
@@ -59,6 +68,9 @@ class AssetCell : UITableViewCell {
         setupKeyButton(withdrawButton)
         withdrawButton.contentHorizontalAlignment = .center
 
+        titleLabel.font = UIFont.systemFont(ofSize:8)
+
+        addSubview(titleLabel)
         addSubview(fillPrimaryKeyButton)
         addSubview(fillSecondaryKeyButton)
         addSubview(withdrawButton)
@@ -72,6 +84,11 @@ class AssetCell : UITableViewCell {
 
     override func updateConstraints() {
         super.updateConstraints()
+
+        titleLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(imageView!)
+            make.top.equalTo(imageView!.snp.bottom).offset(2)
+        }
 
         withdrawButton.layer.cornerRadius = UIDefaults.CornerRadius
         withdrawButton.snp.makeConstraints { (make) in
@@ -143,6 +160,7 @@ class AssetCell : UITableViewCell {
 
     // MARK: Internal fields
 
+    fileprivate let titleLabel = UILabel()
     fileprivate let fillPrimaryKeyButton = UIButton(type:UIButtonType.roundedRect)
     fileprivate let fillSecondaryKeyButton = UIButton(type:UIButtonType.roundedRect)
     fileprivate let withdrawButton = UIButton(type:UIButtonType.roundedRect)
