@@ -48,11 +48,11 @@ class TradingPlatformManager : NSObject {
         if publicKey != nil && privateKey != nil {
             let userDefaults = UserDefaults.standard
 
-            userDefaults.setValue(publicKey!, forKey:UIUtils.PublicKeySettingsKey)
-            userDefaults.setValue(privateKey!, forKey:UIUtils.PrivateKeySettingsKey)
             userDefaults.setValue(userID, forKey:UIUtils.UserIDSettingsKey)
             userDefaults.setValue(password, forKey:UIUtils.UserPasswordSettingsKey)
             userDefaults.setValue(securityKey, forKey:UIUtils.SecurityKeySettingsKey)
+            userDefaults.setValue(publicKey!, forKey:UIUtils.PublicKeySettingsKey)
+            userDefaults.setValue(privateKey!, forKey:UIUtils.PrivateKeySettingsKey)
         }
     }
 
@@ -65,6 +65,11 @@ class TradingPlatformManager : NSObject {
                                           forKeyPath:UIUtils.PrivateKeySettingsKey,
                                           options:NSKeyValueObservingOptions.new,
                                           context:nil)
+    }
+
+    deinit {
+        UserDefaults.standard.removeObserver(self,
+                                             forKeyPath:UIUtils.PrivateKeySettingsKey)
     }
 
     fileprivate static func createTradingPlatform() -> TradingPlatform {

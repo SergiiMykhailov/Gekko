@@ -76,15 +76,6 @@ class MainViewController : UIViewController,
         }
     }
 
-    override func observeValue(forKeyPath keyPath:String?,
-                               of object:Any?,
-                               change:[NSKeyValueChangeKey : Any]?,
-                               context:UnsafeMutableRawPointer?) {
-        if keyPath == UIUtils.PrivateKeySettingsKey {
-            setupTradingPlatform()
-        }
-    }
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let assetsViewController = segue.destination as? AssetsViewController {
             assetsViewController.dataSource = self
@@ -730,6 +721,8 @@ class MainViewController : UIViewController,
 
     func tradingPlatformManager(sender: TradingPlatformManager, didCreateTradingPlatform tradingPlatform: TradingPlatform) {
         setupTradingPlatform()
+
+        navigationItem.leftBarButtonItem?.isEnabled = tradingPlatform.isAuthorized
     }
     
     // MARK: Events handling
