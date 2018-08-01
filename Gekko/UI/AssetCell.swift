@@ -97,7 +97,7 @@ class AssetCell : UITableViewCell {
 
         withdrawButton.layer.cornerRadius = UIDefaults.CornerRadius
         withdrawButton.snp.makeConstraints { (make) in
-            make.width.equalTo(keys != nil ? UIDefaults.LineHeight * 0.75 : 0.0)
+            make.width.equalTo(keys != nil ? UIDefaults.LineHeight * 2 * 0.75 : 0.0)
             make.height.equalTo(keys != nil ? UIDefaults.LineHeight * 0.75 : 0.0)
             make.right.equalToSuperview().offset(-UIDefaults.Spacing)
             make.centerY.equalToSuperview()

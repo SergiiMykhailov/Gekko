@@ -107,13 +107,29 @@ class AssetWithdrawalAddressViewController : UIViewController,
             let address = self.addressTextField!.text!.trimmingCharacters(in:.whitespaces)
             let amount = Double(self.withdrawAmountTextField!.text!.trimmingCharacters(in:.whitespaces))
 
+            let spinner = UIActivityIndicatorView(activityIndicatorStyle:.gray)
+            self.view.addSubview(spinner)
+            spinner.snp.makeConstraints { (make) in
+                make.center.equalToSuperview()
+            }
+            spinner.startAnimating()
+
+            self.submitButton?.isEnabled = false
+            self.addressTextField?.isEnabled = false
+            self.withdrawAmountTextField?.isEnabled = false
+
             TradingPlatformManager.shared.tradingPlatform.assetsHandler?.withdrawAsset?(asset:self.currency,
                                                                                         amount:amount!,
                                                                                         toAddress:address,
                                                                                         securityKey:securityKey,
                                                                                         onCompletion:
-                { (succeed, status) in
+                { (succeeded, status) in
+                spinner.stopAnimating()
+                spinner.removeFromSuperview()
 
+                self.submitButton?.isEnabled = true
+                self.addressTextField?.isEnabled = true
+                self.withdrawAmountTextField?.isEnabled = true
             })
         }
 
