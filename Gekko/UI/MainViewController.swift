@@ -53,7 +53,7 @@ class MainViewController : UIViewController,
                                                             action:#selector(accountSettingsButtonPressed))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.black
 
-        if (tradingPlatform.assetProvider != nil) {
+        if (tradingPlatform.assetsHandler != nil) {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image:#imageLiteral(resourceName: "currencies"),
                                                                style:.plain,
                                                                target:self,
@@ -113,7 +113,7 @@ class MainViewController : UIViewController,
         tradingPlatformController?.start()
         tradingPlatformController?.refreshAll()
 
-        if let assetsProvider = tradingPlatform.assetProvider {
+        if let assetsProvider = tradingPlatform.assetsHandler {
             tradingPlatformAssetsManager = TradingPlatformAssetsManager(withAssetProvider:assetsProvider,
                                                                         assets:supportedAssets)
         }

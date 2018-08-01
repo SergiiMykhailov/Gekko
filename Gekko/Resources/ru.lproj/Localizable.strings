@@ -128,3 +128,30 @@
 
 /* Value copying message */
 "Value was copied to clipboard" = "Значение скопировано";
+
+/* Withdraw funds scene title */
+"Withdraw funds" = "Вывод средств";
+
+/* Withdrawal available amount label title */
+"Available amount:" = "Доступно:";
+
+/* Card number label title */
+"Card number" = "Номер карты";
+
+/* Wallet address label title */
+"Wallet" = "Кошелек";
+
+/* Transfer button title */
+"Transfer" = "Перевести";
+
+/* Two-factor authentication alert title */
+"Two-factor authentication" = "Двухфакторная аутентификация";
+
+/* Enter security key text */
+"Please enter security key (PIN)" = "Пожалуйста, введите код подтверждения (PIN)";
+
+/* Security key placeholder text */
+"Security key (PIN)" = "Код подтверждения (PIN)";
+
+/* Security key submit button title */
+"Submit" = "Подтвердить";

@@ -128,3 +128,30 @@
 
 /* Value copying message */
 "Value was copied to clipboard" = "Value was copied to clipboard";
+
+/* Withdraw funds scene title */
+"Withdraw funds" = "Withdraw funds";
+
+/* Withdrawal available amount label title */
+"Available amount:" = "Available amount:";
+
+/* Card number label title */
+"Card number" = "Card number";
+
+/* Wallet address label title */
+"Wallet" = "Wallet";
+
+/* Transfer button title */
+"Transfer" = "Transfer";
+
+/* Two-factor authentication alert title */
+"Two-factor authentication" = "Two-factor authentication";
+
+/* Enter security key text */
+"Please enter security key (PIN)" = "Please enter security key";
+
+/* Security key placeholder text */
+"Security key (PIN)" = "Security key (PIN)";
+
+/* Security key submit button title */
+"Submit" = "Submit";

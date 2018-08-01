@@ -5,7 +5,7 @@
 import Foundation
 
 class BTCTradeUATradingPlatform : TradingPlatform,
-                                  AssetProvider,
+                                  AssetsHandler,
                                   AccountManager {
 
     // MARK: Public methods and properties
@@ -31,7 +31,7 @@ class BTCTradeUATradingPlatform : TradingPlatform,
         return BTCTradeUATradingPlatform.SupportedCurrencyPairs
     }
 
-    public var assetProvider:AssetProvider? {
+    public var assetsHandler:AssetsHandler? {
         return self
     }
 
