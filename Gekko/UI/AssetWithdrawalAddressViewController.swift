@@ -31,15 +31,19 @@ class AssetWithdrawalAddressViewController : UIViewController,
             }
         }
 
+        let lastUsedWalletForCurrency = UserDefaults.standard.value(forKey:lastUsedWalletSettingsKey) as? String
         if currency == .UAH {
             addressTextField?.keyboardType = .numberPad
             addressTextField?.textContentType = UITextContentType.creditCardNumber
             addressTextField?.smartDashesType = .yes
-            addressTextField?.placeholder = NSLocalizedString("Card number", comment:"Card number label title")
+            addressTextField?.placeholder = lastUsedWalletForCurrency ??
+                NSLocalizedString("Card number", comment:"Card number label title")
         }
         else {
-            addressTextField?.placeholder = NSLocalizedString("Wallet", comment:"Wallet address label title")
+            addressTextField?.placeholder = lastUsedWalletForCurrency ?? NSLocalizedString("Wallet", comment:"Wallet address label title")
         }
+
+        withdrawAmountTextField?.placeholder = NSLocalizedString("Amount", comment:"Withdrawal amount placeholder text")
 
         addressTextField?.delegate = self
         withdrawAmountTextField?.delegate = self
@@ -66,19 +70,45 @@ class AssetWithdrawalAddressViewController : UIViewController,
 
     // MARK: Internal methods
 
+    fileprivate var lastUsedWalletSettingsKey:String {
+        get {
+            return "LastUsedWallet_\(currency.rawValue)"
+        }
+    }
+
+    fileprivate var defaultAddressPlaceholder:String {
+        get {
+            return currency == .UAH ?
+                   NSLocalizedString("Card number", comment:"Card number label title") :
+                   NSLocalizedString("Wallet", comment:"Wallet address label title")
+        }
+    }
+
+    fileprivate var isAddressFieldValid:Bool {
+        get {
+            var addressText = addressTextField!.text
+            if addressText != nil && !addressText!.isEmpty {
+                addressText = addressText!.trimmingCharacters(in:.whitespaces)
+
+                return currency == .UAH ? isValidCreditCardNumber(addressText!) : !addressText!.isEmpty
+            }
+            else if addressTextField!.placeholder != defaultAddressPlaceholder {
+                return true
+            }
+
+            return false
+        }
+    }
+
     @objc fileprivate func textFieldDidChange(_ textField:UITextField) {
         var isButtonEnabled = false
 
-        if var addressText = addressTextField!.text {
-            addressText = addressText.trimmingCharacters(in:.whitespaces)
+        if isAddressFieldValid {
+            if var amountText = withdrawAmountTextField!.text {
+                amountText = amountText.trimmingCharacters(in:.whitespaces)
 
-            isButtonEnabled = currency == .UAH ? isValidCreditCardNumber(addressText) : !addressText.isEmpty
-            if isButtonEnabled {
-                if var amountText = withdrawAmountTextField!.text {
-                    amountText = amountText.trimmingCharacters(in:.whitespaces)
-
-                    isButtonEnabled = Double(amountText) != nil
-                }
+                let amountValue = Double(amountText)
+                isButtonEnabled = amountValue != nil && amountValue! > 0.0
             }
         }
 
@@ -102,10 +132,15 @@ class AssetWithdrawalAddressViewController : UIViewController,
                 return
             }
 
-            UserDefaults.standard.setValue(securityKey, forKey:UIUtils.SecurityKeySettingsKey)
+            var address = self.addressTextField!.text!.trimmingCharacters(in:.whitespaces)
+            if address.isEmpty {
+                address = self.addressTextField!.placeholder!.trimmingCharacters(in:.whitespaces)
+            }
 
-            let address = self.addressTextField!.text!.trimmingCharacters(in:.whitespaces)
             let amount = Double(self.withdrawAmountTextField!.text!.trimmingCharacters(in:.whitespaces))
+
+            UserDefaults.standard.setValue(securityKey, forKey:UIUtils.SecurityKeySettingsKey)
+            UserDefaults.standard.setValue(address, forKey:self.lastUsedWalletSettingsKey)
 
             let spinner = UIActivityIndicatorView(activityIndicatorStyle:.gray)
             self.view.addSubview(spinner)
