@@ -43,7 +43,11 @@ class AssetCell : UITableViewCell {
         }
     }
 
-    public var currency:Currency?
+    public var currency:Currency? {
+        didSet {
+            setupKeysButtons()
+        }
+    }
 
     // MARK: Overriden methods
 
@@ -143,6 +147,10 @@ class AssetCell : UITableViewCell {
             if keys!.count > 1 {
                 fillSecondaryKeyButton.setTitle("↓: \(keys![1])", for:.normal)
             }
+        }
+        else if currency != nil && currency! == .UAH {
+            fillPrimaryKeyButton.contentHorizontalAlignment = .center
+            fillPrimaryKeyButton.setTitle("↓", for:.normal)
         }
     }
 

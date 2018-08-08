@@ -709,7 +709,10 @@ class MainViewController : UIViewController,
     // MARK: CryptoAssetsViewControllerDataSource implementation
 
     func supportedAssets(forCryptoAssetsViewController sender:AssetsViewController) -> [Currency] {
-        return supportedAssets
+        var assets = [tradingPlatform.mainCurrency]
+        assets.append(contentsOf:supportedAssets)
+
+        return assets
     }
 
     func keys(forAsset asset:Currency,
