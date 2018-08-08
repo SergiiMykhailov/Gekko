@@ -47,19 +47,19 @@ class MainViewController : UIViewController,
         serverAccessibility.delegate = self
         serverAccessibility.startMonitoringAccessibility()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image:#imageLiteral(resourceName: "user"),
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image:#imageLiteral(resourceName: "user"),
                                                             style:.plain,
                                                             target:self,
                                                             action:#selector(accountSettingsButtonPressed))
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.black
 
         if (tradingPlatform.assetProvider != nil) {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image:#imageLiteral(resourceName: "currencies"),
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image:#imageLiteral(resourceName: "currencies"),
                                                                style:.plain,
                                                                target:self,
                                                                action:#selector(balanceSettingsButtonPressed))
-            navigationItem.leftBarButtonItem?.tintColor = UIColor.black
-            navigationItem.leftBarButtonItem?.isEnabled = tradingPlatform.isAuthorized
+            navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+            navigationItem.rightBarButtonItem?.isEnabled = tradingPlatform.isAuthorized
         }
 
         TradingPlatformManager.shared.delegate = self
