@@ -14,18 +14,20 @@ class BTCTradeUAPostRequestFactory : NSObject {
                                 withPublicKey publicKey:String,
                                 privateKey:String,
                                 body:String = "") -> URLRequest {
+        let now = Date()
+        let millisecondsFrom1970 = Int64(now.timeIntervalSince1970) * 1000
+
         syncQueue.sync {
-            nonceCount += 1
+            nonce = nonce == nil ? millisecondsFrom1970 : nonce! + 1
         }
 
-        let millisecondsFrom1970 = Int(Date.timeIntervalBetween1970AndReferenceDate) * 1000
         let outOrderId = millisecondsFrom1970
 
         let request = NSMutableURLRequest(url: NSURL(string:url)! as URL)
 
         request.httpMethod = "POST"
 
-        let requestBodySuffix = String(format:"out_order_id=%d&nonce=%d&MerchantID=iOS_Gekko", outOrderId, nonceCount)
+        let requestBodySuffix = "out_order_id=\(outOrderId)&nonce=\(nonce!)&MerchantID=iOS_Gekko"
         let requestBody = body.isEmpty ? requestBodySuffix : String(format:"%@&%@", body, requestBodySuffix)
 
         request.setValue(publicKey, forHTTPHeaderField:"public-key")
@@ -55,7 +57,7 @@ class BTCTradeUAPostRequestFactory : NSObject {
         return result
     }
 
-    private static var nonceCount = 0
+    private static var nonce:Int64?
     private static let MaxOrderId:UInt32 = 1000
 
     private static let syncQueue = DispatchQueue(label:"com.Gekko.RequestSyncQueue")
