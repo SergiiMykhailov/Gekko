@@ -86,6 +86,12 @@
                                     </view>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PWD-ii-ZcC" userLabel="Stack View Placeholder">
                                         <rect key="frame" x="0.0" y="332" width="308" height="172"/>
+                                        <subviews>
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SQK-7g-fEW">
+                                                <rect key="frame" x="0.0" y="0.0" width="308" height="172"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </scrollView>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bqH-l7-rQa" userLabel="Buttons Placeholder">
@@ -138,6 +144,12 @@
                                     <constraint firstItem="Jya-ne-PJG" firstAttribute="leading" secondItem="aDd-Fd-XDV" secondAttribute="leading" id="zLX-QV-GLb"/>
                                 </constraints>
                             </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="Y7E-Zg-24W">
+                                <rect key="frame" x="140" y="470" width="39" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="pageIndicatorTintColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                <color key="currentPageIndicatorTintColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" red="0.8666666666666667" green="0.8784313725490196" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -157,6 +169,8 @@
                         <outlet property="chartViewPlaceholder" destination="Jya-ne-PJG" id="4MS-pe-4wc"/>
                         <outlet property="collectionViewPlaceholder" destination="aWR-7S-po7" id="K4W-hw-atF"/>
                         <outlet property="mainScrollView" destination="aDd-Fd-XDV" id="1lZ-fH-W1a"/>
+                        <outlet property="ordersScrollView" destination="SQK-7g-fEW" id="h7v-g1-l3o"/>
+                        <outlet property="pageControl" destination="Y7E-Zg-24W" id="M0s-wk-Mnn"/>
                         <outlet property="sellButton" destination="P98-sh-Ph3" id="jX0-6j-Ciq"/>
                         <outlet property="stackViewPlaceholder" destination="PWD-ii-ZcC" id="oze-X9-BG5"/>
                         <segue destination="oRG-7B-kZq" kind="show" identifier="Show Account Settings" id="iB2-A6-Vww"/>
@@ -166,7 +180,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1652" y="-188"/>
+            <point key="canvasLocation" x="-1655.2" y="-188.45577211394306"/>
         </scene>
         <!--Account Registration View Controller-->
         <scene sceneID="Gbe-Hy-EbV">

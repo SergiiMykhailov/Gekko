@@ -13,6 +13,7 @@ class MainViewController : UIViewController,
                            OrdersStackViewControllerDataSource,
                            OrdersViewDelegate,
                            OrdersViewDataSource,
+                           UIScrollViewDelegate,
                            TradingPlatformAccessibilityControllerDelegate,
                            AssetsViewControllerDataSource,
                            TradingPlatformManagerDelegate {
@@ -231,27 +232,54 @@ class MainViewController : UIViewController,
     }
 
     fileprivate func setupOrdersView() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(ordersPlaceholderTapped))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-
+        ordersScrollView?.snp.makeConstraints { (make) in
+            make.height.equalToSuperview()
+            make.width.equalToSuperview()
+            make.center.equalToSuperview()
+        }
+        
+        ordersScrollView!.delegate = self
+        ordersScrollView!.isPagingEnabled = true
+        
         userOrdersView.dataSource = self
         userOrdersView.delegate = self
-
-        stackViewPlaceholder?.addGestureRecognizer(tapGestureRecognizer)
-
-        stackViewPlaceholder!.addSubview(userOrdersView)
         userOrdersView.backgroundColor = UIColor.white
-
-        stackViewPlaceholder!.addSubview(ordersStackController.view)
+        
         ordersStackController.dataSource = self
         ordersStackController.view!.backgroundColor = UIColor.white
-
-        userOrdersView.snp.makeConstraints({ (make) in
-            make.edges.equalToSuperview()
-        })
-
+        
+        ordersScrollView?.addSubview(ordersStackController.view)
+        ordersScrollView?.addSubview(userOrdersView)
+        
         ordersStackController.view.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalToSuperview()
+            make.width.equalToSuperview()
+            make.left.equalToSuperview()
+        }
+        
+        userOrdersView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.height.equalToSuperview()
+            make.width.equalToSuperview()
+            make.left.equalTo(ordersStackController.view.snp.right)
+        }
+        
+        ordersScrollView?.contentLayoutGuide.snp.makeConstraints({ (make) in
+            make.height.equalToSuperview()
+            make.top.equalToSuperview()
+            make.left.equalTo(ordersStackController.view)
+            make.right.equalTo(userOrdersView)
+        })
+        
+        if pageControl != nil {
+            pageControl!.numberOfPages = 2
+            pageControl!.currentPage = 0
+            view.bringSubview(toFront: pageControl!)
+            pageControl!.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.bottom.equalToSuperview().offset(-UIDefaults.SpacingSmall)
+            }
         }
     }
 
@@ -366,7 +394,7 @@ class MainViewController : UIViewController,
         }
     }
     
-    fileprivate func setupServerErrorView () {
+    fileprivate func setupServerErrorView() {
         serverErrorView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         serverErrorView.layer.cornerRadius = UIDefaults.CornerRadius
         serverErrorView.isUserInteractionEnabled = false
@@ -725,6 +753,13 @@ class MainViewController : UIViewController,
         navigationItem.leftBarButtonItem?.isEnabled = tradingPlatform.isAuthorized
     }
     
+    // MARK: UIScrollViewDelegate implementation
+    
+    internal func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageIndex = round(scrollView.contentOffset.x/view.frame.width)
+        pageControl!.currentPage = Int(pageIndex)
+    }
+    
     // MARK: Events handling
 
     @IBAction fileprivate func buyButtonPressed(button:UIButton) -> Void {
@@ -782,6 +817,9 @@ class MainViewController : UIViewController,
     
     @IBOutlet weak var buyButton:UIButton?
     @IBOutlet weak var sellButton:UIButton?
+    
+    @IBOutlet weak var ordersScrollView:UIScrollView?
+    @IBOutlet weak var pageControl:UIPageControl?
 
     // MARK: Internal fields
 
