@@ -168,8 +168,8 @@
                         <outlet property="buyButton" destination="Lnl-Vg-wuo" id="ZK6-72-1Hf"/>
                         <outlet property="chartViewPlaceholder" destination="Jya-ne-PJG" id="4MS-pe-4wc"/>
                         <outlet property="collectionViewPlaceholder" destination="aWR-7S-po7" id="K4W-hw-atF"/>
+                        <outlet property="footerScrollView" destination="SQK-7g-fEW" id="h7v-g1-l3o"/>
                         <outlet property="mainScrollView" destination="aDd-Fd-XDV" id="1lZ-fH-W1a"/>
-                        <outlet property="ordersScrollView" destination="SQK-7g-fEW" id="h7v-g1-l3o"/>
                         <outlet property="pageControl" destination="Y7E-Zg-24W" id="M0s-wk-Mnn"/>
                         <outlet property="sellButton" destination="P98-sh-Ph3" id="jX0-6j-Ciq"/>
                         <outlet property="stackViewPlaceholder" destination="PWD-ii-ZcC" id="oze-X9-BG5"/>
@@ -641,7 +641,7 @@ Account -&gt; Profile -&gt; API and mobile app</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rI-VY-wk6">
-                                                <rect key="frame" x="92.5" y="7" width="219.5" height="30"/>
+                                                <rect key="frame" x="93" y="7" width="219" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="63e-su-BAx"/>
                                                 </constraints>
@@ -651,7 +651,7 @@ Account -&gt; Profile -&gt; API and mobile app</string>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LpH-bA-52w">
-                                                <rect key="frame" x="92.5" y="51" width="219.5" height="30"/>
+                                                <rect key="frame" x="93" y="51" width="219" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="6W6-k4-AA4"/>
                                                 </constraints>
@@ -667,7 +667,7 @@ Account -&gt; Profile -&gt; API and mobile app</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vUc-SJ-OrM">
-                                                <rect key="frame" x="92.5" y="96" width="219.5" height="30"/>
+                                                <rect key="frame" x="93" y="96" width="219" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="xoo-R3-nwB"/>
                                                 </constraints>

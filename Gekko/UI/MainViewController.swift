@@ -232,14 +232,12 @@ class MainViewController : UIViewController,
     }
 
     fileprivate func setupOrdersView() {
-        ordersScrollView?.snp.makeConstraints { (make) in
-            make.height.equalToSuperview()
-            make.width.equalToSuperview()
-            make.center.equalToSuperview()
+        footerScrollView?.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
         
-        ordersScrollView!.delegate = self
-        ordersScrollView!.isPagingEnabled = true
+        footerScrollView!.delegate = self
+        footerScrollView!.isPagingEnabled = true
         
         userOrdersView.dataSource = self
         userOrdersView.delegate = self
@@ -248,8 +246,8 @@ class MainViewController : UIViewController,
         ordersStackController.dataSource = self
         ordersStackController.view!.backgroundColor = UIColor.white
         
-        ordersScrollView?.addSubview(ordersStackController.view)
-        ordersScrollView?.addSubview(userOrdersView)
+        footerScrollView?.addSubview(ordersStackController.view)
+        footerScrollView?.addSubview(userOrdersView)
         
         ordersStackController.view.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
@@ -265,7 +263,7 @@ class MainViewController : UIViewController,
             make.left.equalTo(ordersStackController.view.snp.right)
         }
         
-        ordersScrollView?.contentLayoutGuide.snp.makeConstraints({ (make) in
+        footerScrollView?.contentLayoutGuide.snp.makeConstraints({ (make) in
             make.height.equalToSuperview()
             make.top.equalToSuperview()
             make.left.equalTo(ordersStackController.view)
@@ -818,7 +816,7 @@ class MainViewController : UIViewController,
     @IBOutlet weak var buyButton:UIButton?
     @IBOutlet weak var sellButton:UIButton?
     
-    @IBOutlet weak var ordersScrollView:UIScrollView?
+    @IBOutlet weak var footerScrollView:UIScrollView?
     @IBOutlet weak var pageControl:UIPageControl?
 
     // MARK: Internal fields
