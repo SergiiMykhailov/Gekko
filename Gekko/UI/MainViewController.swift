@@ -753,7 +753,7 @@ class MainViewController : UIViewController,
     
     // MARK: UIScrollViewDelegate implementation
     
-    internal func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    internal func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageIndex = round(scrollView.contentOffset.x/view.frame.width)
         pageControl!.currentPage = Int(pageIndex)
     }
