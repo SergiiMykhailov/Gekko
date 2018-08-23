@@ -768,6 +768,11 @@ class MainViewController : UIViewController,
         handleButton(forOrderMode:.Sell)
     }
     
+    @IBAction func pageControlChangeValue(_ sender: UIPageControl) {
+        let offset = CGFloat(pageControl!.currentPage) * footerScrollView!.frame.size.width
+        footerScrollView?.setContentOffset(CGPoint(x:offset, y:0), animated: true)
+    }
+    
     fileprivate func handleButton(forOrderMode mode:OrderMode) {
         loginIfNeeded { [weak self] () in
             if self != nil {
