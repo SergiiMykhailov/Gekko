@@ -6,7 +6,7 @@ import Foundation
 
 class TradingPlatformAssetsManager : NSObject {
 
-    init(withAssetProvider assetProvider:AssetProvider,
+    init(withAssetProvider assetProvider:AssetsHandler,
          assets:[Currency]) {
         super.init()
 
@@ -59,7 +59,7 @@ class TradingPlatformAssetsManager : NSObject {
 
     // MARK: Internal fields
 
-    fileprivate weak var assetProvider:AssetProvider?
+    fileprivate weak var assetProvider:AssetsHandler?
     fileprivate var assetsToKeysMap = MainQueueAccessor<[Currency : [String]]>(element:[Currency : [String]]())
     fileprivate var currentAssetIndex = 0
 }

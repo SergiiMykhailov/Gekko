@@ -54,7 +54,7 @@ class MainViewController : UIViewController,
                                                             action:#selector(accountSettingsButtonPressed))
         navigationItem.leftBarButtonItem?.tintColor = UIColor.black
 
-        if (tradingPlatform.assetProvider != nil) {
+        if (tradingPlatform.assetsHandler != nil) {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image:#imageLiteral(resourceName: "currencies"),
                                                                style:.plain,
                                                                target:self,
@@ -114,7 +114,7 @@ class MainViewController : UIViewController,
         tradingPlatformController?.start()
         tradingPlatformController?.refreshAll()
 
-        if let assetsProvider = tradingPlatform.assetProvider {
+        if let assetsProvider = tradingPlatform.assetsHandler {
             tradingPlatformAssetsManager = TradingPlatformAssetsManager(withAssetProvider:assetsProvider,
                                                                         assets:supportedAssets)
         }
@@ -735,7 +735,10 @@ class MainViewController : UIViewController,
     // MARK: CryptoAssetsViewControllerDataSource implementation
 
     func supportedAssets(forCryptoAssetsViewController sender:AssetsViewController) -> [Currency] {
-        return supportedAssets
+        var assets = [tradingPlatform.mainCurrency]
+        assets.append(contentsOf:supportedAssets)
+
+        return assets
     }
 
     func keys(forAsset asset:Currency,

@@ -100,6 +100,21 @@ class UIUtils {
                                                   localizedReason:reasonString,
                                                   reply:onCompletion)
     }
+
+    public static func formatAssetValue(amount:Double) -> String {
+        var floatingPointsCount = 0
+
+        if amount < MinValueFor2FloatingPoints {
+            floatingPointsCount = 2
+        }
+        if amount < MinValueFor5FloatingPoints {
+            floatingPointsCount = 5
+        }
+
+        let result = String(format:"%.\(floatingPointsCount)f", amount)
+
+        return result
+    }
     
     // MARK: Properties
     
@@ -111,4 +126,6 @@ class UIUtils {
     public static let UserPasswordSettingsKey = "User Password"
 
     fileprivate static let NotificationAnimationDuration:TimeInterval = 2.0
+    fileprivate static let MinValueFor2FloatingPoints:Double = 10000
+    fileprivate static let MinValueFor5FloatingPoints:Double = 10
 }

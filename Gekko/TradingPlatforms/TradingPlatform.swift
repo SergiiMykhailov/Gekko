@@ -40,7 +40,7 @@ protocol TradingPlatform : class {
 
     var isAuthorized:Bool { get }
 
-    var assetProvider:AssetProvider? { get }
+    var assetsHandler:AssetsHandler? { get }
 
     var accountManager:AccountManager? { get }
 
@@ -85,12 +85,18 @@ protocol TradingPlatform : class {
 }
 
 typealias AssetAddressCompletionCallback = ([String]?) -> Void
+typealias AssetWithdrawCompletionCallback = (Bool, String?) -> Void // (Succeeded, StatusString)
 
-protocol AssetProvider : class {
+@objc protocol AssetsHandler : class {
 
     func retriveAssetAddressAsync(currency:Currency,
                                   onCompletion:@escaping AssetAddressCompletionCallback)
 
+    @objc optional func withdrawAsset(asset:Currency,
+                                      amount:Double,
+                                      toAddress:String,
+                                      securityKey:String,
+                                      onCompletion:@escaping AssetWithdrawCompletionCallback)
 }
 
 enum AccountRegistrationStatus {

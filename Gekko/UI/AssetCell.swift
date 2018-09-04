@@ -9,6 +9,7 @@ import SnapKit
 @objc protocol AssetCellDelegate : class {
 
     @objc optional func assetCell(_ sender:AssetCell, didCaptureKey key:String)
+    @objc optional func assetCellDidPressWithdrawButton(_ sender:AssetCell)
 
 }
 
@@ -42,6 +43,12 @@ class AssetCell : UITableViewCell {
         }
     }
 
+    public var currency:Currency? {
+        didSet {
+            setupKeysButtons()
+        }
+    }
+
     // MARK: Overriden methods
 
     override init(style:UITableViewCellStyle, reuseIdentifier:String?) {
@@ -66,7 +73,9 @@ class AssetCell : UITableViewCell {
         setupKeyButton(fillPrimaryKeyButton)
         setupKeyButton(fillSecondaryKeyButton)
         setupKeyButton(withdrawButton)
+
         withdrawButton.contentHorizontalAlignment = .center
+        withdrawButton.addTarget(self, action:#selector(self.withdrawButtonPressed(sender:)), for:.touchUpInside)
 
         titleLabel.font = UIFont.systemFont(ofSize:8)
 
@@ -92,7 +101,7 @@ class AssetCell : UITableViewCell {
 
         withdrawButton.layer.cornerRadius = UIDefaults.CornerRadius
         withdrawButton.snp.makeConstraints { (make) in
-            make.width.equalTo(keys != nil ? UIDefaults.LineHeight * 0.75 : 0.0)
+            make.width.equalTo(keys != nil ? UIDefaults.LineHeight * 2 * 0.75 : 0.0)
             make.height.equalTo(keys != nil ? UIDefaults.LineHeight * 0.75 : 0.0)
             make.right.equalToSuperview().offset(-UIDefaults.Spacing)
             make.centerY.equalToSuperview()
@@ -139,6 +148,10 @@ class AssetCell : UITableViewCell {
                 fillSecondaryKeyButton.setTitle("↓: \(keys![1])", for:.normal)
             }
         }
+        else if currency != nil && currency! == .UAH {
+            fillPrimaryKeyButton.contentHorizontalAlignment = .center
+            fillPrimaryKeyButton.setTitle("↓", for:.normal)
+        }
     }
 
     @objc fileprivate func keyButtonPressed(sender:UIButton) {
@@ -156,6 +169,10 @@ class AssetCell : UITableViewCell {
         if capturedKey != nil {
             delegate?.assetCell?(self, didCaptureKey:capturedKey!)
         }
+    }
+
+    @objc fileprivate func withdrawButtonPressed(sender:UIButton) {
+        delegate?.assetCellDidPressWithdrawButton?(self)
     }
 
     // MARK: Internal fields

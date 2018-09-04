@@ -40,8 +40,14 @@ class AssetsViewController : UIViewController,
                                                    left:UIDefaults.LineHeight,
                                                    bottom:0,
                                                    right:0)
-        assetsTable?.tableFooterView = UIView(frame: .zero)
+        assetsTable?.tableFooterView = UIView(frame:.zero)
         assetsTable?.allowsSelection = false
+    }
+
+    override func prepare(for segue:UIStoryboardSegue, sender:Any?) {
+        if let assetWithdrawController = segue.destination as? AssetWithdrawalAddressViewController {
+            assetWithdrawController.currency = withdrawCurrency!
+        }
     }
 
     // MARK: UITableViewDataSource implementation
@@ -64,6 +70,7 @@ class AssetsViewController : UIViewController,
 
         if dataSource != nil && supportedAssets != nil {
             let currency = supportedAssets![indexPath.row]
+            result.currency = currency
             result.keys = dataSource?.keys(forAsset:currency, forCryptoAssetsViewController:self)
 
             var iconToAssign = AssetIconsProvider.icon(forAsset:currency)
@@ -87,6 +94,12 @@ class AssetsViewController : UIViewController,
                                     onCompletion: {})
     }
 
+    func assetCellDidPressWithdrawButton(_ sender:AssetCell) {
+        withdrawCurrency = sender.currency
+
+        performSegue(withIdentifier:AssetsViewController.WithdrawSegueName, sender:self)
+    }
+
     // MARK: Outlets
 
     @IBOutlet weak var assetsTable:UITableView?
@@ -94,6 +107,8 @@ class AssetsViewController : UIViewController,
     // MARK: Internal fields
 
     fileprivate var supportedAssets:[Currency]?
+    fileprivate var withdrawCurrency:Currency?
 
     fileprivate static let CellIdentifier = "Asset Cell"
+    fileprivate static let WithdrawSegueName = "Show Asset Withdrawal Segue"
 }

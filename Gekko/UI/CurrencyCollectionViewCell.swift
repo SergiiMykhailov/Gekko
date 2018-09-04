@@ -110,13 +110,7 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
             let adjustedMinPrice = min(minPrice!, maxPrice!)
             let adjustedMaxPrice = max(minPrice!, maxPrice!)
 
-            let floatingPointCount = adjustedMinPrice < CurrencyCollectionViewCell.MinBalanceValueForFloatingPoints ?
-                                     2 :
-                                     0
-
-            let labelText = String(format:"%.\(floatingPointCount)f - %.\(floatingPointCount)f",
-                                   adjustedMinPrice,
-                                   adjustedMaxPrice)
+            let labelText = "\(UIUtils.formatAssetValue(amount:adjustedMinPrice)) - \(UIUtils.formatAssetValue(amount:adjustedMaxPrice))"
 
             priceLabel.text = labelText
         }
@@ -172,5 +166,4 @@ class CurrencyCollectionViewCell : UICollectionViewCell {
     fileprivate var topSeparatorView = UIView()
 
     fileprivate static let BalanceDefaultString = "Not available"
-    fileprivate static let MinBalanceValueForFloatingPoints:Double = 100
 }

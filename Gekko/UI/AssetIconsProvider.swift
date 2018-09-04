@@ -11,6 +11,9 @@ class AssetIconsProvider : NSObject {
 
     public static func icon(forAsset asset:Currency) -> UIImage? {
         switch asset {
+        case .UAH:
+            return #imageLiteral(resourceName: "UAH")
+
         case .BTC:
             return #imageLiteral(resourceName: "BTC")
 
