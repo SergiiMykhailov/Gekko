@@ -1,15 +1,20 @@
 PODS:
   - SnapKit (4.0.0)
-  - SwiftCharts (0.6.1)
+  - SwiftCharts (0.6.3)
 
 DEPENDENCIES:
   - SnapKit (~> 4.0.0)
-  - SwiftCharts (~> 0.6.1)
+  - SwiftCharts (~> 0.6.3)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SnapKit
+    - SwiftCharts
 
 SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  SwiftCharts: 77378d6cf667e95f9c79a745b6778e66eed5339c
+  SwiftCharts: 1535b5e228702af2c9c4d60c2a408f2f0f579fa8
 
-PODFILE CHECKSUM: 6640d626f2cb538b75c13f194639c561ae41c499
+PODFILE CHECKSUM: 5fcfd65c91d9b5312552e57940df04139e2b6abc
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.6.0
