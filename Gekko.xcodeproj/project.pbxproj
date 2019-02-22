@@ -31,6 +31,8 @@
 		0240BB1C1FE85DA6000EEAE0 /* OrdersStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB1B1FE85DA6000EEAE0 /* OrdersStackViewController.swift */; };
 		0240BB1E1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */; };
 		0240BB261FEC801B000EEAE0 /* TableViewInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */; };
+		0247E9B8221F47C300CE91E3 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0247E9B7221F47C300CE91E3 /* UIView+Shadow.swift */; };
+		0247E9BA221F5BE800CE91E3 /* UIView+LayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0247E9B9221F5BE800CE91E3 /* UIView+LayerSettings.swift */; };
 		0248532F1FFBD91000290BA1 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0248532E1FFBD91000290BA1 /* UIUtils.swift */; };
 		025210B4206D817C008BE3D5 /* TradingPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210B3206D817C008BE3D5 /* TradingPlatform.swift */; };
 		025210B6206D81FB008BE3D5 /* TradingPlatformController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025210B5206D81FB008BE3D5 /* TradingPlatformController.swift */; };
@@ -116,6 +118,8 @@
 		0240BB1D1FE9709C000EEAE0 /* OrdersStackViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersStackViewTableCell.swift; sourceTree = "<group>"; };
 		0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewInputCell.swift; sourceTree = "<group>"; };
 		0242BCDC2069904500443686 /* Gekko 1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Gekko 1.2.xcdatamodel"; sourceTree = "<group>"; };
+		0247E9B7221F47C300CE91E3 /* UIView+Shadow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
+		0247E9B9221F5BE800CE91E3 /* UIView+LayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LayerSettings.swift"; sourceTree = "<group>"; };
 		0248532E1FFBD91000290BA1 /* UIUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
 		025210B3206D817C008BE3D5 /* TradingPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatform.swift; sourceTree = "<group>"; };
 		025210B5206D81FB008BE3D5 /* TradingPlatformController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPlatformController.swift; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 		0207CDD21FD2E8D70074EADF /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				0247E9B6221F475700CE91E3 /* Utils */,
 				026D251220F556F700971C73 /* BTCTradeUA */,
 				026D251D2105ED3600971C73 /* AccountDetailsViewController.swift */,
 				026D251520F5577600971C73 /* AccountRegistrationViewController.swift */,
@@ -299,9 +304,18 @@
 				02D7D3031FE1E519007C4557 /* QRCodePickerViewController.swift */,
 				0240BB251FEC801B000EEAE0 /* TableViewInputCell.swift */,
 				02D7D2FD1FDDEA4B007C4557 /* UIDefaults.swift */,
-				0248532E1FFBD91000290BA1 /* UIUtils.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		0247E9B6221F475700CE91E3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0247E9B7221F47C300CE91E3 /* UIView+Shadow.swift */,
+				0248532E1FFBD91000290BA1 /* UIUtils.swift */,
+				0247E9B9221F5BE800CE91E3 /* UIView+LayerSettings.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		025210B2206D812B008BE3D5 /* TradingPlatforms */ = {
@@ -531,6 +545,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0247E9B8221F47C300CE91E3 /* UIView+Shadow.swift in Sources */,
 				0207CD761FC1A6ED0074EADF /* AppDelegate.swift in Sources */,
 				02D7D2F61FDB406D007C4557 /* BalanceItem.swift in Sources */,
 				CA40E2DA205817FF000A3A8C /* AuthenticationViewController.swift in Sources */,
@@ -538,6 +553,7 @@
 				0207CDD61FD2E9570074EADF /* CurrenciesCollectionViewController.swift in Sources */,
 				0207CDA01FC234F70074EADF /* RestApiRequestsExecutor.swift in Sources */,
 				0207CDC61FC632E00074EADF /* BTCTradeUAPostRequestFactory.swift in Sources */,
+				0247E9BA221F5BE800CE91E3 /* UIView+LayerSettings.swift in Sources */,
 				02D7D3001FDF2544007C4557 /* BTCTradeUAOrderProvider.swift in Sources */,
 				0240BB1C1FE85DA6000EEAE0 /* OrdersStackViewController.swift in Sources */,
 				0207CDC71FC632E00074EADF /* BTCTradeUABalanceProvider.swift in Sources */,

@@ -30,9 +30,14 @@ class MainViewController : UIViewController,
         setupTradingPlatform()
 
         stackViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
+        stackViewPlaceholder?.layer.borderWidth = 1.0
+        stackViewPlaceholder?.layer.borderColor = UIDefaults.SeparatorColor.cgColor
+        
         collectionViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
-        buttonsPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
+    
         chartViewPlaceholder?.layer.cornerRadius = UIDefaults.CornerRadius
+        chartViewPlaceholder?.layer.borderWidth = 1.0
+        chartViewPlaceholder?.layer.borderColor = UIDefaults.SeparatorColor.cgColor
         
         setupCurrenciesView()
 
@@ -75,6 +80,14 @@ class MainViewController : UIViewController,
             loginCompletionAction!()
             loginCompletionAction = nil
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        stackViewPlaceholder?.applyFullShadow()
+        chartViewPlaceholder?.applyFullShadow()
+        buttonsPlaceholder?.applyFullShadow()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -127,7 +140,7 @@ class MainViewController : UIViewController,
             [weak self] (currency) in
             self?.tradingPlatformController?.readonlyModel.allBalanceItems(handlingBlock: { [weak self] (balanceItems) in
                 if self != nil && !balanceItems.isEmpty {
-                    self!.currenciesController.collectionView!.reloadData()
+//                    self!.currenciesController.collectionView!.reloadData()
 
                     if (self!.orderView?.superview == nil) {
                         self!.updateBalanceValueLabel()

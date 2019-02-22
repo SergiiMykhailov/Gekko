@@ -63,9 +63,10 @@ class CurrenciesCollectionViewController : UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.collectionView!.backgroundColor = UIColor.clear
-        self.collectionView!.allowsSelection = true
-        self.collectionView!.allowsMultipleSelection = false
+        collectionView?.backgroundColor = UIColor.clear
+        collectionView?.allowsSelection = true
+        collectionView?.allowsMultipleSelection = false
+        collectionView?.clipsToBounds = false
     }
 
     // MARK: UICollectionViewDelegate implementation
@@ -105,35 +106,29 @@ class CurrenciesCollectionViewController : UICollectionViewController {
             currentSelectedItem = indexPath
         }
 
-        if currentSelectedItem == indexPath {
-            cell.backgroundColor = UIDefaults.CellDefaultSelectedColor
-        }
-        else {
-            cell.backgroundColor = UIColor.white
-        }
-
+        let isCellHighlighted = currentSelectedItem == indexPath
+        cell.isHighlightVisible = isCellHighlighted
+        
         cell.layer.cornerRadius = UIDefaults.CornerRadius
         return cell
     }
 
     internal override func collectionView(_ collectionView:UICollectionView,
                                           didSelectItemAt indexPath:IndexPath) {
-        let cell = collectionView.cellForItem(at:indexPath)
-        if currentSelectedItem != nil {
-            let currentSelectedCell = collectionView.cellForItem(at:currentSelectedItem!)
-            currentSelectedCell?.backgroundColor = UIColor.white
+        if currentSelectedItem != nil && currentSelectedItem != indexPath {
+            let currentSelectedCell = collectionView.cellForItem(at:currentSelectedItem!) as? CurrencyCollectionViewCell
+            currentSelectedCell?.isHighlightVisible = false
         }
 
         currentSelectedItem = indexPath
-        cell?.backgroundColor = UIDefaults.CellDefaultSelectedColor
 
-        let currencyCell = cell as? CurrencyCollectionViewCell
-        if currencyCell != nil {
-            let currency = currencyForCell(currencyCell!)
+        if let currencyCell = collectionView.cellForItem(at:indexPath) as? CurrencyCollectionViewCell {
+            currencyCell.isHighlightVisible = true
+            let currency = currencyForCell(currencyCell)
 
-            let boundsInCollectionView = cell?.convert(cell!.bounds, to:collectionView)
+            let boundsInCollectionView = currencyCell.convert(currencyCell.bounds, to:collectionView)
 
-            if !collectionView.bounds.contains(boundsInCollectionView!) {
+            if !collectionView.bounds.contains(boundsInCollectionView) {
                 collectionView.scrollToItem(at:indexPath, at:.right, animated:true)
             }
 
@@ -154,7 +149,7 @@ class CurrenciesCollectionViewController : UICollectionViewController {
         layout.scrollDirection = .horizontal
 
         // Try to fit at least 3 items (with 2 interitem spacings)
-        let itemWidth = UIDefaults.LineHeight * 3
+        let itemWidth = UIDefaults.LineHeight * 2.75
         let itemHeight = UIDefaults.LineHeight * 2
         layout.itemSize = CGSize(width:itemWidth, height:itemHeight)
         layout.minimumInteritemSpacing = UIDefaults.Spacing
@@ -170,3 +165,5 @@ class CurrenciesCollectionViewController : UICollectionViewController {
 
     fileprivate static let CellIdentifier = "Currency Cell"
 }
+
+private let SelectedCellShadowOpacity:Float = 0.18

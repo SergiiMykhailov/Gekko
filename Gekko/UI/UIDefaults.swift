@@ -12,12 +12,8 @@ class UIDefaults {
     public static let LabelSmallFontSize:CGFloat = 13
     public static let LabelVerySmallFontSize:CGFloat = 11
 
-    public static let LabelDefaultFontColor = UIColor.black
+    public static let LabelDefaultFontColor = UIColor.black.withAlphaComponent(0.87)
     public static let LabelDefaultLightColor = UIColor(white:142 / 255, alpha:1)
-    public static let CellDefaultSelectedColor = UIColor(red:244 / 255,
-                                                         green:244 / 255,
-                                                         blue:244 / 255,
-                                                         alpha:1)
 
     public static let ButtonDefaultFontSize:CGFloat = 12
 
@@ -27,8 +23,8 @@ class UIDefaults {
 
     public static let CornerRadius:CGFloat = 8
 
-    public static let Spacing:CGFloat = 6
-    public static let SpacingSmall:CGFloat = 2
+    public static let Spacing:CGFloat = 8
+    public static let SpacingSmall:CGFloat = 3
 
     public static let SeparatorColor = UIColor(red:239 / 255,
                                                green: 239 / 255,
@@ -36,8 +32,9 @@ class UIDefaults {
                                                alpha: 1)
 
     public static let GreenColor = UIColor(red:76 / 255, green:217 / 255, blue:100 / 255, alpha:1)
-    public static let RedColor = UIColor(red:1, green:59 / 255, blue:48 / 255, alpha:1)
+    public static let RedColor = UIColor(red:1, green:45 / 255, blue:85 / 255, alpha:1)
     public static let YellowColor = UIColor(red:1, green:204 / 255, blue:0, alpha:1)
+    public static let TealBlueColor = UIColor(red:90 / 255, green:200 / 255, blue:250 / 255, alpha:1)
 
     public static let DefaultAnimationDuration:TimeInterval = 0.25
     
